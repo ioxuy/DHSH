@@ -72,14 +72,8 @@
     <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="LdrDll.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="inlinehook.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LdrTools.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,14 +143,11 @@
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="LdrHeader.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="..\..\MyTools\MyTools\LDasm.h">
+      <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="inlinehook.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="LDasm.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

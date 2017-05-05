@@ -14,6 +14,7 @@
     <ProjectGuid>{AB842D68-A33F-4384-8CB6-19478885A0D0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>InjectorDLL</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,11 +42,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Visual Studio 2013\Projects\MyTools;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\MyTools;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Visual Studio 2013\Projects\MyTools;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\MyTools;$(IncludePath)</IncludePath>
+    <OutDir>\\192.168.0.106\Share\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -61,12 +63,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;INJECTORDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -92,7 +95,6 @@
     <ClInclude Include="..\..\MyTools\MyTools\CLLock.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLMath.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLNoModuleDLL.h" />
-    <ClInclude Include="..\..\MyTools\MyTools\CLNoModuleDLL_Struct.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLPic.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLProcess.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLPublic.h" />
@@ -101,14 +103,13 @@
     <ClInclude Include="..\..\MyTools\MyTools\CLThread.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLVector.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CmdLog.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\LDasm.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h" />
     <ClInclude Include="..\..\MyTools\MyTools\Log.h" />
     <ClInclude Include="..\..\MyTools\MyTools\RelfexStruct.h" />
     <ClInclude Include="..\..\MyTools\MyTools\Script.h" />
     <ClInclude Include="..\..\MyTools\MyTools\TimeTick.h" />
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h" />
-    <ClInclude Include="inlinehook.h" />
-    <ClInclude Include="LDasm.h" />
-    <ClInclude Include="LdrHeader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -130,6 +131,7 @@
     <ClCompile Include="..\..\MyTools\MyTools\CLThread.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CmdLog.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CPublic.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\Log.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\Script.cpp" />
@@ -143,9 +145,6 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="InjectorDLL.cpp" />
-    <ClCompile Include="inlinehook.cpp" />
-    <ClCompile Include="LdrDll.cpp" />
-    <ClCompile Include="LdrTools.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

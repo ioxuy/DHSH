@@ -66,9 +66,6 @@
     <ClInclude Include="..\..\MyTools\MyTools\CLNoModuleDLL.h">
       <Filter>MyTools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\MyTools\MyTools\CLNoModuleDLL_Struct.h">
-      <Filter>MyTools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\MyTools\MyTools\CLPic.h">
       <Filter>MyTools</Filter>
     </ClInclude>
@@ -108,14 +105,11 @@
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h">
       <Filter>MyTools</Filter>
     </ClInclude>
-    <ClInclude Include="inlinehook.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="..\..\MyTools\MyTools\LDasm.h">
+      <Filter>MyTools</Filter>
     </ClInclude>
-    <ClInclude Include="LDasm.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="LdrHeader.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h">
+      <Filter>MyTools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -191,14 +185,8 @@
     <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp">
       <Filter>MyTools</Filter>
     </ClCompile>
-    <ClCompile Include="inlinehook.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LdrDll.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LdrTools.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp">
+      <Filter>MyTools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

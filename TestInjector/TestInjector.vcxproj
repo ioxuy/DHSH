@@ -14,6 +14,7 @@
     <ProjectGuid>{ED0BBD73-CD89-4C3B-A49C-2D6882D57BD4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TestInjector</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,11 +42,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Visual Studio 2013\Projects\MyTools;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\MyTools;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Visual Studio 2013\Projects\MyTools;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\MyTools;$(IncludePath)</IncludePath>
+    <OutDir>\\192.168.0.106\Share\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -62,13 +64,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,12 +95,10 @@
     <ClCompile Include="..\..\MyTools\MyTools\CLThread.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CmdLog.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CPublic.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\Log.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp" />
-    <ClCompile Include="inlinehook.cpp" />
-    <ClCompile Include="LdrDll.cpp" />
-    <ClCompile Include="LdrTools.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -119,13 +120,12 @@
     <ClInclude Include="..\..\MyTools\MyTools\CLResManager.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLThread.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CmdLog.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\LDasm.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h" />
     <ClInclude Include="..\..\MyTools\MyTools\Log.h" />
     <ClInclude Include="..\..\MyTools\MyTools\RelfexStruct.h" />
     <ClInclude Include="..\..\MyTools\MyTools\TimeTick.h" />
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h" />
-    <ClInclude Include="inlinehook.h" />
-    <ClInclude Include="LDasm.h" />
-    <ClInclude Include="LdrHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
