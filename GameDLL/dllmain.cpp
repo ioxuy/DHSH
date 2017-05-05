@@ -12,7 +12,7 @@ DWORD WINAPI _WorkThread(LPVOID)
 	WCHAR wszGamePath[MAX_PATH] = { 0 };
 	::GetCurrentDirectoryW(MAX_PATH, wszGamePath);
 	lstrcatW(wszGamePath, L"\\Log\\");
-	CLog::GetInstance().SetClientName(L"Game", wszGamePath, TRUE, 20 * 1024 * 1024);
+	MyTools::CLog::GetInstance().SetClientName(L"Game", wszGamePath, TRUE, 20 * 1024 * 1024);
 	for (;;)
 	{
 		LOG_C_D(L"Running");

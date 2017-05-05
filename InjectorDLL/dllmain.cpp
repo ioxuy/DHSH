@@ -14,9 +14,9 @@ VOID LoadGameDLL(_In_ CONST LPPROCESS_INFORMATION lpProcessInformation)
 	{
 		LPVOID lpFileContent = nullptr;
 		UINT uSize = 0;
-		if (CLFile::ReadFileContent(L"C:\\Share\\InjectorDLL.dll", lpFileContent, uSize))
+		if (MyTools::CLFile::ReadFileContent(L"C:\\Share\\InjectorDLL.dll", lpFileContent, uSize))
 		{
-			CLNoModuleDLL NoModuleDLL;
+			MyTools::CLNoModuleDLL NoModuleDLL;
 			NoModuleDLL.RemoteLoadMemoryDLL(lpFileContent, uSize, lpProcessInformation->hProcess, lpProcessInformation->hThread);
 			ResumeThread(lpProcessInformation->hThread);
 			::VirtualFree(lpFileContent, 0, MEM_RELEASE);
@@ -87,7 +87,7 @@ __declspec(naked) void HookCreateProcessA()
 
 		}
 		__asm PUSHAD;
-		if (CCharacter::strstr_my(lpCommandLine, "zy@fs"))
+		if (MyTools::CCharacter::strstr_my(lpCommandLine, "zy@fs"))
 		{
 			bHook = TRUE;
 			//CLProcess::CreateProcess_Injector_DLL(lpCommandLine, L"", lpProcessInformation);
@@ -115,22 +115,22 @@ DWORD WINAPI _WorkThread(LPVOID)
 {
 	WCHAR wszPath[MAX_PATH] = { 0 };
 	::GetModuleFileNameW(NULL, wszPath, MAX_PATH);
-	std::wstring wsPath = CCharacter::MakeTextToLower(wszPath);
+	std::wstring wsPath = MyTools::CCharacter::MakeTextToLower(wszPath);
 	if (wsPath.find(L"cprotect1.exe") != -1)
 	{
-		MYHOOK_CONTENT HookContent;
+		MyTools::MYHOOK_CONTENT HookContent;
 		HookContent.dwFunAddr = reinterpret_cast<DWORD>(HookCreateProcessA);
 		HookContent.dwHookAddr = dwHookAddr = reinterpret_cast<DWORD>(::CreateProcessA);
 		HookContent.uNopCount = 0x0;
-		CLHook::Hook_Fun_Jmp_MyAddr(&HookContent);
+		MyTools::CLHook::Hook_Fun_Jmp_MyAddr(&HookContent);
 	}
 	else if(wsPath.find(L"game.exe") != -1)
 	{
 		LPVOID lpFileContent = nullptr;
 		UINT uSize = 0;
-		if (CLFile::ReadFileContent(L"C:\\Share\\GameDLL.dll", lpFileContent, uSize))
+		if (MyTools::CLFile::ReadFileContent(L"C:\\Share\\GameDLL.dll", lpFileContent, uSize))
 		{
-			CLNoModuleDLL NoModuleDLL;
+			MyTools::CLNoModuleDLL NoModuleDLL;
 			BOOL bRet = NoModuleDLL.LoadMemoryDLL(lpFileContent, uSize);
 			::VirtualFree(lpFileContent, 0, MEM_RELEASE);
 		}

@@ -9,7 +9,7 @@
 
 int main()
 {
-	if (!CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))
+	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))
 	{
 		STARTUPINFOW		si = { sizeof(STARTUPINFOW) };
 		PROCESS_INFORMATION pi = { 0 };
@@ -22,9 +22,9 @@ int main()
 
 		LPVOID lpFileContent = nullptr;
 		UINT uSize = 0;
-		if (CLFile::ReadFileContent(L"C:\\Share\\InjectorDLL.dll", lpFileContent, uSize))
+		if (MyTools::CLFile::ReadFileContent(L"C:\\Share\\InjectorDLL.dll", lpFileContent, uSize))
 		{
-			CLNoModuleDLL NoModuleDLL;
+			MyTools::CLNoModuleDLL NoModuleDLL;
 			BOOL bRetCode = NoModuleDLL.RemoteLoadMemoryDLL(lpFileContent, uSize, pi.hProcess, pi.hThread);
 			std::wcout << bRetCode << std::endl;
 			//CLProcess::LoadRemoteDLL(pi.dwProcessId, L"C:\\Visual Studio 2013\\Projects\\DHSH\\Release\\InjectorDLL.dll");

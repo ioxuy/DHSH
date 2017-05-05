@@ -188,5 +188,8 @@
     <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp">
       <Filter>MyTools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\LDasm.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

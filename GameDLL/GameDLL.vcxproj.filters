@@ -64,6 +64,15 @@
     <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp">
       <Filter>MyTools</Filter>
     </ClCompile>
+    <ClCompile Include="TextVariable.cpp">
+      <Filter>Game\Text\Variable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\RelfexClass.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="ExcuteAction.cpp">
+      <Filter>Game\Method\CALL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -143,6 +152,18 @@
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h">
       <Filter>MyTools</Filter>
     </ClInclude>
+    <ClInclude Include="TextVariable.h">
+      <Filter>Game\Text\Variable</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBase.hpp">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\RelfexClass.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcuteAction.h">
+      <Filter>Game\Method\CALL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -150,6 +171,63 @@
   <ItemGroup>
     <Filter Include="MyTools">
       <UniqueIdentifier>{688acaf1-24b6-4b89-b96c-66b760f21714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{ad4176f5-4e69-4771-861c-fc7a35d6ab46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Text">
+      <UniqueIdentifier>{b843b57a-ef95-406b-bd6e-f668099d4c39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Text\Variable">
+      <UniqueIdentifier>{8f4791a9-2d17-42a6-b1ec-ada25f491729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Text\Config">
+      <UniqueIdentifier>{48875972-3fa9-4345-90d0-8edccb4f2079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Socket">
+      <UniqueIdentifier>{98998a53-f1ec-432f-9c2e-f058a4364be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object">
+      <UniqueIdentifier>{03caa041-4bda-4de9-80f0-c72fa57336d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script">
+      <UniqueIdentifier>{1081b0ae-c495-4c01-b785-5a14a0e20638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Test">
+      <UniqueIdentifier>{14a46b09-6b3e-4a8a-83fb-2f35eb43db4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method">
+      <UniqueIdentifier>{0c5ee230-658f-4518-9794-48014ed49da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\CALL">
+      <UniqueIdentifier>{e73f2ed5-47b6-4629-abfd-e91b530795b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\ScanBase">
+      <UniqueIdentifier>{13877d51-c42e-4270-9e29-a6ad6d51ef62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Deal">
+      <UniqueIdentifier>{2cdd1be1-3f8e-4931-9f9a-c958c47a1924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Deal\Mail">
+      <UniqueIdentifier>{41445d46-cc84-4338-862b-2377c08dbb4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Farm">
+      <UniqueIdentifier>{4bd8feda-c66d-45a9-9d0c-daa4c908a33e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Action">
+      <UniqueIdentifier>{caf30ea3-3f02-4242-9442-99409f4bbb9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Action\跑商">
+      <UniqueIdentifier>{220dacbd-4164-4fbe-beb8-1020698ab0b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Action\帮派">
+      <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Action\采集">
+      <UniqueIdentifier>{42721005-920f-42bd-89ac-346b4e3d19c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Common">
+      <UniqueIdentifier>{d16769c9-f0b2-4c64-9e57-addcd55758ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

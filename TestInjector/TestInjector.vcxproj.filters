@@ -75,6 +75,9 @@
     <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\LDasm.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\MyTools\MyTools\ByteBuffer.h">
