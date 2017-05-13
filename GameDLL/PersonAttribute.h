@@ -5,6 +5,7 @@
 
 class CPersonAttribute : public MyTools::CRelfexBaseClass
 {
+public:
 	struct PersonBuff
 	{
 		std::wstring wsName;
@@ -37,8 +38,13 @@ public:
 	// InWar?
 	BOOL IsWar() CONST;
 
+	BOOL IsMoving() CONST;
+
 	// Point
 	Point GetPoint() CONST;
+
+	// dis
+	float GetDis(_In_ CONST Point& TarPoint) CONST;
 
 	// 
 	DWORD GetMoney() CONST;
@@ -46,7 +52,7 @@ public:
 
 	//
 	UINT GetVecPersonBuff(_Out_ std::vector<PersonBuff>& Vec, _In_ std::function<BOOL(CONST PersonBuff&)> FilterPtr) CONST;
-	BOOL ExistPersonBuff_By_Name(_In_ CONST std::wstring& wsName) CONST;
+	BOOL ExistPersonBuff_By_PartName(_In_ CONST std::wstring& wsPartName) CONST;
 public:
 	static CPersonAttribute* CreateInstance()
 	{

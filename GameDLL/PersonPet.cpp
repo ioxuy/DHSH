@@ -17,7 +17,7 @@ CPersonPet::CPersonPet(_In_ DWORD dwNodeBase)
 
 VOID CPersonPet::SetName()
 {
-	_wsName = MyTools::CCharacter::ASCIIToUnicode(std::string(reinterpret_cast<CONST CHAR*>(ReadDWORD(GetNodeBase() + C_chong_name))));
+	_wsName = MyTools::CCharacter::ASCIIToUnicode(std::string(reinterpret_cast<CONST CHAR*>(GetNodeBase() + C_chong_name)));
 }
 
 DWORD CPersonPet::GetLoyalty() CONST

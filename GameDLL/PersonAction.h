@@ -8,7 +8,12 @@ class CPersonAction : public MyTools::CRelfexBaseClass
 public:
 	CPersonAction() = default;
 	~CPersonAction() = default;
+
+	// ≤π≥‰HP
+	BOOL SupplementHp() CONST;
 	
+	// ≤π≥‰MP
+	BOOL SupplementMp() CONST;
 public:
 	static CPersonAction* CreateInstance()
 	{

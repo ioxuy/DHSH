@@ -12,13 +12,13 @@ public:
 	//
 	BOOL UseItem(_In_ CONST std::wstring& wsItemName) CONST;
 
-	//
+	// by Filter
 	VOID DropItem() CONST;
 
-	//
+	// by Filter
 	VOID Decompose() CONST;
 	
-	//
+	// by Filter
 	VOID Save() CONST;
 public:
 	static CBagItemAction* CreateInstance()

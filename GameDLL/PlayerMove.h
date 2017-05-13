@@ -9,10 +9,12 @@ public:
 	CPlayerMove() = default;
 	~CPlayerMove() = default;
 	
-	
-private:
-	DWORD IsMoving() CONST;
-	
+	// Current Map
+	BOOL MoveToPoint(_In_ CONST Point& TarPoint) CONST;
+
+	// different Map
+	BOOL MoveToMapPoint(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint) CONST;
+
 public:
 	static CPlayerMove* CreateInstance()
 	{

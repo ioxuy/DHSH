@@ -18,6 +18,8 @@ private:
 	virtual VOID Help(CONST std::vector<std::wstring>& VecParm);
 
 	virtual VOID AroundObject(CONST std::vector<std::wstring>& VecParm);
+
+	virtual VOID TestPtr(CONST std::vector<std::wstring>& VecParm);
 };
 
 

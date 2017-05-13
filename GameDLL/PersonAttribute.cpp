@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PersonAttribute.h"
 #include <MyTools/Character.h>
+#include <MyTools/CLPublic.h>
 
 CONST std::wstring CPersonAttribute::GetCurrentMapName() CONST
 {
@@ -52,10 +53,20 @@ BOOL CPersonAttribute::IsWar() CONST
 	return (ReadDWORD(ReadDWORD(C_base_dianguai) + 0x0) & 0xFF) != NULL;
 }
 
+BOOL CPersonAttribute::IsMoving() CONST
+{
+	return ReadDWORD(ReadDWORD(ReadDWORD(ReadDWORD(C_map_base) + C_map_Addr) + C_ZOU_pi_1) + C_ZOU_pi_2) != NULL;
+}
+
 Point CPersonAttribute::GetPoint() CONST
 {
 	DWORD dwAddr = ReadDWORD(ReadDWORD(C_map_base) + C_map_Addr);
 	return Point(ReadDWORD(dwAddr + C_map_AddX) >> 0x4, ReadDWORD(dwAddr + C_map_AddY) >> 0x4);
+}
+
+float CPersonAttribute::GetDis(_In_ CONST Point& TarPoint) CONST
+{
+	return MyTools::CLPublic::GetDisBy2D(GetPoint(), TarPoint);
 }
 
 DWORD CPersonAttribute::GetMoney() CONST
@@ -86,8 +97,8 @@ UINT CPersonAttribute::GetVecPersonBuff(_Out_ std::vector<PersonBuff>& Vec, _In_
 	return Vec.size();
 }
 
-BOOL CPersonAttribute::ExistPersonBuff_By_Name(_In_ CONST std::wstring& wsName) CONST
+BOOL CPersonAttribute::ExistPersonBuff_By_PartName(_In_ CONST std::wstring& wsPartName) CONST
 {
 	std::vector<PersonBuff> Vec;
-	return GetVecPersonBuff(Vec, [wsName](CONST PersonBuff& PersonBuff_) { return PersonBuff_.wsName == wsName; }) != NULL;
+	return GetVecPersonBuff(Vec, [wsPartName](CONST PersonBuff& PersonBuff_) { return PersonBuff_.wsName.find(wsPartName) != -1; }) != NULL;
 }

@@ -12,7 +12,7 @@ public:
 	~CPlayerExtend() = default;
 	
 	template<typename T>
-	UINT GetAroundObject(_In_ CPlayer::em_PlayerType emPlayerType, _Out_ std::vector<T>& Vec)
+	UINT GetAroundObject(_Out_ std::vector<T>& Vec, _In_ std::function<BOOL(CONST CPlayer&)> fnFilter)
 	{
 		DWORD dwRoot = ReadDWORD(ReadDWORD(C_huan_base) + C_huan_yiji);
 		DWORD dwNextNode = ReadDWORD(dwRoot + 0x0);
@@ -22,7 +22,7 @@ public:
 			if (dwNodeBase > 0)
 			{
 				T Player(dwNodeBase);
-				if (emPlayerType == CPlayer::em_PlayerType::em_PlayerType_ALL)
+				if (fnFilter == nullptr)
 				{
 					DWORD dwType = static_cast<DWORD>(Player.GetType());
 					if (dwType != 0x6 && dwType != 0x7)
@@ -31,10 +31,11 @@ public:
 						Vec.push_back(std::move(Player));
 					}
 				}
-				else if (Player.GetType() == emPlayerType)
+				else if (fnFilter(Player))
 				{
 					Player.SetName();
 					Vec.push_back(std::move(Player));
+					break;
 				}
 			}
 			dwNextNode = ReadDWORD(dwNextNode);

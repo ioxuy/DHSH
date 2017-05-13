@@ -264,6 +264,22 @@ extern em_GameStatus g_GameStatus;
 #define GameRun (g_GameStatus == em_GameStatus::em_GameStatus_Running)
 #define StopGame  g_GameStatus = em_GameStatus::em_GameStatus_Stop
 
+
+enum class em_TextVar
+{
+	// 是否使用驱魔香 = 1
+	em_TextVar_UseExorcism,
+	// 人物HP<70 吃药
+	em_TextVar_Person_SupplementHp,
+	// 人物MP<70 吃药
+	em_TextVar_Person_SupplementMp,
+	// 宠物HP<70 吃药
+	em_TextVar_Pet_SupplementHp,
+	// 宠物MP<70 吃药
+	em_TextVar_Pet_SupplementMp,
+};
+
+
 struct Point
 {
 	DWORD X, Y;

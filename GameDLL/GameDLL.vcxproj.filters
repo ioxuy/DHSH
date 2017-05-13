@@ -64,9 +64,6 @@
     <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp">
       <Filter>MyTools</Filter>
     </ClCompile>
-    <ClCompile Include="TextVariable.cpp">
-      <Filter>Game\Text\Variable</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\MyTools\MyTools\RelfexClass.cpp">
       <Filter>MyTools</Filter>
     </ClCompile>
@@ -154,6 +151,15 @@
     <ClCompile Include="Expr.cpp">
       <Filter>Expression</Filter>
     </ClCompile>
+    <ClCompile Include="FarmMonster.cpp">
+      <Filter>Game\Method\Farm</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicBagItemAction.cpp">
+      <Filter>Game\Method\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVariable.cpp">
+      <Filter>Game\Text\Variable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -232,9 +238,6 @@
     </ClInclude>
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h">
       <Filter>MyTools</Filter>
-    </ClInclude>
-    <ClInclude Include="TextVariable.h">
-      <Filter>Game\Text\Variable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\MyTools\MyTools\RelfexClass.h">
       <Filter>MyTools</Filter>
@@ -322,6 +325,15 @@
     </ClInclude>
     <ClInclude Include="Expr.h">
       <Filter>Expression</Filter>
+    </ClInclude>
+    <ClInclude Include="FarmMonster.h">
+      <Filter>Game\Method\Farm</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicBagItemAction.h">
+      <Filter>Game\Method\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVariable.h">
+      <Filter>Game\Text\Variable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

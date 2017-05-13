@@ -658,7 +658,7 @@ BOOL CGameCALL::Save(_In_ DWORD dwItemId, _In_ DWORD dwCount) CONST
 	return FALSE;
 }
 
-BOOL CGameCALL::AddHp(_In_ DWORD dwLocation) CONST
+BOOL CGameCALL::AddHp(_In_ DWORD dwActionId) CONST
 {
 	__try
 	{
@@ -667,7 +667,7 @@ BOOL CGameCALL::AddHp(_In_ DWORD dwLocation) CONST
 			PUSHAD;
 			PUSH 0;
 			PUSH 0;
-			PUSH dwLocation;
+			PUSH dwActionId;
 			PUSH 0x4075;
 			MOV EAX, C_CALL_ADDHP;
 			CALL EAX;
@@ -678,7 +678,7 @@ BOOL CGameCALL::AddHp(_In_ DWORD dwLocation) CONST
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		LOG_CF_E(L"AddHp Exception, dwLocation=%d", dwLocation);
+		LOG_CF_E(L"AddHp Exception, dwActionId=%d", dwActionId);
 	}
 	return FALSE;
 }

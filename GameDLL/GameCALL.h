@@ -30,7 +30,7 @@ public:
 	// 给予
 	BOOL Give_Send(_In_ DWORD dwNpcId, _In_ DWORD dwId) CONST;
 
-	// 检查坐标点是否能降落
+	// 检查坐标点是否能降落(针对坐骑)
 	BOOL CheckPointIsWork(_In_ CONST Point& Point_) CONST;
 
 	// 逃跑
@@ -76,7 +76,7 @@ public:
 	BOOL Save(_In_ DWORD dwItemId, _In_ DWORD dwCount) CONST;
 
 	// Add Hp
-	BOOL AddHp(_In_ DWORD dwLocation) CONST;
+	BOOL AddHp(_In_ DWORD dwActionId) CONST;
 
 	// 分解装备
 	BOOL DecompostionEqui(_In_ DWORD dwId) CONST;

@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "PersonPetExtend.h"
 #include <MyTools/Character.h>
+#include <MyTools/Log.h>
 #include "PersonPet.h"
+
+#define _SELF L"PersonPetExtend.cpp"
 
 UINT CPersonPetExtend::GetVecPet(_Out_ std::vector<CPersonPet>& Vec, _In_ std::function<BOOL(CONST CPersonPet&)> FilterPtr) CONST
 {
@@ -14,8 +17,13 @@ UINT CPersonPetExtend::GetVecPet(_Out_ std::vector<CPersonPet>& Vec, _In_ std::f
 	for (int i = 0;i < nCount; ++i)
 	{
 		CPersonPet PersonPet(ReadDWORD(dwArrayHead + i * 4));
-		if (FilterPtr(PersonPet))
+		if(FilterPtr == nullptr)
 			Vec.push_back(std::move(PersonPet));
+		else if (FilterPtr(PersonPet))
+		{
+			Vec.push_back(std::move(PersonPet));
+			break;
+		}
 	}
 	return Vec.size();
 }

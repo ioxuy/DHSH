@@ -5,15 +5,23 @@
 
 class CPlayerSkill;
 class CPetSkill;
+class CPersonPet;
 class CSkillExtend : public MyTools::CRelfexBaseClass
 {
 public:
 	CSkillExtend() = default;
 	~CSkillExtend() = default;
 	
-	UINT GetVecPlayerSkill(_Out_ std::vector<CPlayerSkill>& Vec) CONST;
+	// 当前人物的所有技能
+	UINT GetVecPlayerSkill(_Out_ std::vector<CPlayerSkill>& Vec, _In_ std::function<BOOL(CONST CPlayerSkill&)> fnFilter) CONST;
+
+	// 查找人物的某个技能
+	BOOL FindPlayerSkill_By_Name(_In_ CONST std::wstring& wsSkillName, _Out_opt_ CPlayerSkill* pPlayerSkill = nullptr) CONST;
 	
-	UINT GetVecPetSkill(_Out_ std::vector<CPetSkill>& Vec) CONST;
+	// 宠物的技能
+	UINT GetVecPetSkill_By_ConditionPtr(_Out_ std::vector<CPetSkill>& Vec, _In_ std::function<BOOL(CONST CPersonPet&)> fnFilter) CONST;
+
+
 public:
 	static CSkillExtend* CreateInstance()
 	{
