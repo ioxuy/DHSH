@@ -73,6 +73,87 @@
     <ClCompile Include="ExcuteAction.cpp">
       <Filter>Game\Method\CALL</Filter>
     </ClCompile>
+    <ClCompile Include="GameUi.cpp">
+      <Filter>Game\Object\GameUi</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>Game\Object\BaseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUiExtend.cpp">
+      <Filter>Game\Object\GameUi</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCALL.cpp">
+      <Filter>Game\Method\CALL</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonAction.cpp">
+      <Filter>Game\Object\Person</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMove.cpp">
+      <Filter>Game\Method\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ResText.cpp">
+      <Filter>Game\Text\Res</Filter>
+    </ClCompile>
+    <ClCompile Include="BagItemExtend.cpp">
+      <Filter>Game\Object\BagItem</Filter>
+    </ClCompile>
+    <ClCompile Include="HotKey.cpp">
+      <Filter>Game\Object\HotKey</Filter>
+    </ClCompile>
+    <ClCompile Include="HotKeyExtend.cpp">
+      <Filter>Game\Object\HotKey</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Game\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillExtend.cpp">
+      <Filter>Game\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBase.cpp">
+      <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonAttribute.cpp">
+      <Filter>Game\Object\Person</Filter>
+    </ClCompile>
+    <ClCompile Include="BagItem.cpp">
+      <Filter>Game\Object\BagItem</Filter>
+    </ClCompile>
+    <ClCompile Include="ResNpc.cpp">
+      <Filter>Game\Object\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="ResNpcExtend.cpp">
+      <Filter>Game\Object\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerExtend.cpp">
+      <Filter>Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Npc.cpp">
+      <Filter>Game\Object\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="MapMonster.cpp">
+      <Filter>Game\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BagItemAction.cpp">
+      <Filter>Game\Object\BagItem</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemFilter.cpp">
+      <Filter>Game\Method\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonPet.cpp">
+      <Filter>Game\Object\Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonPetExtend.cpp">
+      <Filter>Game\Object\Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonPetAction.cpp">
+      <Filter>Game\Object\Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="Expr.cpp">
+      <Filter>Expression</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -155,14 +236,92 @@
     <ClInclude Include="TextVariable.h">
       <Filter>Game\Text\Variable</Filter>
     </ClInclude>
-    <ClInclude Include="GameBase.hpp">
-      <Filter>Game\Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\MyTools\MyTools\RelfexClass.h">
       <Filter>MyTools</Filter>
     </ClInclude>
     <ClInclude Include="ExcuteAction.h">
       <Filter>Game\Method\CALL</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUi.h">
+      <Filter>Game\Object\GameUi</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseObject.h">
+      <Filter>Game\Object\BaseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUiExtend.h">
+      <Filter>Game\Object\GameUi</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCALL.h">
+      <Filter>Game\Method\CALL</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonAction.h">
+      <Filter>Game\Object\Person</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMove.h">
+      <Filter>Game\Method\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="ResText.h">
+      <Filter>Game\Text\Res</Filter>
+    </ClInclude>
+    <ClInclude Include="BagItemExtend.h">
+      <Filter>Game\Object\BagItem</Filter>
+    </ClInclude>
+    <ClInclude Include="HotKey.h">
+      <Filter>Game\Object\HotKey</Filter>
+    </ClInclude>
+    <ClInclude Include="HotKeyExtend.h">
+      <Filter>Game\Object\HotKey</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Game\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillExtend.h">
+      <Filter>Game\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBase.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonAttribute.h">
+      <Filter>Game\Object\Person</Filter>
+    </ClInclude>
+    <ClInclude Include="BagItem.h">
+      <Filter>Game\Object\BagItem</Filter>
+    </ClInclude>
+    <ClInclude Include="ResNpc.h">
+      <Filter>Game\Object\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="ResNpcExtend.h">
+      <Filter>Game\Object\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerExtend.h">
+      <Filter>Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Npc.h">
+      <Filter>Game\Object\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="MapMonster.h">
+      <Filter>Game\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="BagItemAction.h">
+      <Filter>Game\Object\BagItem</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFilter.h">
+      <Filter>Game\Method\Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonPet.h">
+      <Filter>Game\Object\Pet</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonPetExtend.h">
+      <Filter>Game\Object\Pet</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonPetAction.h">
+      <Filter>Game\Object\Pet</Filter>
+    </ClInclude>
+    <ClInclude Include="Expr.h">
+      <Filter>Expression</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -214,20 +373,65 @@
     <Filter Include="Game\Method\Farm">
       <UniqueIdentifier>{4bd8feda-c66d-45a9-9d0c-daa4c908a33e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Method\Action">
-      <UniqueIdentifier>{caf30ea3-3f02-4242-9442-99409f4bbb9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Method\Action\跑商">
-      <UniqueIdentifier>{220dacbd-4164-4fbe-beb8-1020698ab0b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Method\Action\帮派">
-      <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Method\Action\采集">
-      <UniqueIdentifier>{42721005-920f-42bd-89ac-346b4e3d19c9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Common">
       <UniqueIdentifier>{d16769c9-f0b2-4c64-9e57-addcd55758ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\GameUi">
+      <UniqueIdentifier>{e4021f47-4b95-4b15-ada7-3254a08be128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\BaseObject">
+      <UniqueIdentifier>{2b83f913-cd67-474d-8f0d-07fce6e37dbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Player">
+      <UniqueIdentifier>{a89b3614-ae2b-4160-b024-361f9f0ade11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Person">
+      <UniqueIdentifier>{5b449f4d-3507-499e-96d7-db71616e2093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Script">
+      <UniqueIdentifier>{caf30ea3-3f02-4242-9442-99409f4bbb9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Script\跑商">
+      <UniqueIdentifier>{220dacbd-4164-4fbe-beb8-1020698ab0b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Script\帮派">
+      <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Script\采集">
+      <UniqueIdentifier>{42721005-920f-42bd-89ac-346b4e3d19c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Action">
+      <UniqueIdentifier>{acbf8b78-dcc7-4708-8a26-82f0944ed7d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Text\Res">
+      <UniqueIdentifier>{27f3cb87-0e32-4ddc-8f60-5e5ba9449821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Npc">
+      <UniqueIdentifier>{644af5b4-b203-48b4-8298-e7e130610770}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\BagItem">
+      <UniqueIdentifier>{9817a899-fbd4-427b-9271-2abd889d8fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\HotKey">
+      <UniqueIdentifier>{a7f9000d-244a-4df4-8362-6b152bb08c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Skill">
+      <UniqueIdentifier>{bcbbe7f6-66b0-4d32-ab65-8e83d1469f41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Script\答题">
+      <UniqueIdentifier>{4b49357d-c100-431d-b8eb-14fe9ac77287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Monster">
+      <UniqueIdentifier>{18c5578c-f091-41ba-8e2b-c92103e399e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Method\Filter">
+      <UniqueIdentifier>{58131171-b602-4545-bf10-b6f7319ac058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Pet">
+      <UniqueIdentifier>{bf1d7a10-4d90-43fa-80ed-4d307a687a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Expression">
+      <UniqueIdentifier>{bfad8c82-7a7f-4809-860c-154070de8ace}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

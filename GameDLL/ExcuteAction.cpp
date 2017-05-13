@@ -19,9 +19,17 @@ VOID CExcuteAction::PushPtrToMainThread(_In_ std::function<VOID(VOID)> MethodPtr
 	ThreadMethodInfo_.hEvent = INVALID_HANDLE_VALUE;
 }
 
-DWORD WINAPI CExcuteAction::_ExcuteActionThread(LPVOID lpParm)
+VOID CExcuteAction::ExcutePtr()
 {
-	auto pExcuteAction = reinterpret_cast<CExcuteAction *>(lpParm);
-
-
+	_LockQueMethodPtr.Access([this]
+	{
+		while (!_QueMethodPtr.empty())
+		{
+			auto& itm = _QueMethodPtr.front();
+			itm.ThreadExcutePtr();
+			::SetEvent(itm.hEvent);
+			_QueMethodPtr.pop();
+		}
+	});
 }
+

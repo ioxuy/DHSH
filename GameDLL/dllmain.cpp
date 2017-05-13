@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include <MyTools/Log.h>
 #include <MyTools/Character.h>
+#include <MyTools/CmdLog.h>
+#include "Expr.h"
 
 #define _SELF L"dllmain.cpp"
 
@@ -13,20 +15,26 @@ DWORD WINAPI _WorkThread(LPVOID)
 	::GetCurrentDirectoryW(MAX_PATH, wszGamePath);
 	lstrcatW(wszGamePath, L"\\Log\\");
 	MyTools::CLog::GetInstance().SetClientName(L"Game", wszGamePath, TRUE, 20 * 1024 * 1024);
-	for (;;)
-	{
-		LOG_C_D(L"Running");
-		::Sleep(5 * 1000);
-	}
+	MyTools::CCmdLog::GetInstance().Run(L"Game", CExpr::GetInstance().GetVec());
 
+	return 0;
 }
 
-BOOL APIENTRY DllMain(HMODULE ,DWORD  ,LPVOID )
+BOOL APIENTRY DllMain(HMODULE ,DWORD dwReason ,LPVOID )
 {
-	if (hWorkThread == NULL)
+	if (dwReason == DLL_PROCESS_ATTACH && hWorkThread == NULL)
 	{
 		hWorkThread = cbBEGINTHREADEX(NULL, NULL, _WorkThread, NULL, NULL, NULL);
+		::CloseHandle(hWorkThread);
+	}
+	else if (dwReason == DLL_PROCESS_DETACH)
+	{
+		MyTools::CCmdLog::GetInstance().Stop();
 	}
 	return TRUE;
 }
 
+extern "C" __declspec(dllexport)  VOID WINAPIV ExitDLL()
+{
+	//
+}

@@ -1,7 +1,7 @@
 #ifndef __DHSH_GAMEDLL_GAME_METHOD_CALL_EXCUTEACTION_H__
 #define __DHSH_GAMEDLL_GAME_METHOD_CALL_EXCUTEACTION_H__
 
-#include "GameBase.hpp"
+#include "GameBase.h"
 #include <queue>
 #include <MyTools/CLLock.h>
 
@@ -20,8 +20,9 @@ public:
 	// 将函数丢到主线程去执行!
 	VOID PushPtrToMainThread(_In_ std::function<VOID(VOID)> MethodPtr);
 
+	VOID ExcutePtr();
 private:
-	static DWORD WINAPI _ExcuteActionThread(LPVOID lpParm);
+	
 private:
 	// 主线程执行函数队列
 	std::queue<ThreadMethodInfo> _QueMethodPtr;

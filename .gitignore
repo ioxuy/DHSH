@@ -189,3 +189,9 @@ _Pvt_Extensions/
 ModelManifest.xml
 /DHSH.VC.db
 /DHSH.VC.VC.opendb
+/.vs/DHSH/v15/Browse.VC.db
+/.vs/DHSH/v15/Browse.VC.opendb
+/.vs/DHSH/v15/Solution.VC.db
+/.vs/DHSH/v15/Solution.VC.db-shm
+/.vs/DHSH/v15/Solution.VC.db-wal
+*.db

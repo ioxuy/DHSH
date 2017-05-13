@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -20,13 +20,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -63,7 +63,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -108,8 +108,34 @@
     <ClInclude Include="..\..\MyTools\MyTools\Script.h" />
     <ClInclude Include="..\..\MyTools\MyTools\TimeTick.h" />
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h" />
+    <ClInclude Include="BagItem.h" />
+    <ClInclude Include="BagItemExtend.h" />
+    <ClInclude Include="BaseObject.h" />
     <ClInclude Include="ExcuteAction.h" />
-    <ClInclude Include="GameBase.hpp" />
+    <ClInclude Include="Expr.h" />
+    <ClInclude Include="GameBase.h" />
+    <ClInclude Include="GameCALL.h" />
+    <ClInclude Include="HotKey.h" />
+    <ClInclude Include="HotKeyExtend.h" />
+    <ClInclude Include="BagItemAction.h" />
+    <ClInclude Include="ItemFilter.h" />
+    <ClInclude Include="MapMonster.h" />
+    <ClInclude Include="Npc.h" />
+    <ClInclude Include="PersonPet.h" />
+    <ClInclude Include="PersonPetAction.h" />
+    <ClInclude Include="PersonPetExtend.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerExtend.h" />
+    <ClInclude Include="ResNpc.h" />
+    <ClInclude Include="ResNpcExtend.h" />
+    <ClInclude Include="PersonAttribute.h" />
+    <ClInclude Include="PlayerMove.h" />
+    <ClInclude Include="GameUi.h" />
+    <ClInclude Include="GameUiExtend.h" />
+    <ClInclude Include="PersonAction.h" />
+    <ClInclude Include="ResText.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillExtend.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextVariable.h" />
@@ -136,6 +162,10 @@
     <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\Script.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp" />
+    <ClCompile Include="BagItem.cpp" />
+    <ClCompile Include="BagItemExtend.cpp" />
+    <ClCompile Include="BagItemAction.cpp" />
+    <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -145,7 +175,30 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ExcuteAction.cpp" />
+    <ClCompile Include="Expr.cpp" />
+    <ClCompile Include="GameBase.cpp" />
+    <ClCompile Include="GameCALL.cpp" />
     <ClCompile Include="GameDLL.cpp" />
+    <ClCompile Include="GameUi.cpp" />
+    <ClCompile Include="GameUiExtend.cpp" />
+    <ClCompile Include="HotKey.cpp" />
+    <ClCompile Include="HotKeyExtend.cpp" />
+    <ClCompile Include="ItemFilter.cpp" />
+    <ClCompile Include="MapMonster.cpp" />
+    <ClCompile Include="Npc.cpp" />
+    <ClCompile Include="PersonPet.cpp" />
+    <ClCompile Include="PersonPetAction.cpp" />
+    <ClCompile Include="PersonPetExtend.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerExtend.cpp" />
+    <ClCompile Include="ResNpc.cpp" />
+    <ClCompile Include="ResNpcExtend.cpp" />
+    <ClCompile Include="PersonAction.cpp" />
+    <ClCompile Include="PersonAttribute.cpp" />
+    <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="ResText.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillExtend.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
