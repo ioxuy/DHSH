@@ -43,7 +43,7 @@ DWORD CBagItemExtend::GetCount_By_ItemName(_In_ CONST std::wstring& wsItemName) 
 
 UINT CBagItemExtend::GetVecBagItem(_Out_ std::vector<CBagItem>& Vec, _In_ std::function<BOOL(CONST CBagItem&)> FilterPtr) CONST
 {
-	DWORD dwRoot = ReadDWORD(ReadDWORD(C_Box_base)+C_Box_yiji);
+	DWORD dwRoot = ReadDWORD(ReadDWORD(C_Box_base) + C_Box_yiji);
 
 	MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([=, &Vec]
 	{

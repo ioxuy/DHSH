@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Expr.h"
 #include <MyTools/Log.h>
+#include <MyTools/CLThread.h>
 #include "PlayerExtend.h"
 #include "Player.h"
 #include "Npc.h"
@@ -78,14 +79,15 @@ VOID CExpr::SetGameRun(CONST std::vector<std::wstring>& VecParm)
 	g_GameStatus = VecParm.at(0) == L"1" ? em_GameStatus::em_GameStatus_Running : em_GameStatus::em_GameStatus_Stop;
 }
 
+
+
 VOID CExpr::TestPtr(CONST std::vector<std::wstring>& VecParm)
 {
 	std::vector<CBagItem> Vec;
 	MyTools::InvokeClassPtr<CBagItemExtend>()->GetVecBagItem(Vec, nullptr);
-
 	for (CONST auto& itm : Vec)
 	{
-		LOG_C_D(L"Name=%s, Count=%d", itm.GetName().c_str(), itm.GetCount());
+		LOG_C_D(L"Name=%s,Count=%d", itm.GetName().c_str(), itm.GetCount());
 	}
 	//MyTools::InvokeClassPtr<CTestFunction>()->InitTestShareContent();
 	//MyTools::InvokeClassPtr<CGameVariable>()->InitVariable();

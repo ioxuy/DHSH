@@ -5,6 +5,7 @@
 #include <queue>
 #include <MyTools/CLLock.h>
 
+//#define MESSAGE_CUSTOME WM_USER + 0x1A5
 class CExcuteAction : public MyTools::CRelfexBaseClass
 {
 public:
@@ -21,8 +22,12 @@ public:
 	VOID PushPtrToMainThread(_In_ std::function<VOID(VOID)> MethodPtr);
 
 	VOID ExcutePtr();
+
+	VOID SetRun(_In_ BOOL bRun);
+
 private:
-	
+	static HHOOK hWndProc;
+	static LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lParam);
 private:
 	// 主线程执行函数队列
 	std::queue<ThreadMethodInfo> _QueMethodPtr;

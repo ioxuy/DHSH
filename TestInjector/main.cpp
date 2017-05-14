@@ -3,6 +3,7 @@
 #include <MyTools/Log.h>
 #include <iostream>
 #include <MyTools/CLFile.h>
+#include <MyTools/CLThread.h>
 
 #define _SELF L"main.cpp"
 
