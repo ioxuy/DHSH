@@ -12,6 +12,9 @@ public:
 	// 初始化血量的设置, 比如<?吃红, 吃蓝
 	VOID InitVariable() CONST;
 	
+	GameShareContent*& GetGameShareContent() CONST;
+
+	GameAccountShareContent*& GetAccountShareContent() CONST;
 	
 public:
 	static CGameVariable* CreateInstance()

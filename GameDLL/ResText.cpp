@@ -7,8 +7,8 @@ BOOL CResText::Initialize()
 {
 	SetErrorPtr([](_In_ CONST std::wstring& wsErrText)
 	{
-		LOG_MSG_CF(MyTools::CLog::em_Log_Type_Exception, L"UnExist RelfexStruct, Text=%s", wsErrText.c_str());
 		StopGame;
+		LOG_MSG_CF(L"UnExist RelfexStruct, Text=%s", wsErrText.c_str());
 	});
 
 	RegisterResNpcMapText();
@@ -285,6 +285,7 @@ VOID CResText::RegisterResNpcMapText()
 		{ L"家具托管员", L"应天府", L"应天府", Point(408, 121) },
 		{ L"房屋管理员", L"星秀村", L"星秀村", Point(141, 77) },
 		{ L"爱照片的英英", L"应天府", L"应天府", Point(236, 156) },
+		{ L"【星】杂货摊老板", L"星秀村", L"星秀村", Point(187, 114) },
 	};
 
 	Register(L"ResNpcPointText", &Vec);
@@ -503,4 +504,24 @@ VOID CResText::RegisterResShopEquiText()
 	};
 
 	Register(L"ResShopEquiText", &Vec);
+}
+
+VOID CResText::RegisterResShopItemText()
+{
+	CONST static std::vector<ResStoreItemText> Vec =
+	{
+		{ L"驱魔香", L"【星】杂货摊老板",1,500 },
+		{ L"十里香", L"【星】杂货摊老板",2,100 },
+		{ L"欢悦铃", L"【星】杂货摊老板",8,1000 },
+		{ L"星秀村超程符", L"【星】杂货摊老板",11,30000 },
+		{ L"驱魔香", L"【汴】杂货摊老板",1,500 },
+		{ L"十里香", L"【汴】杂货摊老板",2,100 },
+		{ L"欢悦铃", L"【汴】杂货摊老板",8,1000 },
+		{ L"汴京城超程符", L"【汴】杂货摊老板",13,0 },
+		{ L"驱魔香", L"【应】杂货摊老板",1,500 },
+		{ L"十里香", L"【应】杂货摊老板",2,100 },
+		{ L"欢悦铃", L"【应】杂货摊老板",10,1000 },
+		{ L"应天府超程符", L"【应】杂货摊老板",14,30000 },
+	};
+	Register(L"ResShopItemText", &Vec);
 }

@@ -160,6 +160,21 @@
     <ClCompile Include="GameVariable.cpp">
       <Filter>Game\Text\Variable</Filter>
     </ClCompile>
+    <ClCompile Include="FarmField.cpp">
+      <Filter>Game\Script\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Game\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterExtend.cpp">
+      <Filter>Game\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="TestFunction.cpp">
+      <Filter>Game\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcExtend.cpp">
+      <Filter>Game\Object\Npc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -335,6 +350,21 @@
     <ClInclude Include="GameVariable.h">
       <Filter>Game\Text\Variable</Filter>
     </ClInclude>
+    <ClInclude Include="FarmField.h">
+      <Filter>Game\Script\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Game\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterExtend.h">
+      <Filter>Game\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="TestFunction.h">
+      <Filter>Game\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcExtend.h">
+      <Filter>Game\Object\Npc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -400,18 +430,6 @@
     <Filter Include="Game\Object\Person">
       <UniqueIdentifier>{5b449f4d-3507-499e-96d7-db71616e2093}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Method\Script">
-      <UniqueIdentifier>{caf30ea3-3f02-4242-9442-99409f4bbb9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Method\Script\跑商">
-      <UniqueIdentifier>{220dacbd-4164-4fbe-beb8-1020698ab0b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Method\Script\帮派">
-      <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Method\Script\采集">
-      <UniqueIdentifier>{42721005-920f-42bd-89ac-346b4e3d19c9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Method\Action">
       <UniqueIdentifier>{acbf8b78-dcc7-4708-8a26-82f0944ed7d9}</UniqueIdentifier>
     </Filter>
@@ -430,9 +448,6 @@
     <Filter Include="Game\Object\Skill">
       <UniqueIdentifier>{bcbbe7f6-66b0-4d32-ab65-8e83d1469f41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Method\Script\答题">
-      <UniqueIdentifier>{4b49357d-c100-431d-b8eb-14fe9ac77287}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Object\Monster">
       <UniqueIdentifier>{18c5578c-f091-41ba-8e2b-c92103e399e0}</UniqueIdentifier>
     </Filter>
@@ -444,6 +459,21 @@
     </Filter>
     <Filter Include="Expression">
       <UniqueIdentifier>{bfad8c82-7a7f-4809-860c-154070de8ace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\帮派">
+      <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\采集">
+      <UniqueIdentifier>{42721005-920f-42bd-89ac-346b4e3d19c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\答题">
+      <UniqueIdentifier>{4b49357d-c100-431d-b8eb-14fe9ac77287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\跑商">
+      <UniqueIdentifier>{220dacbd-4164-4fbe-beb8-1020698ab0b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\Field">
+      <UniqueIdentifier>{cd1d2f16-4d0c-4599-a609-50f9de63702f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

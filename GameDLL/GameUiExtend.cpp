@@ -5,7 +5,7 @@
 
 UINT CGameUiExtend::GetVecGameUi(_Out_ std::vector<CGameUi>& Vec) CONST
 {
-	return TraverseGameUi(Vec, [](CONST CGameUi&) { return TRUE; });
+	return TraverseGameUi(Vec, nullptr);
 }
 
 BOOL CGameUiExtend::FindGameUi_By_Name(_In_ CONST std::wstring& wsUiName, _Out_ CGameUi& GameUi) CONST
@@ -22,8 +22,7 @@ BOOL CGameUiExtend::FindGameUi_By_Name(_In_ CONST std::wstring& wsUiName, _Out_ 
 
 BOOL CGameUiExtend::IsShowNpcDlg() CONST
 {
-	CGameUi GameUi;
-	return !FindGameUi_By_Name(L"npcdlg", GameUi) ? FALSE : GameUi.IsShow();
+	return IsShowDlg(L"npcdlg");
 }
 
 BOOL CGameUiExtend::FindText_In_NpcDlg(_In_ CONST std::wstring& wsText) CONST
@@ -36,6 +35,12 @@ BOOL CGameUiExtend::FindText_In_NpcDlg(_In_ CONST std::wstring& wsText) CONST
 	return wsNpcDlgText.find(wsText) != -1 ? TRUE : FALSE;
 }
 
+BOOL CGameUiExtend::IsShowDlg(_In_ CONST std::wstring& wsDlgName) CONST
+{
+	CGameUi GameUi;
+	return !FindGameUi_By_Name(wsDlgName, GameUi) ? FALSE : GameUi.IsShow();
+}
+
 UINT CGameUiExtend::TraverseGameUi(_Out_ std::vector<CGameUi>& Vec, _In_ std::function<BOOL(CONST CGameUi&)> fnExprPtr) CONST
 {
 	DWORD dwArrayHead = ReadDWORD(ReadDWORD(C_window_base) + C_window_offset);
@@ -46,10 +51,16 @@ UINT CGameUiExtend::TraverseGameUi(_Out_ std::vector<CGameUi>& Vec, _In_ std::fu
 	{
 		DWORD dwAddr = ReadDWORD(dwArrayHead + i * 4);
 		CGameUi GameUi(dwAddr);
-		if (!fnExprPtr(GameUi))
+		if (fnExprPtr == nullptr)
+		{
+			Vec.push_back(std::move(GameUi));
 			continue;
-
-		Vec.push_back(std::move(GameUi));
+		}
+		else if (fnExprPtr(GameUi))
+		{
+			Vec.push_back(std::move(GameUi));
+			break;
+		}
 	}
 	return Vec.size();
 }

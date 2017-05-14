@@ -21,7 +21,8 @@ BOOL CBagItemExtend::FindItem_By_Name_To_ExcutePtr(_In_ CONST std::wstring& wsIt
 	std::vector<CBagItem> Vec;
 	if (GetVecBagItem(Vec, [wsItemName](CONST CBagItem& item) { return item.GetName() == wsItemName; }) != NULL)
 	{
-		ExcutePtr(Vec.at(0));
+		if(ExcutePtr != nullptr)
+			ExcutePtr(Vec.at(0));
 		return TRUE;
 	}
 	return FALSE;
@@ -54,12 +55,24 @@ UINT CBagItemExtend::GetVecBagItem(_Out_ std::vector<CBagItem>& Vec, _In_ std::f
 				continue;
 
 			CBagItem Item_(dwObjAddr);
-			if (!FilterPtr(Item_))
+			if (FilterPtr == nullptr)
+			{
+				Vec.push_back(std::move(Item_));
 				continue;
-
-			Vec.push_back(Item_);
+			}
+			else if (FilterPtr(Item_))
+			{
+				Vec.push_back(std::move(Item_));
+				break;
+			}
 		}
 	});
 	
 	return Vec.size();
+}
+
+BOOL CBagItemExtend::IsBagFull() CONST
+{
+	std::vector<CBagItem> Vec;
+	return GetVecBagItem(Vec, nullptr) == 20;
 }

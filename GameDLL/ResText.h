@@ -18,6 +18,9 @@ private:
 
 	// Shop Equi Text
 	VOID RegisterResShopEquiText();
+
+	// Shop Item Text
+	VOID RegisterResShopItemText();
 public:
 	static CResText* CreateInstance()
 	{

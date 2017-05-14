@@ -16,7 +16,15 @@ public:
 	BOOL CheckExorcism() CONST;
 
 	// 装备持久度检查?
-	
+
+
+	// 先检查物品是否充足, 背包位置是否足够之类的……!
+	BOOL Check() CONST;
+
+	// 
+	BOOL SupplementItem(_In_ CONST std::wstring& wsItemName, _In_ UINT uCount) CONST;
+
+
 public:
 	static CLogicBagItemAction* CreateInstance()
 	{

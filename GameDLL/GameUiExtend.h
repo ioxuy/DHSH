@@ -17,6 +17,8 @@ public:
 	BOOL IsShowNpcDlg() CONST;
 
 	BOOL FindText_In_NpcDlg(_In_ CONST std::wstring& wsText) CONST;
+
+	BOOL IsShowDlg(_In_ CONST std::wstring& wsDlgName) CONST;
 private:
 	// 
 	UINT TraverseGameUi(_Out_ std::vector<CGameUi>& Vec, _In_ std::function<BOOL(CONST CGameUi&)> fnExprPtr) CONST;

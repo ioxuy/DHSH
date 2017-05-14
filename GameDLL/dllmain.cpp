@@ -4,6 +4,7 @@
 #include <MyTools/Character.h>
 #include <MyTools/CmdLog.h>
 #include "Expr.h"
+#include "ResText.h"
 
 #define _SELF L"dllmain.cpp"
 
@@ -16,6 +17,9 @@ DWORD WINAPI _WorkThread(LPVOID)
 	lstrcatW(wszGamePath, L"\\Log\\");
 	MyTools::CLog::GetInstance().SetClientName(L"Game", wszGamePath, TRUE, 20 * 1024 * 1024);
 	MyTools::CCmdLog::GetInstance().Run(L"Game", CExpr::GetInstance().GetVec());
+	MyTools::InvokeClassPtr<CResText>()->Initialize();
+
+
 
 	return 0;
 }

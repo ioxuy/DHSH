@@ -19,6 +19,8 @@ private:
 
 	virtual VOID AroundObject(CONST std::vector<std::wstring>& VecParm);
 
+	virtual VOID SetGameRun(CONST std::vector<std::wstring>& VecParm);
+
 	virtual VOID TestPtr(CONST std::vector<std::wstring>& VecParm);
 };
 

@@ -15,6 +15,14 @@ public:
 	// different Map
 	BOOL MoveToMapPoint(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint) CONST;
 
+	// 用符传送
+	BOOL TransferToCity(_In_ CONST std::wstring& wsCityName) CONST;
+
+	// 去杂货摊
+	BOOL MoveToGeneralStore(_Out_ std::wstring& wsNpcName) CONST;
+
+	BOOL MoveToGeneralStoreNpc(_In_ CONST std::wstring& wsNpcName) CONST;
+
 public:
 	static CPlayerMove* CreateInstance()
 	{

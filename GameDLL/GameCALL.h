@@ -109,7 +109,7 @@ public:
 	BOOL SetAutoAction() CONST;
 
 	// 购买法宝
-	BOOL ShopMagicWeapon(_In_ DWORD dwNpcId, _In_ DWORD dwLocation, _In_ DWORD dwCount) CONST;
+	BOOL Buy_By_Npc(_In_ DWORD dwNpcId, _In_ DWORD dwLocation, _In_ DWORD dwCount) CONST;
 
 	// 答题
 	BOOL AnswerQuestion(_In_ DWORD dwAnswer, _In_ DWORD dwBase) CONST;
@@ -130,6 +130,9 @@ public:
 
 	// 返回宠物名字
 	CONST CHAR* GetPetName_By_SkillId(_In_ DWORD dwSkillId) CONST;
+
+	// AutoMove
+	BOOL SetAutoMove(_In_ BOOL bRun) CONST;
 public:
 	static CGameCALL* CreateInstance()
 	{

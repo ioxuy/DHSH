@@ -915,7 +915,7 @@ BOOL CGameCALL::SetAutoAction() CONST
 	return FALSE;
 }
 
-BOOL CGameCALL::ShopMagicWeapon(_In_ DWORD dwNpcId, _In_ DWORD dwLocation, _In_ DWORD dwCount) CONST
+BOOL CGameCALL::Buy_By_Npc(_In_ DWORD dwNpcId, _In_ DWORD dwLocation, _In_ DWORD dwCount) CONST
 {
 	__try
 	{
@@ -935,7 +935,7 @@ BOOL CGameCALL::ShopMagicWeapon(_In_ DWORD dwNpcId, _In_ DWORD dwLocation, _In_ 
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		LOG_CF_E(L"ShopMagicWeapon Exception, dwNpcId=%X, dwLocation=%d, dwCount=%d", dwNpcId, dwLocation, dwCount);
+		LOG_CF_E(L"Buy_By_Npc Exception, dwNpcId=%X, dwLocation=%d, dwCount=%d", dwNpcId, dwLocation, dwCount);
 	}
 	return FALSE;
 }
@@ -1152,5 +1152,26 @@ CONST CHAR* CGameCALL::GetPetName_By_SkillId(_In_ DWORD dwSkillId) CONST
 		LOG_CF_E(L"GetPetName_By_SkillId Exception, dwSkillId=[%X]", dwSkillId);
 	}
 	return nullptr;
+}
+
+BOOL CGameCALL::SetAutoMove(_In_ BOOL bRun) CONST
+{
+	__try
+	{
+		__asm
+		{
+			PUSHAD;
+			PUSH bRun;
+			MOV EAX, 自动走路CALL;
+			CALL EAX;
+			POPAD;
+		}
+		return TRUE;
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER)
+	{
+		LOG_CF_E(L"SetAutoMove Exception, bRun=[%X]", bRun);
+	}
+	return FALSE;
 }
 

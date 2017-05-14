@@ -14,7 +14,8 @@ public:
 		em_ItemFilterType_Save,
 		em_ItemFilterType_Keep,
 		em_ItemFilterType_Default,
-		em_ItemFilterType_Sell
+		em_ItemFilterType_Sell,
+		em_ItemFilterType_Collect,
 	};
 
 public:

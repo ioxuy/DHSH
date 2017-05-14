@@ -249,11 +249,13 @@
 #define C_CALL_Login             0x004FC380
 #define C_CALL_Check_Btn        0x0077E020
 
+#define 自动走路CALL 0x409310
+
 
 #define ReadDWORD(Addr) MyTools::CCharacter::ReadDWORD(Addr)
 
 
-enum em_GameStatus
+enum class em_GameStatus
 {
 	em_GameStatus_None,
 	em_GameStatus_Running,
@@ -263,7 +265,7 @@ enum em_GameStatus
 extern em_GameStatus g_GameStatus;
 #define GameRun (g_GameStatus == em_GameStatus::em_GameStatus_Running)
 #define StopGame  g_GameStatus = em_GameStatus::em_GameStatus_Stop
-
+#define StartGame g_GameStatus = em_GameStatus::em_GameStatus_Running
 
 enum class em_TextVar
 {
@@ -277,6 +279,14 @@ enum class em_TextVar
 	em_TextVar_Pet_SupplementHp,
 	// 宠物MP<70 吃药
 	em_TextVar_Pet_SupplementMp,
+	// 人物的战斗模式
+	em_TextVar_PersonFightMode,
+	// 宠物的战斗模式
+	em_TextVar_PetFightMode,
+	// 自动购买驱魔香
+	em_TextVar_AutoBuyExorcism,
+	// 自动购买欢悦铃
+	em_TextVar_AutoBuyHappyBell,
 };
 
 
@@ -320,5 +330,75 @@ struct ResShopEquiText
 	DWORD		 dwStoreIndex;
 	DWORD		 dwItemIndex;
 };
+
+struct ResStoreItemText
+{
+	std::wstring  wsItemName;
+	std::wstring  wsNpcName;
+	DWORD		  dwStoreIndex;
+	DWORD		  dwSinglePrice;
+};
+
+
+///////Account Share///////////////////////////////////////////////////////////////////
+
+struct GameAccountContent
+{
+	WCHAR wszUserName[64];
+	WCHAR wszPassword[64];
+	WCHAR wszAreaName[16];
+	WCHAR wszPlayerName[64];
+	WCHAR wszCardNo[64];
+};
+
+struct GameAccountStatus
+{
+	BOOL bExist;
+	BOOL bLogining;
+	BOOL bClose;
+	UINT uLoginFaildCount;
+	ULONGLONG ulOnlineTick;
+	BOOL bAlive;
+	DWORD dwPid;
+	HWND hGameWnd;
+};
+
+enum em_PersonFightMode
+{
+	em_PersonFightMode_FixF1,
+	em_PersonFightMode_NormalAttack,
+	em_PersonFightMode_SwitchF1F2
+};
+
+enum em_PetFightMode
+{
+	em_PersonFightMode_Denfence,
+	em_PersonFightMode_Skill
+};
+
+struct GameAccountConfig
+{
+	
+};
+
+typedef struct GameAccountShareContent
+{
+	GameAccountContent AccountContent;
+	GameAccountStatus AccountStatus;
+	GameAccountConfig AccountConfig;
+}*PGameAccountContent;
+
+struct GameShareGlobalConfig
+{
+
+};
+
+typedef struct GameShareContent
+{
+	WCHAR wszConsolePath[MAX_PATH];
+	UINT  uAccountCount;
+	GameAccountShareContent arrGameArrount[10];
+	GameShareGlobalConfig  GlobalConfig;
+}*PGameShareContent;
 
 #endif

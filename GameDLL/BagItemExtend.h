@@ -20,6 +20,9 @@ public:
 
 	//
 	UINT GetVecBagItem(_Out_ std::vector<CBagItem>& Vec, _In_ std::function<BOOL(CONST CBagItem&)> FilterPtr) CONST;
+
+	//
+	BOOL IsBagFull() CONST;
 public:
 	static CBagItemExtend* CreateInstance()
 	{

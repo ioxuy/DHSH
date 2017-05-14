@@ -13,6 +13,14 @@
 #include "PersonPetExtend.h"
 #include "HotKey.h"
 #include "HotKeyExtend.h"
+#include "TestFunction.h"
+#include "GameVariable.h"
+#include "FarmField.h"
+#include "LogicBagItemAction.h"
+#include "GameUi.h"
+#include "GameUiExtend.h"
+#include "BagItem.h"
+#include "BagItemExtend.h"
 
 #define _SELF L"Expr.cpp"
 CExpr::CExpr()
@@ -36,6 +44,7 @@ std::vector<MyTools::ExpressionFunPtr>& CExpr::GetVec()
 	{
 		{ std::bind(&CExpr::Help,this, std::placeholders::_1),L"Help" },
 		{ std::bind(&CExpr::AroundObject,this, std::placeholders::_1),L"AroundObject" },
+		{ std::bind(&CExpr::SetGameRun,this, std::placeholders::_1),L"SetGameRun" },
 		{ std::bind(&CExpr::TestPtr,this, std::placeholders::_1),L"TestPtr" },
 	};
 
@@ -61,14 +70,29 @@ VOID CExpr::AroundObject(CONST std::vector<std::wstring>&)
 	}
 }
 
+VOID CExpr::SetGameRun(CONST std::vector<std::wstring>& VecParm)
+{
+	if (VecParm.size() == 0)
+		return;
+
+	g_GameStatus = VecParm.at(0) == L"1" ? em_GameStatus::em_GameStatus_Running : em_GameStatus::em_GameStatus_Stop;
+}
+
 VOID CExpr::TestPtr(CONST std::vector<std::wstring>& VecParm)
 {
-	std::vector<CHotKey> Vec;
-	MyTools::InvokeClassPtr<CHotKeyExtend>()->GetVecHotKey(Vec);
+	std::vector<CBagItem> Vec;
+	MyTools::InvokeClassPtr<CBagItemExtend>()->GetVecBagItem(Vec, nullptr);
+
 	for (CONST auto& itm : Vec)
 	{
-		LOG_C_D(L"HotKey Index=%d, KeyType=%d, KeyValue=%d, Name=%s, Office=%d", itm.GetIndex(), itm.GetKeyType(), itm.GetKeyValue(), itm.GetName().c_str(), itm.GetOffice());
+		LOG_C_D(L"Name=%s, Count=%d", itm.GetName().c_str(), itm.GetCount());
 	}
+	//MyTools::InvokeClassPtr<CTestFunction>()->InitTestShareContent();
+	//MyTools::InvokeClassPtr<CGameVariable>()->InitVariable();
 
-	
+	//StartGame;
+	//if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->Check())
+	//	return;
+
+	//MyTools::InvokeClassPtr<CFarmField>()->Run(L"γκΎ©Ά«½Ό", Point(39,21));
 }
