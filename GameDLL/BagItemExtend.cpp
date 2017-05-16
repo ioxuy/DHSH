@@ -2,17 +2,16 @@
 #include "BagItemExtend.h"
 #include <MyTools/CLPublic.h>
 #include <MyTools/Character.h>
-#include "ResText.h"
 #include "BagItem.h"
 #include "ExcuteAction.h"
 
-BOOL CBagItemExtend::GetShopEquiResText(_In_ CONST std::wstring& wsEquiName, _Out_ ResShopEquiText& ResEquiText) CONST
+BOOL CBagItemExtend::GetShopEquiResText(_In_ CONST std::wstring& wsEquiName, _Out_ CResText::ResShopEquiText& ResEquiText) CONST
 {
 #ifdef GameDLL_Release
 	return FALSE;
 #else
-	auto pVec = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<ResShopEquiText>*>(L"ResShopEquiText");
-	return pVec == nullptr ? FALSE : MyTools::CLPublic::Vec_find_if_Const(*pVec, &ResEquiText, [wsEquiName](CONST ResShopEquiText& Res_) { return Res_.wsEquiName == wsEquiName; });
+	auto pVec = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<CResText::ResShopEquiText>*>(L"ResShopEquiText");
+	return pVec == nullptr ? FALSE : MyTools::CLPublic::Vec_find_if_Const(*pVec, &ResEquiText, [wsEquiName](CONST CResText::ResShopEquiText& Res_) { return Res_.wsEquiName == wsEquiName; });
 #endif
 }
 
@@ -71,8 +70,8 @@ UINT CBagItemExtend::GetVecBagItem(_Out_ std::vector<CBagItem>& Vec, _In_ std::f
 	return Vec.size();
 }
 
-BOOL CBagItemExtend::IsBagFull() CONST
+BOOL CBagItemExtend::IsBagFull(_In_ DWORD dwLastCount) CONST
 {
 	std::vector<CBagItem> Vec;
-	return GetVecBagItem(Vec, nullptr) == 20;
+	return GetVecBagItem(Vec, nullptr) == 20 - dwLastCount;
 }

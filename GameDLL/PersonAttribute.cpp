@@ -79,6 +79,11 @@ DWORD CPersonAttribute::GetJiaoZiMoney() CONST
 	return ReadDWORD(ReadDWORD(ReadDWORD(ReadDWORD(ReadDWORD(ReadDWORD(ReadDWORD(C_money_base) + C_money_yiji + C_money_erji) + 0) + C_money_siji) + C_money_wuji) + C_money_liuji) + C_money_jiao);
 }
 
+DWORD CPersonAttribute::GetPetPhysicalStrength() CONST
+{
+	return ReadDWORD(ReadDWORD(C_caiji_chong_base) + C_chongwu_tili);
+}
+
 UINT CPersonAttribute::GetVecPersonBuff(_Out_ std::vector<PersonBuff>& Vec, _In_ std::function<BOOL(CONST PersonBuff&)> FilterPtr) CONST
 {
 	DWORD dwBase = ReadDWORD(ReadDWORD(C_state_base) + C_state_yiji);
@@ -91,8 +96,14 @@ UINT CPersonAttribute::GetVecPersonBuff(_Out_ std::vector<PersonBuff>& Vec, _In_
 		PersonBuff_.dwObjAddr = dwHead + i * 0x98;
 		PersonBuff_.wsName = MyTools::CCharacter::ASCIIToUnicode(std::string(reinterpret_cast<CHAR*>(ReadDWORD(PersonBuff_.dwObjAddr + 0x18))));
 		PersonBuff_.dwSurpTime = ReadDWORD(PersonBuff_.dwObjAddr + C_state_surp1);
-		if (FilterPtr(PersonBuff_))
+
+		if(FilterPtr == nullptr)
 			Vec.push_back(std::move(PersonBuff_));
+		else if (FilterPtr(PersonBuff_))
+		{
+			Vec.push_back(std::move(PersonBuff_));
+			break;
+		}
 	}
 	return Vec.size();
 }
@@ -101,4 +112,9 @@ BOOL CPersonAttribute::ExistPersonBuff_By_PartName(_In_ CONST std::wstring& wsPa
 {
 	std::vector<PersonBuff> Vec;
 	return GetVecPersonBuff(Vec, [wsPartName](CONST PersonBuff& PersonBuff_) { return PersonBuff_.wsName.find(wsPartName) != -1; }) != NULL;
+}
+
+BOOL CPersonAttribute::IsCollecting() CONST
+{
+	return (ReadDWORD(ReadDWORD(C_caiji_base) + C_caiji_offset) & 0xFF) == 1 && (ReadDWORD(ReadDWORD(ReadDWORD(C_caiji_base) + 0x4C0) + C_caiji_offset) & 0xFF) == 1;
 }

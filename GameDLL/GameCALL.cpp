@@ -209,8 +209,7 @@ BOOL CGameCALL::CloseGameUi(_In_ DWORD dwUiBase) CONST
 			PUSH 1;
 			PUSH 0;
 			MOV ECX, dwUiBase;
-			MOV ECX, DWORD PTR DS : [ECX];
-			MOV EAX, ECX;
+			MOV EAX, DWORD PTR DS : [ECX];
 			MOV EDX, DWORD PTR DS : [EAX + 0x28];
 			CALL EDX;
 
@@ -328,7 +327,7 @@ BOOL CGameCALL::ClickMonster(_In_ DWORD dwObjAddr) CONST
 {
 	__try
 	{
-		DWORD Buffer = { 0 };
+		DWORD Buffer[20] = { 0 };
 		__asm
 		{
 			PUSH dwObjAddr;
@@ -1019,8 +1018,8 @@ BOOL CGameCALL::MoveToPoint(_In_ CONST Point& Point_) CONST
 {
 	__try
 	{
-		DWORD dwX = Point_.X;
-		DWORD dwY = Point_.Y;
+		DWORD dwX = Point_.X << 4;
+		DWORD dwY = Point_.Y << 4;
 		__asm
 		{
 			PUSHAD;
@@ -1050,8 +1049,8 @@ BOOL CGameCALL::MoveToPoint(_In_ LPCSTR pszMapName, _In_ CONST Point& Point_) CO
 {
 	__try
 	{
-		DWORD dwX = Point_.X;
-		DWORD dwY = Point_.Y;
+		DWORD dwX = Point_.X << 4;
+		DWORD dwY = Point_.Y << 4;
 		__asm
 		{
 			PUSHAD;

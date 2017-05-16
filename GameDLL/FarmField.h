@@ -9,9 +9,11 @@ public:
 	CFarmField() = default;
 	~CFarmField() = default;
 	
+	// 
 	BOOL Run(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint) CONST;
 	
-	
+	// 
+	BOOL Check() CONST;
 public:
 	static CFarmField* CreateInstance()
 	{

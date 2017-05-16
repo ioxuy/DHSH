@@ -1,6 +1,7 @@
 #ifndef __DHSH_GAMEDLL_GAME_OBJECT_BAGITEM_BAGITEMEXTEND_H__
 #define __DHSH_GAMEDLL_GAME_OBJECT_BAGITEM_BAGITEMEXTEND_H__
 #include "GameBase.h"
+#include "ResText.h"
 
 class CBagItem;
 class CBagItemExtend : public MyTools::CRelfexBaseClass
@@ -10,7 +11,7 @@ public:
 	~CBagItemExtend() = default;
 	
 	// 
-	BOOL GetShopEquiResText(_In_ CONST std::wstring& wsEquiName, _Out_ ResShopEquiText& ResEquiText) CONST; 
+	BOOL GetShopEquiResText(_In_ CONST std::wstring& wsEquiName, _Out_ CResText::ResShopEquiText& ResEquiText) CONST; 
 	
 	// 
 	BOOL FindItem_By_Name_To_ExcutePtr(_In_ CONST std::wstring& wsItemName, _In_ std::function<VOID(CONST CBagItem&)> ExcutePtr) CONST;
@@ -22,7 +23,7 @@ public:
 	UINT GetVecBagItem(_Out_ std::vector<CBagItem>& Vec, _In_ std::function<BOOL(CONST CBagItem&)> FilterPtr) CONST;
 
 	//
-	BOOL IsBagFull() CONST;
+	BOOL IsBagFull(_In_ DWORD dwLastCount = 0) CONST;
 public:
 	static CBagItemExtend* CreateInstance()
 	{

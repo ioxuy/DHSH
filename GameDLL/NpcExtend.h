@@ -4,6 +4,7 @@
 #include "GameBase.h"
 
 class CNpc;
+class CPlayer;
 class CNpcExtend : public MyTools::CRelfexBaseClass
 {
 public:
@@ -12,7 +13,7 @@ public:
 	
 	BOOL FindNpc_By_Name_ExcutePtr(_In_ CONST std::wstring& wsNpcName, _In_ std::function<VOID(CONST CNpc&)> ActionPtr);
 	
-	
+	BOOL FindPlayer_By_Condition_ExcuteAction(_In_ std::function<BOOL(CONST CPlayer&)> CondtionPtr, _In_ std::function<VOID(CONST CNpc&)> ActionPtr);
 public:
 	static CNpcExtend* CreateInstance()
 	{

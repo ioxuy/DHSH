@@ -14,6 +14,8 @@
 #include "ResText.h"
 #include "ExcuteAction.h"
 #include "GameCALL.h"
+#include "GameUiExtend.h"
+#include "PersonPetExtend.h"
 
 #define _SELF L"LogicBagItemAction.cpp"
 BOOL CLogicBagItemAction::AfterFight_Item() CONST
@@ -68,13 +70,11 @@ BOOL CLogicBagItemAction::AfterFight_Item() CONST
 
 BOOL CLogicBagItemAction::CheckExorcism() CONST
 {
-	BOOL bExist = FALSE;
+	BOOL bExist = TRUE;
 	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 1, [&bExist]
 	{
-		if (!MyTools::InvokeClassPtr<CPersonAttribute>()->ExistPersonBuff_By_PartName(L"驱魔香剩余时间"))
+		if (!MyTools::InvokeClassPtr<CPersonAttribute>()->ExistPersonBuff_By_PartName(L"驱魔香"))
 			bExist = MyTools::InvokeClassPtr<CBagItemAction>()->UseItem(L"驱魔香");
-		else
-			bExist = TRUE;
 	});
 
 	return bExist;
@@ -85,7 +85,7 @@ BOOL CLogicBagItemAction::Check() CONST
 	BOOL bFaild = FALSE;
 	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_AutoBuyExorcism, 1, [this, &bFaild]
 	{
-		if (!MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"驱魔香") == 0)
+		if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"驱魔香") == 0)
 		{
 			LOG_CF_D(L"开启了自动购买驱魔香, 但是身上并不存在驱魔香! 去买驱魔香");
 			bFaild = !SupplementItem(L"驱魔香", 10);
@@ -96,7 +96,7 @@ BOOL CLogicBagItemAction::Check() CONST
 
 	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_AutoBuyHappyBell, 1, [this, &bFaild]
 	{
-		if (!MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"欢悦铃") == 0)
+		if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"欢悦铃") == 0)
 		{
 			LOG_CF_D(L"身上并不存在欢悦铃! 去买欢悦铃");
 			bFaild = !SupplementItem(L"欢悦铃", 10);
@@ -105,7 +105,21 @@ BOOL CLogicBagItemAction::Check() CONST
 	if (bFaild)
 		return FALSE;
 
-	return TRUE;
+	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 0, [this]
+	{
+		if (MyTools::InvokeClassPtr<CPersonAttribute>()->ExistPersonBuff_By_PartName(L"驱魔香"))
+		{
+			LOG_CF_D(L"设置不使用驱魔香, 但是却检测到身上有驱魔香BUFF, 放弃驱魔香任务!");
+			RemoveExorcism();
+		}
+	});
+
+	// Set Enter War Pet!
+	MyTools::InvokeClassPtr<CPersonPetAction>()->SetPetEnterWar();
+
+
+
+	return AfterFight_Item();
 }
 
 BOOL CLogicBagItemAction::SupplementItem(_In_ CONST std::wstring& wsItemName, _In_ UINT uCount) CONST
@@ -120,8 +134,6 @@ BOOL CLogicBagItemAction::SupplementItem(_In_ CONST std::wstring& wsItemName, _I
 	std::wstring wsNpcName;
 	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToGeneralStore(wsNpcName))
 		return FALSE;
-
-	LOG_CF_D(L"打开Npc[%s]", wsNpcName.c_str());
 
 	DWORD dwNpcId = 0;
 	BOOL bOpenDlg = FALSE;
@@ -147,11 +159,11 @@ BOOL CLogicBagItemAction::SupplementItem(_In_ CONST std::wstring& wsItemName, _I
 		return FALSE;
 	}
 
-	auto pVecResItem = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<ResStoreItemText>*>(L"ResShopItemText");
+	auto pVecResItem = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<CResText::ResStoreItemText>*>(L"ResShopItemText");
 	if (pVecResItem == nullptr)
 		return FALSE;
 
-	auto pResItem = MyTools::CLPublic::Vec_find_if_Const(*pVecResItem, [wsItemName, wsNpcName](CONST ResStoreItemText& ResItem) { return ResItem.wsItemName == wsItemName && ResItem.wsNpcName == wsNpcName; });
+	auto pResItem = MyTools::CLPublic::Vec_find_if_Const(*pVecResItem, [wsItemName, wsNpcName](CONST CResText::ResStoreItemText& ResItem) { return ResItem.wsItemName == wsItemName && ResItem.wsNpcName == wsNpcName; });
 	if (pResItem == nullptr)
 	{
 		LOG_CF_E(L"不存在资源[%s],[%s]", wsNpcName.c_str(), wsItemName.c_str());
@@ -165,17 +177,28 @@ BOOL CLogicBagItemAction::SupplementItem(_In_ CONST std::wstring& wsItemName, _I
 		return FALSE;
 	}
 
+	LOG_CF_D(L"购买物品:[%s], 数量:[%d]", pResItem->wsItemName.c_str(), uCount);
 	MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([dwNpcId, pResItem, uCount]
 	{
 		MyTools::InvokeClassPtr<CGameCALL>()->Buy_By_Npc(dwNpcId, pResItem->dwStoreIndex, uCount);
 	});
 
-	::Sleep(1000);
+	GameSleep(1000);
+
+	// Close shop dlg
+	if (!MyTools::InvokeClassPtr<CGameUiExtend>()->CloseDlg(L"shop_npcbuy"))
+		return FALSE;
+
 	if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(wsItemName) == 0)
 	{
 		LOG_CF_E(L"网络波动或者延迟导致买[%s]失败!", wsItemName.c_str());
 		return FALSE;
 	}
 	return TRUE;
+}
+
+VOID CLogicBagItemAction::RemoveExorcism() CONST
+{
+	MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([] { MyTools::InvokeClassPtr<CGameCALL>()->AbandonTask(0x7E6); });
 }
 

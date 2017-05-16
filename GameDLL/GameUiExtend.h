@@ -16,11 +16,18 @@ public:
 
 	BOOL IsShowNpcDlg() CONST;
 
+	VOID CloseNpcDlg() CONST;
+
 	BOOL FindText_In_NpcDlg(_In_ CONST std::wstring& wsText) CONST;
 
 	BOOL IsShowDlg(_In_ CONST std::wstring& wsDlgName) CONST;
+
+	BOOL CloseDlg(_In_ CONST std::wstring& wsDlgName) CONST;
+
+	VOID PrintGameUi() CONST;
+
+	BOOL Action_By_DlgName_When_ShowDlg(_In_ CONST std::wstring& wsDlgName, std::function<VOID(CONST CGameUi&)> ActionPtr) CONST;
 private:
-	// 
 	UINT TraverseGameUi(_Out_ std::vector<CGameUi>& Vec, _In_ std::function<BOOL(CONST CGameUi&)> fnExprPtr) CONST;
 public:
 	static CGameUiExtend* CreateInstance()

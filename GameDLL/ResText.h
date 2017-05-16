@@ -7,6 +7,36 @@
 class CResText : public MyTools::CRelfexBaseClass, public MyTools::CRelfexStruct
 {
 public:
+	struct ResNpcMapPointText
+	{
+		std::wstring wsNpcName;
+		std::wstring wsMapName;
+		std::wstring wsGlobleMapName;
+		Point        FixPoint;
+	};
+
+	struct ResShopEquiText
+	{
+		std::wstring wsEquiName;
+		DWORD		 dwStoreIndex;
+		DWORD		 dwItemIndex;
+	};
+
+	struct ResStoreItemText
+	{
+		std::wstring  wsItemName;
+		std::wstring  wsNpcName;
+		DWORD		  dwStoreIndex;
+		DWORD		  dwSinglePrice;
+	};
+
+	struct ResCollectItemPath
+	{
+		std::wstring		wsMapName;
+		std::vector<Point>	VecPoint;
+	};
+
+public:
 	CResText() = default;
 	~CResText() = default;
 	
@@ -21,6 +51,12 @@ private:
 
 	// Shop Item Text
 	VOID RegisterResShopItemText();
+
+	// Map Path Text
+	VOID RegisterResMapPathText();
+
+	// 
+	VOID RegisterResMapCollectPathText();
 public:
 	static CResText* CreateInstance()
 	{

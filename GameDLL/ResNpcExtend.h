@@ -2,6 +2,7 @@
 #define __DHSH_GAMEDLL_GAME_OBJECT_NPC_RESNPCEXTEND_H__
 
 #include "GameBase.h"
+#include "ResText.h"
 
 class CResNpc;
 class CResNpcExtend : public MyTools::CRelfexBaseClass
@@ -10,7 +11,7 @@ public:
 	CResNpcExtend() = default;
 	~CResNpcExtend() = default;
 	
-	BOOL GetNpcResMapPoint(_In_ CONST std::wstring& wsNpcName, _Out_ ResNpcMapPointText& NpcResText) CONST;
+	BOOL GetNpcResMapPoint(_In_ CONST std::wstring& wsNpcName, _Out_ CResText::ResNpcMapPointText& NpcResText) CONST;
 	
 	UINT GetVecResNpc(_Out_ std::vector<CResNpc>& Vec) CONST;
 public:

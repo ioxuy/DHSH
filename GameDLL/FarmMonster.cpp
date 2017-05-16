@@ -15,11 +15,9 @@ BOOL CFarmMonster::Fight() CONST
 	CONST auto pPersonAttributePtr = MyTools::InvokeClassPtr<CPersonAttribute>();
 	while (GameRun && pPersonAttributePtr->IsWar())
 	{
-		::Sleep(500);
+		GameSleep(500);
 		switch (GetFightSwitch())
 		{
-		case em_FightSwitch::em_FightSwitch_None:
-			break;
 		case em_FightSwitch::em_FightSwitch_Person:
 			Fight_Person();
 			break;
@@ -50,15 +48,20 @@ CFarmMonster::em_FightSwitch CFarmMonster::GetFightSwitch() CONST
 
 VOID CFarmMonster::Fight_Person() CONST
 {
-	LOG_CF_D(L"轮到人物行动");
 	em_MouseShape emMouseShape = GetPersonMouseShape();
+	//LOG_CF_D(L"轮到人物行动, Mouse=%s", emMouseShape == em_MouseShape::em_MouseShape_Skill ? L"Skill" : L"None");
 	switch (static_cast<em_PersonFightMode>(MyTools::InvokeClassPtr<CGameVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_PersonFightMode)))
 	{
 	case em_PersonFightMode::em_PersonFightMode_FixF1:
 		if (emMouseShape == em_MouseShape::em_MouseShape_None)
+		{
 			MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([] {MyTools::InvokeClassPtr<CGameCALL>()->SetHotKey(VK_F1); });
+		}
 		else
-			MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([] { MyTools::InvokeClassPtr<CGameCALL>()->ClickMonster(MyTools::InvokeClassPtr<CMonsterExtend>()->GetAttackMonsterNodeBase()); });
+		{
+			DWORD dwNodeBase = MyTools::InvokeClassPtr<CMonsterExtend>()->GetAttackMonsterNodeBase();
+			MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([dwNodeBase] { MyTools::InvokeClassPtr<CGameCALL>()->ClickMonster(dwNodeBase); });
+		}
 		break;
 	case em_PersonFightMode::em_PersonFightMode_NormalAttack:
 		MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([] { MyTools::InvokeClassPtr<CGameCALL>()->ClickMonster(MyTools::InvokeClassPtr<CMonsterExtend>()->GetAttackMonsterNodeBase()); });
@@ -73,9 +76,8 @@ VOID CFarmMonster::Fight_Person() CONST
 
 VOID CFarmMonster::Fight_Pet() CONST
 {
-	LOG_CF_D(L"轮到宠物行动");
 	em_MouseShape emMouseShape = GetPetMouseShape();
-	
+	//LOG_CF_D(L"轮到宠物行动, Mouse=%s", emMouseShape == em_MouseShape::em_MouseShape_Skill ? L"Skill" : L"None");
 	switch (static_cast<em_PetFightMode>(MyTools::InvokeClassPtr<CGameVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_PetFightMode)))
 	{
 	case em_PetFightMode::em_PersonFightMode_Denfence:

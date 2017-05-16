@@ -175,6 +175,12 @@
     <ClCompile Include="NpcExtend.cpp">
       <Filter>Game\Object\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="MapSearch.cpp">
+      <Filter>Game\Algorithm\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="CollectItem.cpp">
+      <Filter>Game\Script\Collect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -365,6 +371,12 @@
     <ClInclude Include="NpcExtend.h">
       <Filter>Game\Object\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="MapSearch.h">
+      <Filter>Game\Algorithm\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="CollectItem.h">
+      <Filter>Game\Script\Collect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -463,9 +475,6 @@
     <Filter Include="Game\Script\帮派">
       <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Script\采集">
-      <UniqueIdentifier>{42721005-920f-42bd-89ac-346b4e3d19c9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Script\答题">
       <UniqueIdentifier>{4b49357d-c100-431d-b8eb-14fe9ac77287}</UniqueIdentifier>
     </Filter>
@@ -474,6 +483,15 @@
     </Filter>
     <Filter Include="Game\Script\Field">
       <UniqueIdentifier>{cd1d2f16-4d0c-4599-a609-50f9de63702f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Algorithm">
+      <UniqueIdentifier>{8332ce72-ac99-4d32-80f2-fa6e9709175c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Algorithm\Path">
+      <UniqueIdentifier>{37a1ac56-acf1-44f2-b6c9-68334f44c9c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\Collect">
+      <UniqueIdentifier>{42721005-920f-42bd-89ac-346b4e3d19c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

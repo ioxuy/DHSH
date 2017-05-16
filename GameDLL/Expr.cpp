@@ -22,6 +22,9 @@
 #include "GameUiExtend.h"
 #include "BagItem.h"
 #include "BagItemExtend.h"
+#include "ExcuteAction.h"
+#include "NpcExtend.h"
+#include "MonsterExtend.h"
 
 #define _SELF L"Expr.cpp"
 CExpr::CExpr()
@@ -47,6 +50,8 @@ std::vector<MyTools::ExpressionFunPtr>& CExpr::GetVec()
 		{ std::bind(&CExpr::AroundObject,this, std::placeholders::_1),L"AroundObject" },
 		{ std::bind(&CExpr::SetGameRun,this, std::placeholders::_1),L"SetGameRun" },
 		{ std::bind(&CExpr::TestPtr,this, std::placeholders::_1),L"TestPtr" },
+		{ std::bind(&CExpr::PrintUiDlg,this, std::placeholders::_1),L"PrintUiDlg" },
+		{ std::bind(&CExpr::PrintBuff,this, std::placeholders::_1),L"PrintBuff" },
 	};
 
 	return Vec;
@@ -64,11 +69,8 @@ VOID CExpr::AroundObject(CONST std::vector<std::wstring>&)
 	std::vector<CPlayer> Vec;
 	MyTools::InvokeClassPtr<CPlayerExtend>()->GetAroundObject(Vec, nullptr);
 
-	int nCount = 0;
 	for (CONST auto& itm : Vec)
-	{
-		LOG_C_D(L"Index=%d,Addr=%X, Name=%s,Point=[%d,%d],dis=%.2f,Type=[%X,%s]", ++nCount, itm.GetNodeBase(), itm.GetName().c_str(), itm.GetPoint().X, itm.GetPoint().Y, itm.GetDis(),static_cast<DWORD>(itm.GetType()),  itm.GetTextType().c_str());
-	}
+		LOG_C_D(L"ID=%X,Addr=%X, Name=%s,Point=[%d,%d],dis=%.2f,Type=[%X,%s]", itm.GetId(), itm.GetNodeBase(), itm.GetName().c_str(), itm.GetPoint().X, itm.GetPoint().Y, itm.GetDis(), static_cast<DWORD>(itm.GetType()), itm.GetTextType().c_str());
 }
 
 VOID CExpr::SetGameRun(CONST std::vector<std::wstring>& VecParm)
@@ -81,20 +83,45 @@ VOID CExpr::SetGameRun(CONST std::vector<std::wstring>& VecParm)
 
 
 
+VOID CExpr::PrintUiDlg(CONST std::vector<std::wstring>& VecParm)
+{
+	MyTools::InvokeClassPtr<CGameUiExtend>()->PrintGameUi();
+}
+
+VOID CExpr::PrintBuff(CONST std::vector<std::wstring>& VecParm)
+{
+	std::vector<CPersonAttribute::PersonBuff> Vec;
+	MyTools::InvokeClassPtr<CPersonAttribute>()->GetVecPersonBuff(Vec, nullptr);
+	for (CONST auto& itm : Vec)
+		LOG_C_D(L"Text=%s",itm.wsName.c_str());
+}
+
 VOID CExpr::TestPtr(CONST std::vector<std::wstring>& VecParm)
 {
-	std::vector<CBagItem> Vec;
-	MyTools::InvokeClassPtr<CBagItemExtend>()->GetVecBagItem(Vec, nullptr);
-	for (CONST auto& itm : Vec)
+	MyTools::InvokeClassPtr<CTestFunction>()->InitTestShareContent();
+
+	StartGame;
+	if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->Check())
+		return;
+
+	MyTools::InvokeClassPtr<CPlayerMove>()->MoveToMapPoint(L"汴京东郊", Point(39, 21));
+	/*MyTools::InvokeClassPtr<CGameUiExtend>()->Action_By_DlgName_When_ShowDlg(L"npcdlg", [](CONST CGameUi& npcdlg) 
 	{
-		LOG_C_D(L"Name=%s,Count=%d", itm.GetName().c_str(), itm.GetCount());
-	}
-	//MyTools::InvokeClassPtr<CTestFunction>()->InitTestShareContent();
-	//MyTools::InvokeClassPtr<CGameVariable>()->InitVariable();
+		DWORD dwHead = ReadDWORD(npcdlg.GetNodeBase() + 0x14);
+		DWORD dwEnd = ReadDWORD(npcdlg.GetNodeBase() + 0x18);
 
-	//StartGame;
-	//if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->Check())
-	//	return;
+		int nCount = static_cast<int>(dwEnd - dwHead) >> 2;
+		for (int i = 0;i < nCount; ++i)
+		{
+			DWORD dwAddr = ReadDWORD(dwHead + i * 4);
+			if (ReadDWORD(dwAddr + 0x24C) == 0)
+				continue;
 
+			CHAR* pszText = reinterpret_cast<CHAR *>(ReadDWORD(dwAddr + 0x24C));
+			LOG_C_D(L"Text=%s", MyTools::CCharacter::ASCIIToUnicode(pszText).c_str());
+		}
+	});*/
+	
 	//MyTools::InvokeClassPtr<CFarmField>()->Run(L"汴京东郊", Point(39,21));
+	/**/
 }

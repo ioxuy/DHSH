@@ -6,6 +6,8 @@
 #include "ExcuteAction.h"
 #include "GameCALL.h"
 #include "GameUiExtend.h"
+#include "PlayerMove.h"
+#include "PersonAttribute.h"
 
 #define _SELF L"Npc.cpp"
 CNpc::CNpc() : CPlayer(NULL)
@@ -35,11 +37,12 @@ BOOL CNpc::OpenNpcDlg() CONST
 			return FALSE;
 		}
 
+		LOG_CF_D(L"打开Npc对话[%s]", GetName().c_str());
 		MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([this]
 		{
 			MyTools::InvokeClassPtr<CGameCALL>()->OpenNpc(GetId());
 		});
-		::Sleep(1000);
+		GameSleep(1000);
 	}
 	
 	return TRUE;
@@ -61,12 +64,36 @@ BOOL CNpc::ClickOption_By_Condition(_In_ CONST std::wstring& wsOptionText, _In_ 
 			return FALSE;
 		}
 
+		LOG_CF_D(L"点击Npc选项:[%s]", wsOptionText.c_str());
 		MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([this, wsOptionText]
 		{
 			MyTools::InvokeClassPtr<CGameCALL>()->ClickNpcOption(GetId(), MyTools::CCharacter::UnicodeToASCII(wsOptionText).c_str());
 		});
-		::Sleep(1000);
+		GameSleep(1000);
 	}
 	return fnExitPtr();
+}
+
+BOOL CNpc::Collect() CONST
+{
+	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToPoint(GetPoint()))
+	{
+		LOG_CF_E(L"MoveToPoint Faild! Collect Faild!");
+		return FALSE;
+	}
+
+	LOG_CF_D(L"采集物品[%s]",GetName().c_str());
+	MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([this] 
+	{
+		MyTools::InvokeClassPtr<CGameCALL>()->CollectItem(GetNodeBase());
+	});
+	GameSleep(2 * 1000);
+
+	LOG_CF_D(L"等待采集完毕!");
+	while (GameRun && MyTools::InvokeClassPtr<CPersonAttribute>()->IsCollecting())
+		GameSleep(1000);
+
+	LOG_CF_D(L"采集完毕!");
+	return TRUE;
 }
 

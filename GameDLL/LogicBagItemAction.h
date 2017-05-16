@@ -21,10 +21,11 @@ public:
 	// 先检查物品是否充足, 背包位置是否足够之类的……!
 	BOOL Check() CONST;
 
-	// 
+	// 购买补充物品
 	BOOL SupplementItem(_In_ CONST std::wstring& wsItemName, _In_ UINT uCount) CONST;
 
-
+	// 去除驱魔香效果
+	VOID RemoveExorcism() CONST;
 public:
 	static CLogicBagItemAction* CreateInstance()
 	{

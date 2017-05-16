@@ -9,7 +9,7 @@
 #define _SELF L"ExcuteAction.cpp"
 CExcuteAction::CExcuteAction() : _LockQueMethodPtr(L"CExcuteAction::_LockQueMethodPtr")
 {
-	hWndProc = NULL;
+	
 }
 
 VOID CExcuteAction::PushPtrToMainThread(_In_ std::function<VOID(VOID)> MethodPtr)
@@ -20,9 +20,8 @@ VOID CExcuteAction::PushPtrToMainThread(_In_ std::function<VOID(VOID)> MethodPtr
 
 	_LockQueMethodPtr.Access([this, &ThreadMethodInfo_] {_QueMethodPtr.push(ThreadMethodInfo_); });
 
-	::SendMessageW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, WM_NULL, NULL, NULL);
+	::PostMessageW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, WM_NULL, NULL, NULL);
 	::WaitForSingleObject(ThreadMethodInfo_.hEvent, INFINITE);
-	LOG_C_D(L"Excute Succ!");
 	::CloseHandle(ThreadMethodInfo_.hEvent);
 	ThreadMethodInfo_.hEvent = INVALID_HANDLE_VALUE;
 }
@@ -41,35 +40,48 @@ VOID CExcuteAction::ExcutePtr()
 	});
 }
 
-HHOOK CExcuteAction::hWndProc = NULL;
-LRESULT CALLBACK CExcuteAction::CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lParam)
+
+DWORD dwGetMessageAAddr = NULL;
+__declspec(naked) VOID WINAPIV HookGetMessageAMethod()
 {
+	__asm PUSHAD;
+
 	MyTools::InvokeClassPtr<CExcuteAction>()->ExcutePtr();
-	return ::CallNextHookEx(hWndProc, nCode, wParam, lParam);
+
+	__asm POPAD;
+	__asm PUSH EBP;
+	__asm MOV EBP, ESP;
+	__asm PUSH dwGetMessageAAddr;
+	__asm RETN;
 }
 
 VOID CExcuteAction::SetRun(_In_ BOOL bRun)
 {
-	static HANDLE hEvent = NULL;
-	if (hEvent == NULL)
-		hEvent = ::CreateEventW(NULL, FALSE, FALSE, NULL);
-
 	if (bRun)
 	{
-		std::thread t([]
+		if (HookGetMessageAContent.dwHookAddr != NULL)
 		{
-			hWndProc = ::SetWindowsHookExW(WH_CALLWNDPROC, CallWndProc, NULL, MyTools::CLThread::GetMainThreadId());
-			::WaitForSingleObject(hEvent, INFINITE);
-			LOG_C_D(L"Release Hook GetMessage Thread");
-		});
-		t.detach();
+			LOG_CF_E(L"Do Not Repeat Hook!");
+			return;
+		}
+
+		HookGetMessageAContent.dwHookAddr = reinterpret_cast<DWORD>(::GetMessageA);
+		HookGetMessageAContent.dwFunAddr = reinterpret_cast<DWORD>(HookGetMessageAMethod);
+		HookGetMessageAContent.uNopCount = 0;
+
+		dwGetMessageAAddr = HookGetMessageAContent.dwHookAddr + 5;
+		MyTools::CLHook::Hook_Fun_Jmp_MyAddr(&HookGetMessageAContent);
 	}
 	else
 	{
-		::UnhookWindowsHookEx(hWndProc);
-		::SetEvent(hEvent);
-		::Sleep(1000);
-		hEvent = NULL;
+		if (HookGetMessageAContent.dwHookAddr == NULL)
+		{
+			LOG_CF_E(L"Do Not Repeat Release Hook!");
+			return;
+		}
+
+		MyTools::CLHook::UnHook_Fun_Jmp_MyAddr(&HookGetMessageAContent);
+		HookGetMessageAContent.Release();
 	}
 }
 

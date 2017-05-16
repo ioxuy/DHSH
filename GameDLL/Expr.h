@@ -21,6 +21,10 @@ private:
 
 	virtual VOID SetGameRun(CONST std::vector<std::wstring>& VecParm);
 
+	virtual VOID PrintUiDlg(CONST std::vector<std::wstring>& VecParm);
+
+	virtual VOID PrintBuff(CONST std::vector<std::wstring>& VecParm);
+
 	virtual VOID TestPtr(CONST std::vector<std::wstring>& VecParm);
 };
 

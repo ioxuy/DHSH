@@ -250,6 +250,8 @@
 #define C_CALL_Check_Btn        0x0077E020
 
 #define 自动走路CALL 0x409310
+#define NPC选项文本偏移 0x24C
+#define NPC选项发包偏移 0x58
 
 
 #define ReadDWORD(Addr) MyTools::CCharacter::ReadDWORD(Addr)
@@ -266,6 +268,8 @@ extern em_GameStatus g_GameStatus;
 #define GameRun (g_GameStatus == em_GameStatus::em_GameStatus_Running)
 #define StopGame  g_GameStatus = em_GameStatus::em_GameStatus_Stop
 #define StartGame g_GameStatus = em_GameStatus::em_GameStatus_Running
+
+extern VOID GameSleep(_In_ DWORD dwTime);
 
 enum class em_TextVar
 {
@@ -287,6 +291,8 @@ enum class em_TextVar
 	em_TextVar_AutoBuyExorcism,
 	// 自动购买欢悦铃
 	em_TextVar_AutoBuyHappyBell,
+	// 购买宠物饮料数量
+	em_TextVar_AutoBuyPetDrinksCount,
 };
 
 
@@ -313,30 +319,6 @@ struct Point
 	{
 		return this->X != Point_.X || this->Y != Point_.Y;
 	}
-};
-
-struct ResNpcMapPointText
-{
-	std::wstring wsNpcName;
-	std::wstring wsMapName;
-	std::wstring wsGlobleMapName;
-	Point        FixPoint;
-};
-
-
-struct ResShopEquiText
-{
-	std::wstring wsEquiName;
-	DWORD		 dwStoreIndex;
-	DWORD		 dwItemIndex;
-};
-
-struct ResStoreItemText
-{
-	std::wstring  wsItemName;
-	std::wstring  wsNpcName;
-	DWORD		  dwStoreIndex;
-	DWORD		  dwSinglePrice;
 };
 
 

@@ -4,16 +4,15 @@
 #include <MyTools/RelfexClass.h>
 #include <MyTools/CLPublic.h>
 #include <MyTools/Character.h>
-#include "ResText.h"
 #include "ResNpc.h"
 
-BOOL CResNpcExtend::GetNpcResMapPoint(_In_ CONST std::wstring& wsNpcName, _Out_ ResNpcMapPointText& NpcResText) CONST
+BOOL CResNpcExtend::GetNpcResMapPoint(_In_ CONST std::wstring& wsNpcName, _Out_ CResText::ResNpcMapPointText& NpcResText) CONST
 {
 #ifdef GameDLL_Release
 	return FALSE;
 #else
-	auto pVec = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<ResNpcMapPointText>*>(L"ResNpcPointText");
-	return pVec == nullptr ? FALSE : MyTools::CLPublic::Vec_find_if_Const(*pVec, &NpcResText, [wsNpcName](CONST ResNpcMapPointText& Res_) { return Res_.wsNpcName == wsNpcName; });
+	auto pVec = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<CResText::ResNpcMapPointText>*>(L"ResNpcPointText");
+	return pVec == nullptr ? FALSE : MyTools::CLPublic::Vec_find_if_Const(*pVec, &NpcResText, [wsNpcName](CONST CResText::ResNpcMapPointText& Res_) { return Res_.wsNpcName == wsNpcName; });
 #endif // GameDLL_Release
 
 }

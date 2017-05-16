@@ -11,7 +11,7 @@
 #define _SELF L"PersonPetAction.cpp"
 BOOL CPersonPetAction::SupplementLoyalty() CONST
 {
-	BOOL bExist = FALSE;
+	BOOL bExist = TRUE;
 	MyTools::InvokeClassPtr<CPersonPetExtend>()->Action_By_JoinWarPet([&bExist] (CONST CPersonPet& Pet)
 	{
 		if (Pet.GetLoyalty() < 90)
@@ -57,4 +57,20 @@ BOOL CPersonPetAction::SupplementMp() CONST
 	});
 
 	return bRetCode;
+}
+
+BOOL CPersonPetAction::SetPetEnterWar() CONST
+{
+	// Already Exist Pet Enter War
+	if (MyTools::InvokeClassPtr<CPersonPetExtend>()->Action_By_JoinWarPet(nullptr))
+		return TRUE;
+
+	std::vector<CPersonPet> Vec;
+	if (MyTools::InvokeClassPtr<CPersonPetExtend>()->GetVecPet(Vec, nullptr) == 0)
+		return FALSE;
+
+	LOG_CF_D(L"设置宠物[%s]参战!",Vec.begin()->GetName().c_str());
+	Vec.begin()->EnterWar();
+	GameSleep(2 * 1000);
+	return TRUE;
 }

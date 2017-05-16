@@ -34,7 +34,8 @@ BOOL CPersonPetExtend::Action_By_JoinWarPet(_In_ std::function<VOID(CONST CPerso
 	if (GetVecPet(Vec, [](CONST CPersonPet& PersonPet) { return PersonPet.IsJoinWar(); }) == NULL)
 		return FALSE;
 	
-	ActionPtr(*Vec.begin());
+	if(ActionPtr != nullptr)
+		ActionPtr(*Vec.begin());
 	return TRUE;
 }
 

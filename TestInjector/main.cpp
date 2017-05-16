@@ -4,12 +4,52 @@
 #include <iostream>
 #include <MyTools/CLFile.h>
 #include <MyTools/CLThread.h>
+#include <MyTools/CLPublic.h>
+#include <MyTools/Character.h>
+#include <MyTools/CmdLog.h>
+#include <MyTools/CLExpression.h>
 
 #define _SELF L"main.cpp"
 
+class CExpr : public MyTools::CExprFunBase, virtual public MyTools::CClassInstance<CExpr>
+{
+public:
+	CExpr() = default;
+	virtual ~CExpr()
+	{
+
+	}
+
+	virtual VOID Release()
+	{
+
+	}
+
+	virtual std::vector<MyTools::ExpressionFunPtr>& GetVec()
+	{
+		static std::vector<MyTools::ExpressionFunPtr> Vec =
+		{
+			{ std::bind(&CExpr::Help,this, std::placeholders::_1),L"Help" }
+		};
+
+		return Vec;
+	}
+
+private:
+	virtual VOID Help(CONST std::vector<std::wstring>& VecParm)
+	{
+
+	}
+};
 
 int main()
 {
+	static int i = 100;
+	MyTools::CLog::GetInstance().SetClientName(L"Test", L"D:\\", TRUE, 20 * 1024 * 1024);
+	MyTools::CCmdLog::GetInstance().Run(L"Test", CExpr::GetInstance().GetVec());
+	LOG_C_D(L"i=%X",&i);
+	::Sleep(-1);
+	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))
 	{
 		STARTUPINFOW		si = { sizeof(STARTUPINFOW) };

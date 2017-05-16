@@ -22,27 +22,25 @@ public:
 			if (dwNodeBase > 0)
 			{
 				T Player(dwNodeBase);
-				if (fnFilter == nullptr)
-				{
-					DWORD dwType = static_cast<DWORD>(Player.GetType());
-					if (dwType != 0x6 && dwType != 0x7)
-					{
-						Player.SetName();
-						Vec.push_back(std::move(Player));
-					}
-				}
-				else if (fnFilter(Player))
+				DWORD dwType = static_cast<DWORD>(Player.GetType());
+				if (dwType != 0x6 && dwType != 0x7)
 				{
 					Player.SetName();
-					Vec.push_back(std::move(Player));
-					break;
+					if (fnFilter == nullptr)
+						Vec.push_back(std::move(Player));
+					else if (fnFilter(Player))
+					{
+						Vec.push_back(std::move(Player));
+						break;
+					}
 				}
+				
 			}
 			dwNextNode = ReadDWORD(dwNextNode);
 		}
 		return Vec.size();
 	}
-	
+
 public:
 	static CPlayerExtend* CreateInstance()
 	{

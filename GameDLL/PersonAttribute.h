@@ -50,9 +50,15 @@ public:
 	DWORD GetMoney() CONST;
 	DWORD GetJiaoZiMoney() CONST;
 
+	// ≥ËŒÔÃÂ¡¶
+	DWORD GetPetPhysicalStrength() CONST;
+
 	//
 	UINT GetVecPersonBuff(_Out_ std::vector<PersonBuff>& Vec, _In_ std::function<BOOL(CONST PersonBuff&)> FilterPtr) CONST;
 	BOOL ExistPersonBuff_By_PartName(_In_ CONST std::wstring& wsPartName) CONST;
+
+	//
+	BOOL IsCollecting() CONST;
 public:
 	static CPersonAttribute* CreateInstance()
 	{

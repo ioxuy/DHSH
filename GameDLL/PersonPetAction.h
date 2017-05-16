@@ -17,6 +17,9 @@ public:
 	// 补充MP
 	BOOL SupplementMp() CONST;
 
+	// 设置出战宠物
+	BOOL SetPetEnterWar() CONST;
+
 public:
 	static CPersonPetAction* CreateInstance()
 	{

@@ -111,6 +111,7 @@
     <ClInclude Include="BagItem.h" />
     <ClInclude Include="BagItemExtend.h" />
     <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="CollectItem.h" />
     <ClInclude Include="ExcuteAction.h" />
     <ClInclude Include="Expr.h" />
     <ClInclude Include="FarmField.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="ItemFilter.h" />
     <ClInclude Include="LogicBagItemAction.h" />
     <ClInclude Include="MapMonster.h" />
+    <ClInclude Include="MapSearch.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterExtend.h" />
     <ClInclude Include="Npc.h" />
@@ -173,6 +175,7 @@
     <ClCompile Include="BagItemExtend.cpp" />
     <ClCompile Include="BagItemAction.cpp" />
     <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="CollectItem.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -195,6 +198,7 @@
     <ClCompile Include="ItemFilter.cpp" />
     <ClCompile Include="LogicBagItemAction.cpp" />
     <ClCompile Include="MapMonster.cpp" />
+    <ClCompile Include="MapSearch.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterExtend.cpp" />
     <ClCompile Include="Npc.cpp" />

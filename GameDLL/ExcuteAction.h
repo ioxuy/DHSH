@@ -4,6 +4,7 @@
 #include "GameBase.h"
 #include <queue>
 #include <MyTools/CLLock.h>
+#include <MyTools/CLHook.h>
 
 //#define MESSAGE_CUSTOME WM_USER + 0x1A5
 class CExcuteAction : public MyTools::CRelfexBaseClass
@@ -26,8 +27,7 @@ public:
 	VOID SetRun(_In_ BOOL bRun);
 
 private:
-	static HHOOK hWndProc;
-	static LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lParam);
+	MyTools::MYHOOK_CONTENT HookGetMessageAContent;
 private:
 	// 主线程执行函数队列
 	std::queue<ThreadMethodInfo> _QueMethodPtr;

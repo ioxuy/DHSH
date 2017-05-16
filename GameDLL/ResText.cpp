@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ResText.h"
 #include <MyTools/Log.h>
+#include "MapSearch.h"
 
 #define _SELF L"ResText.cpp"
 BOOL CResText::Initialize()
@@ -12,6 +13,14 @@ BOOL CResText::Initialize()
 	});
 
 	RegisterResNpcMapText();
+
+	RegisterResShopEquiText();
+
+	RegisterResShopItemText();
+
+	RegisterResMapPathText();
+
+	RegisterResMapCollectPathText();
 
 	return TRUE;
 }
@@ -286,6 +295,8 @@ VOID CResText::RegisterResNpcMapText()
 		{ L"房屋管理员", L"星秀村", L"星秀村", Point(141, 77) },
 		{ L"爱照片的英英", L"应天府", L"应天府", Point(236, 156) },
 		{ L"【星】杂货摊老板", L"星秀村", L"星秀村", Point(187, 114) },
+		{ L"【应】杂货摊老板", L"应天府", L"应天府", Point(131, 139) },
+		{ L"【汴】杂货摊老板", L"星秀村", L"星秀村", Point(32, 229) },
 	};
 
 	Register(L"ResNpcPointText", &Vec);
@@ -513,15 +524,69 @@ VOID CResText::RegisterResShopItemText()
 		{ L"驱魔香", L"【星】杂货摊老板",1,500 },
 		{ L"十里香", L"【星】杂货摊老板",2,100 },
 		{ L"欢悦铃", L"【星】杂货摊老板",8,1000 },
+		{ L"宠物饮料", L"【星】杂货摊老板",9,250 },
 		{ L"星秀村超程符", L"【星】杂货摊老板",11,30000 },
 		{ L"驱魔香", L"【汴】杂货摊老板",1,500 },
 		{ L"十里香", L"【汴】杂货摊老板",2,100 },
 		{ L"欢悦铃", L"【汴】杂货摊老板",8,1000 },
+		{ L"宠物饮料", L"【汴】杂货摊老板",9,250 },
 		{ L"汴京城超程符", L"【汴】杂货摊老板",13,0 },
 		{ L"驱魔香", L"【应】杂货摊老板",1,500 },
 		{ L"十里香", L"【应】杂货摊老板",2,100 },
 		{ L"欢悦铃", L"【应】杂货摊老板",10,1000 },
+		{ L"宠物饮料", L"【应】杂货摊老板",11,250 },
 		{ L"应天府超程符", L"【应】杂货摊老板",14,30000 },
 	};
 	Register(L"ResShopItemText", &Vec);
+}
+
+VOID CResText::RegisterResMapPathText()
+{
+	CONST static std::vector<CMapSearch::Edge> VecEdge =
+	{
+		{ L"二龙山",L"二龙山脚" },{ L"二龙山脚",L"梁山水道" },{ L"梁山水道",L"梁山" },
+		{ L"梁山",L"虎头峰" },{ L"梁山",L"清风山" },{ L"清风山",L"快活林" },
+		{ L"梁山",L"蓬莱" },{ L"蓬莱",L"大禹水道" },{ L"大禹水道",L"芒砀山麓" },
+		{ L"芒砀山麓",L"星秀村东" },{ L"星秀村东",L"星秀村" },{ L"星秀村",L"黄泥岗" },
+		{ L"黄泥岗",L"应天府" },{ L"应天府",L"应天府东" },{ L"应天府东",L"应天府东郊" },
+		{ L"应天府",L"应天府西" },{ L"应天府西",L"应天府西郊" },
+		{ L"应天府西郊",L"林中小居" },{ L"应天府东郊",L"阳谷县" },{ L"阳谷县",L"景阳岗" },
+		{ L"景阳岗",L"景阳松林" },{ L"景阳岗",L"清河县" },{ L"清河县",L"清河湿地" },
+		{ L"清河县",L"柴家庄" },{ L"柴家庄",L"野猪林" },{ L"柴家庄",L"沧州道" },
+		{ L"沧州道",L"沧州" },{ L"沧州",L"五台山下" },{ L"五台山下",L"五台山" },
+		{ L"沧州",L"宋辽战场" },{ L"宋辽战场",L"辽军军营" },{ L"野猪林",L"渭州城外" },
+		{ L"野猪林",L"汴京东郊" },{ L"汴京东郊",L"汴京城" },{ L"汴京城",L"汴京南郊" },
+		{ L"汴京南郊",L"十字坡" },{ L"十字坡",L"汴京东郊" },{ L"十字坡",L"少华山麓" }
+	};
+
+	Register(L"EdgeText", &VecEdge);
+}
+
+VOID CResText::RegisterResMapCollectPathText()
+{
+	CONST static std::vector<ResCollectItemPath> Vec =
+	{
+		{L"芒砀山麓",
+		{
+			Point(26,101),Point(118,85),Point(86,65),Point(46,81),
+			Point(131,18),Point(191,36),Point(159,142),
+		}},
+		{L"黄泥岗",
+		{
+			Point(206,135),Point(220,38),Point(140,40),Point(105,39),
+			Point(89,15),Point(26,112),Point(159,140),
+		}},
+		{L"应天府东郊",
+		{
+			Point(46,61),Point(40,11),Point(186,15),Point(187,111),
+			Point(174,123),Point(105,94),Point(47,116),
+		}},
+		{L"应天府西郊",
+		{
+			Point(129,145),Point(27,118),Point(63,83),Point(128,98),
+			Point(134,55),Point(45,19),Point(28,49),
+		}}
+	};
+
+	Register(L"VecResCollectItemPath", &Vec);
 }
