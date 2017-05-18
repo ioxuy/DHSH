@@ -59,6 +59,12 @@ public:
 
 	//
 	BOOL IsCollecting() CONST;
+
+	//
+	BOOL IsInHome(_In_ BOOL bIncludeCoutryard = TRUE) CONST;
+
+	// 家园活力值
+	DWORD GetHomeVitalityValue() CONST;
 public:
 	static CPersonAttribute* CreateInstance()
 	{
@@ -68,12 +74,6 @@ public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CPersonAttribute*>(lpObjectAddr);
-	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CPersonAttribute";
-		return wsClassName;
 	}
 };
 

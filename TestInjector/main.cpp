@@ -44,10 +44,7 @@ private:
 
 int main()
 {
-	static int i = 100;
-	MyTools::CLog::GetInstance().SetClientName(L"Test", L"D:\\", TRUE, 20 * 1024 * 1024);
-	MyTools::CCmdLog::GetInstance().Run(L"Test", CExpr::GetInstance().GetVec());
-	LOG_C_D(L"i=%X",&i);
+	std::cout << typeid(CExpr::GetInstance()).hash_code() << std::endl;
 	::Sleep(-1);
 	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))

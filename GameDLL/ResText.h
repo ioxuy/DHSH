@@ -36,6 +36,12 @@ public:
 		std::vector<Point>	VecPoint;
 	};
 
+	struct ResNameId
+	{
+		std::wstring	wsResName;
+		DWORD			dwResId;
+	};
+
 public:
 	CResText() = default;
 	~CResText() = default;
@@ -57,6 +63,10 @@ private:
 
 	// 
 	VOID RegisterResMapCollectPathText();
+
+	//
+	VOID RegisterHomeResNameIdText();
+
 public:
 	static CResText* CreateInstance()
 	{
@@ -66,12 +76,6 @@ public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CResText*>(lpObjectAddr);
-	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CResText";
-		return wsClassName;
 	}
 };
 

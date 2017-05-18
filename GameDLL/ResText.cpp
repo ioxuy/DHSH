@@ -22,6 +22,8 @@ BOOL CResText::Initialize()
 
 	RegisterResMapCollectPathText();
 
+	RegisterHomeResNameIdText();
+
 	return TRUE;
 }
 
@@ -589,4 +591,14 @@ VOID CResText::RegisterResMapCollectPathText()
 	};
 
 	Register(L"VecResCollectItemPath", &Vec);
+}
+
+VOID CResText::RegisterHomeResNameIdText()
+{
+	CONST static std::vector<ResNameId> Vec = 
+	{
+		{ L"羊脂甘露瓶", 0x5E27 },{ L"万物乾坤灯", 0x5E26 },{ L"八卦造化台", 0x5E24 },{ L"尧帝百宝袋", 0x2E5E },
+	};
+
+	Register(L"VecHomeRes", &Vec);
 }

@@ -27,12 +27,6 @@ public:
 		delete reinterpret_cast<CMonsterExtend*>(lpObjectAddr);
 	}
 
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CMonsterExtend";
-		return wsClassName;
-	}
-	
 	CMonsterExtend(CONST CMonsterExtend&) = delete;
 	
 	CMonsterExtend& operator=(CONST CMonsterExtend&) = delete;

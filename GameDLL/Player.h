@@ -31,6 +31,8 @@ public:
 	virtual CONST std::wstring& GetTextType() CONST;
 
 	virtual float GetDis() CONST;
+
+	virtual DWORD GetResId() CONST;
 private:
 
 };

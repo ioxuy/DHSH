@@ -12,10 +12,10 @@ public:
 	BOOL SupplementLoyalty() CONST;
 	
 	// 补充HP
-	BOOL SupplementHp() CONST;
+	VOID SupplementHp() CONST;
 
 	// 补充MP
-	BOOL SupplementMp() CONST;
+	VOID SupplementMp() CONST;
 
 	// 设置出战宠物
 	BOOL SetPetEnterWar() CONST;
@@ -29,12 +29,6 @@ public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CPersonPetAction*>(lpObjectAddr);
-	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CPersonPetAction";
-		return wsClassName;
 	}
 };
 

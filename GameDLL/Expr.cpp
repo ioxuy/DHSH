@@ -25,6 +25,9 @@
 #include "ExcuteAction.h"
 #include "NpcExtend.h"
 #include "MonsterExtend.h"
+#include "CollectItem.h"
+#include "ItemFilter.h"
+#include "BagItemAction.h"
 
 #define _SELF L"Expr.cpp"
 CExpr::CExpr()
@@ -70,7 +73,7 @@ VOID CExpr::AroundObject(CONST std::vector<std::wstring>&)
 	MyTools::InvokeClassPtr<CPlayerExtend>()->GetAroundObject(Vec, nullptr);
 
 	for (CONST auto& itm : Vec)
-		LOG_C_D(L"ID=%X,Addr=%X, Name=%s,Point=[%d,%d],dis=%.2f,Type=[%X,%s]", itm.GetId(), itm.GetNodeBase(), itm.GetName().c_str(), itm.GetPoint().X, itm.GetPoint().Y, itm.GetDis(), static_cast<DWORD>(itm.GetType()), itm.GetTextType().c_str());
+		LOG_C_D(L"ID=%X,ResId=%X,Addr=%X, Name=%s,Point=[%d,%d],dis=%.2f,Type=[%X,%s]", itm.GetId(), itm.GetResId(), itm.GetNodeBase(), itm.GetName().c_str(), itm.GetPoint().X, itm.GetPoint().Y, itm.GetDis(), static_cast<DWORD>(itm.GetType()), itm.GetTextType().c_str());
 }
 
 VOID CExpr::SetGameRun(CONST std::vector<std::wstring>& VecParm)
@@ -101,27 +104,12 @@ VOID CExpr::TestPtr(CONST std::vector<std::wstring>& VecParm)
 	MyTools::InvokeClassPtr<CTestFunction>()->InitTestShareContent();
 
 	StartGame;
-	if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->Check())
+	if (!MyTools::InvokeClassPtr<CFarmField>()->Check())
 		return;
 
-	MyTools::InvokeClassPtr<CPlayerMove>()->MoveToMapPoint(L"汴京东郊", Point(39, 21));
-	/*MyTools::InvokeClassPtr<CGameUiExtend>()->Action_By_DlgName_When_ShowDlg(L"npcdlg", [](CONST CGameUi& npcdlg) 
-	{
-		DWORD dwHead = ReadDWORD(npcdlg.GetNodeBase() + 0x14);
-		DWORD dwEnd = ReadDWORD(npcdlg.GetNodeBase() + 0x18);
-
-		int nCount = static_cast<int>(dwEnd - dwHead) >> 2;
-		for (int i = 0;i < nCount; ++i)
-		{
-			DWORD dwAddr = ReadDWORD(dwHead + i * 4);
-			if (ReadDWORD(dwAddr + 0x24C) == 0)
-				continue;
-
-			CHAR* pszText = reinterpret_cast<CHAR *>(ReadDWORD(dwAddr + 0x24C));
-			LOG_C_D(L"Text=%s", MyTools::CCharacter::ASCIIToUnicode(pszText).c_str());
-		}
-	});*/
+	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 0);
+	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_PersonFightMode, em_PersonFightMode::em_PersonFightMode_FixF1);
+	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_PetFightMode, em_PetFightMode::em_PersonFightMode_Denfence);
+	MyTools::InvokeClassPtr<CFarmField>()->Run(L"汴京东郊", Point(103,45));
 	
-	//MyTools::InvokeClassPtr<CFarmField>()->Run(L"汴京东郊", Point(39,21));
-	/**/
 }

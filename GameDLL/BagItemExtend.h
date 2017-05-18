@@ -34,12 +34,6 @@ public:
 	{
 		delete reinterpret_cast<CBagItemExtend*>(lpObjectAddr);
 	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CBagItemExtend";
-		return wsClassName;
-	}
 };
 
 #endif // !__DHSH_GAMEDLL_GAME_OBJECT_BAGITEM_BAGITEMEXTEND_H__

@@ -31,3 +31,16 @@ CItemFilter::em_ItemFilterType CItemFilter::GetItemFilterType(_In_ CONST std::ws
 	return emType;
 }
 
+UINT CItemFilter::GetVecItem_By_FilterType(_In_ em_ItemFilterType emType, _Out_ std::vector<std::wstring>& Vec) CONST
+{
+	_Lock.Access([this, emType, &Vec]
+	{
+		for (CONST auto& itm : _MapItemFilter)
+		{
+			if (itm.second == emType)
+				Vec.push_back(itm.first);
+		}
+	});
+	return Vec.size();
+}
+

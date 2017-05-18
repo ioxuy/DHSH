@@ -118,3 +118,22 @@ BOOL CPersonAttribute::IsCollecting() CONST
 {
 	return (ReadDWORD(ReadDWORD(C_caiji_base) + C_caiji_offset) & 0xFF) == 1 && (ReadDWORD(ReadDWORD(ReadDWORD(C_caiji_base) + 0x4C0) + C_caiji_offset) & 0xFF) == 1;
 }
+
+BOOL CPersonAttribute::IsInHome(_In_ BOOL bIncludeCoutryard) CONST
+{
+	CONST static std::vector<std::wstring> Vec = 
+	{
+		L"小型住宅",L"中型住宅",L"大型住宅",L"豪华住宅",L"超级豪宅"
+	};
+
+	auto wsCurMapName = GetCurrentMapName();
+	if (MyTools::CLPublic::Vec_find_if_Const(Vec, [wsCurMapName](CONST auto& itm) { return itm == wsCurMapName; }))
+		return TRUE;
+
+	return bIncludeCoutryard && wsCurMapName == L"庭院" ? TRUE : FALSE;
+}
+
+DWORD CPersonAttribute::GetHomeVitalityValue() CONST
+{
+	return ReadDWORD(ReadDWORD(家园基址) + 家园偏移 + 家园活力偏移) & 0xFF;
+}

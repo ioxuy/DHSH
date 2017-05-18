@@ -943,6 +943,8 @@ BOOL CGameCALL::AnswerQuestion(_In_ DWORD dwAnswer, _In_ DWORD dwBase) CONST
 {
 	__try
 	{
+		*reinterpret_cast<DWORD*>(ReadDWORD(dwBase + C_dati_yiji) + 0x2A0) = dwAnswer;
+
 		__asm
 		{
 			PUSHAD;

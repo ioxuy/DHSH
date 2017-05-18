@@ -31,11 +31,6 @@ public:
 		delete reinterpret_cast<CBagItemAction*>(lpObjectAddr);
 	}
 
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CBagItemAction";
-		return wsClassName;
-	}
 };
 
 #endif // !__DHSH_GAMEDLL_GAME_OBJECT_BAGITEM_BAGITEMACTION_H__

@@ -63,12 +63,6 @@ public:
 	{
 		delete reinterpret_cast<CMapSearch*>(lpObjectAddr);
 	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CMapSearch";
-		return wsClassName;
-	}
 	
 	CMapSearch(CONST CMapSearch&) = delete;
 	

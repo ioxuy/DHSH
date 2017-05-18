@@ -23,10 +23,9 @@ BOOL CPersonPetAction::SupplementLoyalty() CONST
 	return bExist;
 }
 
-BOOL CPersonPetAction::SupplementHp() CONST
+VOID CPersonPetAction::SupplementHp() CONST
 {
-	BOOL bRetCode = FALSE;
-	MyTools::InvokeClassPtr<CPersonPetExtend>()->Action_By_JoinWarPet([&bRetCode](CONST CPersonPet& Pet)
+	MyTools::InvokeClassPtr<CPersonPetExtend>()->Action_By_JoinWarPet([](CONST CPersonPet& Pet)
 	{
 		CONST auto dwValue = MyTools::InvokeClassPtr<CGameVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_Pet_SupplementHp);
 		if (Pet.GetPercentHp() < dwValue)
@@ -34,17 +33,12 @@ BOOL CPersonPetAction::SupplementHp() CONST
 			LOG_CF_D(L"宠物的HP=%d, 低于设定的值=%d, 吃药!", Pet.GetPercentHp(), dwValue);
 			MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([] {MyTools::InvokeClassPtr<CGameCALL>()->AddHp(0x3); });
 		}
-
-		bRetCode = Pet.GetPercentHp() >= dwValue;
 	});
-
-	return bRetCode;
 }
 
-BOOL CPersonPetAction::SupplementMp() CONST
+VOID CPersonPetAction::SupplementMp() CONST
 {
-	BOOL bRetCode = FALSE;
-	MyTools::InvokeClassPtr<CPersonPetExtend>()->Action_By_JoinWarPet([&bRetCode](CONST CPersonPet& Pet)
+	MyTools::InvokeClassPtr<CPersonPetExtend>()->Action_By_JoinWarPet([](CONST CPersonPet& Pet)
 	{
 		CONST auto dwValue = MyTools::InvokeClassPtr<CGameVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_Pet_SupplementMp);
 		if (Pet.GetPercentMp() < dwValue)
@@ -52,11 +46,7 @@ BOOL CPersonPetAction::SupplementMp() CONST
 			LOG_CF_D(L"宠物的MP=%d, 低于设定的值=%d, 吃药!", Pet.GetPercentMp(), dwValue);
 			MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([] {MyTools::InvokeClassPtr<CGameCALL>()->AddHp(0x4); });
 		}
-
-		bRetCode = Pet.GetPercentMp() >= dwValue;
 	});
-
-	return bRetCode;
 }
 
 BOOL CPersonPetAction::SetPetEnterWar() CONST

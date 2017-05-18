@@ -25,12 +25,6 @@ public:
 		delete reinterpret_cast<CFarmField*>(lpObjectAddr);
 	}
 
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CFarmField";
-		return wsClassName;
-	}
-	
 	CFarmField(CONST CFarmField&) = delete;
 	
 	CFarmField& operator=(CONST CFarmField&) = delete;

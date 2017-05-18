@@ -48,6 +48,9 @@ BOOL CFarmField::Run(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPo
 				continue;
 			}
 
+			// Check Answer!
+			MyTools::InvokeClassPtr<CPlayerMove>()->FindDlg_By_BindMethod();
+
 			// ALT+Z
 			LOG_CF_D(L"发现停止不动了,按ALT+Z开始自动走路!");
 			MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([] { MyTools::InvokeClassPtr<CGameCALL>()->SetAutoMove(TRUE); });

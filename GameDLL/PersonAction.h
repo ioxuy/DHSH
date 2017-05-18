@@ -10,10 +10,10 @@ public:
 	~CPersonAction() = default;
 
 	// ≤π≥‰HP
-	BOOL SupplementHp() CONST;
+	VOID SupplementHp() CONST;
 	
 	// ≤π≥‰MP
-	BOOL SupplementMp() CONST;
+	VOID SupplementMp() CONST;
 public:
 	static CPersonAction* CreateInstance()
 	{
@@ -23,12 +23,6 @@ public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CPersonAction*>(lpObjectAddr);
-	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CPersonAction";
-		return wsClassName;
 	}
 };
 

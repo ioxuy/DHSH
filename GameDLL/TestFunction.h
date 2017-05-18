@@ -24,12 +24,6 @@ public:
 		delete reinterpret_cast<CTestFunction*>(lpObjectAddr);
 	}
 
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CTestFunction";
-		return wsClassName;
-	}
-	
 	CTestFunction(CONST CTestFunction&) = delete;
 	
 	CTestFunction& operator=(CONST CTestFunction&) = delete;

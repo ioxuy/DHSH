@@ -53,6 +53,11 @@ BOOL CNpc::ClickOption(_In_ CONST std::wstring& wsOptionText, _In_ CONST std::ws
 	return ClickOption_By_Condition(wsOptionText, [wsNewDlg] { return MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowDlg(wsNewDlg); });
 }
 
+BOOL CNpc::CLickOption_DisableDlg(_In_ CONST std::wstring& wsOptionText, _In_ CONST std::wstring& wsDlg) CONST
+{
+	return ClickOption_By_Condition(wsOptionText, [wsDlg] { return !MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowDlg(wsDlg); });
+}
+
 BOOL CNpc::ClickOption_By_Condition(_In_ CONST std::wstring& wsOptionText, _In_ std::function<BOOL(VOID)> fnExitPtr) CONST
 {
 	MyTools::CTimeTick TimeTick;
@@ -87,11 +92,26 @@ BOOL CNpc::Collect() CONST
 	{
 		MyTools::InvokeClassPtr<CGameCALL>()->CollectItem(GetNodeBase());
 	});
-	GameSleep(2 * 1000);
 
+	GameSleep(2 * 1000);
 	LOG_CF_D(L"等待采集完毕!");
-	while (GameRun && MyTools::InvokeClassPtr<CPersonAttribute>()->IsCollecting())
+
+	MyTools::CTimeTick TimeTick;
+	DWORD dwPetPhysicalStrengthValue = MyTools::InvokeClassPtr<CPersonAttribute>()->GetPetPhysicalStrength();
+	while (GameRun && (MyTools::InvokeClassPtr<CPersonAttribute>()->IsCollecting() && MyTools::InvokeClassPtr<CPersonAttribute>()->GetPetPhysicalStrength() >= 10))
+	{
 		GameSleep(1000);
+		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 30)
+		{
+			if (dwPetPhysicalStrengthValue == MyTools::InvokeClassPtr<CPersonAttribute>()->GetPetPhysicalStrength())
+			{
+				LOG_CF_E(L"30秒之内体力没变化……重新开始采集~");
+				break;
+			}
+			dwPetPhysicalStrengthValue = MyTools::InvokeClassPtr<CPersonAttribute>()->GetPetPhysicalStrength();
+			TimeTick.Reset();
+		}
+	}
 
 	LOG_CF_D(L"采集完毕!");
 	return TRUE;

@@ -11,8 +11,16 @@ public:
 	CResNpcExtend() = default;
 	~CResNpcExtend() = default;
 	
+	//
 	BOOL GetNpcResMapPoint(_In_ CONST std::wstring& wsNpcName, _Out_ CResText::ResNpcMapPointText& NpcResText) CONST;
-	
+
+	//
+	BOOL GetResNpc_By_MapName_NpcName(_In_ CONST std::wstring& wsMapName, _In_ CONST std::wstring& wsNpcName, _Out_ CResText::ResNpcMapPointText& NpcResText);
+private:
+	// 
+	BOOL GetNpcResMapPoint_By_Condition(_Out_ CResText::ResNpcMapPointText& NpcResText, _In_ CONST std::function<BOOL(CONST CResText::ResNpcMapPointText&)> FilterPtr) CONST;
+
+	//
 	UINT GetVecResNpc(_Out_ std::vector<CResNpc>& Vec) CONST;
 public:
 	static CResNpcExtend* CreateInstance()
@@ -23,12 +31,6 @@ public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CResNpcExtend*>(lpObjectAddr);
-	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CResNpcExtend";
-		return wsClassName;
 	}
 };
 

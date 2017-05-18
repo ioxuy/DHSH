@@ -17,10 +17,6 @@ public:
 
 	// 装备持久度检查?
 
-
-	// 先检查物品是否充足, 背包位置是否足够之类的……!
-	BOOL Check() CONST;
-
 	// 购买补充物品
 	BOOL SupplementItem(_In_ CONST std::wstring& wsItemName, _In_ UINT uCount) CONST;
 
@@ -35,12 +31,6 @@ public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CLogicBagItemAction*>(lpObjectAddr);
-	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CLogicBagItemAction";
-		return wsClassName;
 	}
 
 	CLogicBagItemAction(CONST CLogicBagItemAction&) = delete;

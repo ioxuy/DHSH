@@ -3,10 +3,10 @@
 
 #include <MyTools/RelfexClass.h>
 
-#define C_renwu_zhanghao  0x919618
-#define C_renwu_qu        0x919684
-#define C_renwu_name      0x91964C
-#define C_renwu_base      0x8F3E88
+#define C_renwu_zhanghao  0x91A61C
+#define C_renwu_qu        0x91A668
+#define C_renwu_name      0x91A650
+#define C_renwu_base      0x8F4E88
 #define C_renwu_DQHP      0x5E8
 #define C_renwu_职业      0x4F8
 #define C_renwu_MHP       C_renwu_DQHP + 0x0C
@@ -16,16 +16,16 @@
 #define C_renwu_ID        C_renwu_DQHP - 0x0F4
 #define C_renwu_qianli    C_renwu_DQHP - 0x0C
 ///////////////////////////////////////////////////////技能
-#define C_renwu_Skill_base   0x8F40C0
+#define C_renwu_Skill_base   0x8F50C0
 #define C_Skill_office       0x498
 #define C_Skill_Num          0x264
 
-#define C_Pet_Skill_base     0x9417E0
-#define C_Get_Skill_name_CALL  0x006CC1A0
+#define C_Pet_Skill_base     0x9427E0
+#define C_Get_Skill_name_CALL  0x006CD3A0
 ////////////////////////////////////////////////////////
 //宠物
 ///////////////////////////////////////////////////////
-#define C_chong_base     0x8F7898
+#define C_chong_base     0x8F8898
 #define C_chong_yiji     0x598
 #define C_chong_shu      C_chong_yiji + 4
 #define C_chong_DQHP     0x46
@@ -40,14 +40,14 @@
 /////////////////////////////////////////////////////
 //当前出战宠物数据
 /////////////////////////////////////////////////////
-#define C_chuzhan_base   0x8F7DCC//?
+#define C_chuzhan_base   0x8F8DCC//?
 #define C_chuzhan_dq     0x5Bc
 #define C_EXP            0x588//[588]+258
 #define C_chuzhan_MAX    0x5C4
 ////////////////////////////////////////////////////
 //地图数据
 ///////////////////////////////////////////////////
-#define C_map_base       0x8F292C    //+10 窗口句柄
+#define C_map_base       0x8F392C    //+10 窗口句柄
 #define C_map_name       0x184
 #define C_map_Addr       0x910
 #define C_map_AddX       0x2a
@@ -65,7 +65,7 @@
 ///////////////////////////////////////////////////
 //金钱
 ///////////////////////////////////////////////////
-#define C_money_base     0xAE5C64
+#define C_money_base     0xAE6C64
 #define C_money_yiji     0x10
 #define C_money_erji     0x14
 #define C_money_siji     0x10
@@ -76,7 +76,7 @@
 //////////////////////////////////////////////////
 //背包
 /////////////////////////////////////////////////
-#define C_Box_base      0x8F6BE8//?
+#define C_Box_base      0x8F7BE8//?
 #define C_Box_yiji      4
 #define C_Box_num       8
 #define C_Box_jia       0xc
@@ -88,7 +88,7 @@
 //////////////////////////////////////////////////
 //环境
 //////////////////////////////////////////////////
-#define	C_huan_base     0x91F168
+#define	C_huan_base     0x920168
 #define C_huan_yiji     4
 #define C_huan_name     4
 #define C_huan_ID       0x24
@@ -99,7 +99,7 @@
 //////////////////////////////////////////////
 //状态
 //////////////////////////////////////////////
-#define C_state_base    0x8F3ED0//?
+#define C_state_base    0x8F4ED0//?
 #define C_state_yiji    0x4a0
 #define C_state_erji    0x290
 #define C_state_shu     0xac   //290+ac 是数量
@@ -109,7 +109,7 @@
 ////////////////////////////////////////////
 //NPC 状态
 ////////////////////////////////////////////
-#define C_NPC_state    0x8F4050// ?
+#define C_NPC_state    0x8F5050// ?
 #define C_NPC_xuan_base  0x454
 #define C_NPC_xuan_shu   0x458
 #define C_NPC_xuan_str   0x1c0
@@ -119,7 +119,7 @@
 ////////////////////////////////////////////
 //任务
 ////////////////////////////////////////////
-#define C_task_base      0x8F7DB4
+#define C_task_base      0x8F8DB4
 #define C_task_yiji      0x149C
 #define C_task_erji      0x390
 #define C_task_name      0x54
@@ -151,32 +151,32 @@
 ///////////////////////////////////////////
 //采集
 ///////////////////////////////////////////
-#define C_caiji_base        0x8F6D84 //?
+#define C_caiji_base        0x8F7D84//?
 #define C_caiji_offset      0x8
-#define C_caiji_chong_base   0x8F6D74
+#define C_caiji_chong_base   0x8F7D74
 
 //#define C_chongwu_chushi    0x0050DEB0
 //#define C_chongwu_base      0x0050CE40 
 #define C_chongwu_tili      0x26
-#define C_caiji_CALL_chushi 0x0051BF60
-#define C_caiji_CALL        0x0051C1F0
+#define C_caiji_CALL_chushi 0x0051C0F0
+#define C_caiji_CALL        0x0051C380
 ////////////////////////////////////////////
 //UI 怪物数组
 ////////////////////////////////////////////
-#define C_Monster_base           0x8F40F0
+#define C_Monster_base           0x8F50F0
 #define C_Monster_UI             0x49C
 #define C_Monster_UI_1           0x290
 ///////////////////////////////////////////////
 /////遍历窗口
 ///////////////////////////////////////////////
-#define C_window_base         0xAE5B78 //?
+#define C_window_base         0xAE6B78 //?
 #define C_window_offset       0x0C8
 
 
 /////////////////////////////////////////////
 //队伍
 ////////////////////////////////////////////
-#define C_Team_base               0x8F7DE4
+#define C_Team_base               0x8F8DE4
 #define C_Team_暂离               0x75 //1为暂离 0为组队
 #define C_Team_Lev                0x14
 #define C_Team_Map                0x7E
@@ -187,72 +187,74 @@
 ////////////////////////////////////////////
 
 //#define C_CALL_dati         0x007491D0  0x5332B0
-#define C_CALL_dati         0x5338F0 //答题三CALL 上层
-#define C_CALL_dati1        0x007D28C5
-#define C_CALL_dati2        0x00533880
-#define C_CALL_fabao_base   0x8F2930
-#define C_CALL_fabao        0x0064E360
+#define C_CALL_dati         0x533820 //答题三CALL 上层
+#define C_CALL_dati1        0x007D3C25
+#define C_CALL_dati2        0x005337B0
+#define C_CALL_fabao_base   0x8F3930
+#define C_CALL_fabao        0x0064F370
 #define C_CALL_close_maimai  C_NPC_state
-#define C_CALL_CloseNPC     0x00750F80
+#define C_CALL_CloseNPC     0x007520C0
 //#define C_CALL_hanhua       0x005FEAD0
-#define C_CALL_zoulu        0x0042FC30
-#define  C_xunlu_base       0x8F3E44 //C_CALL_xunlu1 内
-#define C_CALL_xunlu1       0x0042FB80
-#define C_CALL_xunlu        0x00430450
-#define C_call_dianji       0x0064EE10//?
-#define C_Set_Skill_base    0x8F4098
-#define C_CALL_Set_Skill    0x00489650
-#define C_base_kuaijie      0x8F6C9C// 快捷键基址 ??
-#define C_CALL_kuaijie      0x004F9CC0// 快捷键CALL ??
-#define C_base_dianguai     0x8F9124//战斗点击怪物基址 //?
+#define C_CALL_zoulu        0x0042F850
+#define  C_xunlu_base       0x8F4E44 //C_CALL_xunlu1 内
+#define C_CALL_xunlu1       0x0042F7A0
+#define C_CALL_xunlu        0x00430030
+#define C_call_dianji       0x0064FE60//?
+#define C_Set_Skill_base    0x8F5098
+#define C_CALL_Set_Skill    0x00489350
+#define C_base_kuaijie      0x8F7C9C// 快捷键基址 ??
+#define C_CALL_kuaijie      0x004F9BE0// 快捷键CALL ??
+#define C_base_dianguai     0x8FA124//战斗点击怪物基址 //?
 #define C_zhandou_huihe     0x0c      //战斗回合数
 #define C_base_xing         0x40      // 快捷键形态
 #define C_base_baobaoxing   0x84     //宝宝快捷键形态
 #define	C_base_zhuangtai    0x10      // 战斗场景人物状态 5,人物未攻击  6宠物未攻击 0 未进入战斗  3人物正在攻击
-#define C_CALL_dianguai     0x00640B40// 技能点击怪物
-#define C_CALL_ADDHP        0x0064EF30
+#define C_CALL_dianguai     0x00641D10// 技能点击怪物
+#define C_CALL_ADDHP        0x0064FF80
 #define C_CALL_maichu      C_CALL_ADDHP
 #define C_chaxun_Offset     0x6E4 //--
 #define C_chushi_Offset     0x4C8 //--
 #define C_CALL_chushi       0x0053A130 //--
 #define C_CALL_chaxun       0x00539EE0 //--
 #define C_call_jianwu       C_CALL_ADDHP   //
-#define C_CALL_taopao       0x00640F10
+#define C_CALL_taopao       0x006420E0
 
 //#define C_jiasu_xuhanshu    0x7E8644
-#define C_zidong_base       0x8F9120
-#define C_CALL_zidong       0x0063DE00
+#define C_zidong_base       0x8FA120
+#define C_CALL_zidong       0x0063EFE0
 
 #define C_Auto_Skill        C_CALL_taopao
 
-#define C_Auto_Skill_      0x00643E30
-#define C_CALL_IsFly       0x006AAA70//0x00693580
+#define C_Auto_Skill_      0x00644FA0
+#define C_CALL_IsFly       0x006ABB60//0x00693580
 
 #define C_CALL_NPC_寻路CALL  C_CALL_xunlu1
-#define C_CALL_NPC_寻路CALL1  0x00430710
+#define C_CALL_NPC_寻路CALL1  0x004302C0
 
 
-#define C_CALL_猜拳          0x00640130
+#define C_CALL_猜拳          0x00641300
 
-#define C_CALL_Open_give    0x004C9630
-#define C_CALL_Start_打地鼠  0x0064EF90
-#define C_CALL_give_Enter            0x004C9320//确认给予
-#define C_CALL_Give_Set            0x0076BF30
-#define C_CALL_Give_Set1            0x0076F330
-#define C_CALL_Give_Set2           0x0076C1E0
+#define C_CALL_Open_give    0x004C9910
+#define C_CALL_Start_打地鼠  0x0064FFE0
+#define C_CALL_give_Enter            0x004C9650//确认给予
+#define C_CALL_Give_Set            0x0076D220
+#define C_CALL_Give_Set1            0x00770640
+#define C_CALL_Give_Set2           0x0076D4F0
 
 
 
-#define C_verify_Base           0x909608
-#define C_CALL_Key_InPut        0x00771500
-#define C_CALL_Login_Base       0x8F6CAC
-#define C_CALL_Login             0x004FC380
-#define C_CALL_Check_Btn        0x0077E020
+#define C_verify_Base           0x90A608
+#define C_CALL_Key_InPut        0x00772800
+#define C_CALL_Login_Base       0x8F7CAC
+#define C_CALL_Login             0x004FC280
+#define C_CALL_Check_Btn        0x0077F340
 
-#define 自动走路CALL 0x409310
+#define 自动走路CALL 0x409320
 #define NPC选项文本偏移 0x24C
 #define NPC选项发包偏移 0x58
-
+#define 家园基址 0x8F7B40
+#define 家园偏移 0x498
+#define 家园活力偏移 0x2B
 
 #define ReadDWORD(Addr) MyTools::CCharacter::ReadDWORD(Addr)
 
@@ -293,6 +295,8 @@ enum class em_TextVar
 	em_TextVar_AutoBuyHappyBell,
 	// 购买宠物饮料数量
 	em_TextVar_AutoBuyPetDrinksCount,
+	// 家园采集的家具名称
+	em_TextVar_CollectHome_Furniture
 };
 
 

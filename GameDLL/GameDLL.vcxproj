@@ -148,6 +148,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="GameVariable.h" />
     <ClInclude Include="TestFunction.h" />
+    <ClInclude Include="TextVariable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\MyTools\MyTools\Character.cpp" />
@@ -222,6 +223,7 @@
     </ClCompile>
     <ClCompile Include="GameVariable.cpp" />
     <ClCompile Include="TestFunction.cpp" />
+    <ClCompile Include="TextVariable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

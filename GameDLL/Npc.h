@@ -14,6 +14,10 @@ public:
 
 	// npcdlg visiable
 	BOOL ClickOption(_In_ CONST std::wstring& wsOptionText, _In_ CONST std::wstring& wsNewDlg) CONST;
+
+	//
+	BOOL CLickOption_DisableDlg(_In_ CONST std::wstring& wsOptionText, _In_ CONST std::wstring& wsDlg) CONST;
+
 	BOOL ClickOption_By_Condition(_In_ CONST std::wstring& wsOptionText, _In_ std::function<BOOL(VOID)> fnExitPtr) CONST;
 
 	// 

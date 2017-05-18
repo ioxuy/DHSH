@@ -8,13 +8,18 @@
 
 BOOL CResNpcExtend::GetNpcResMapPoint(_In_ CONST std::wstring& wsNpcName, _Out_ CResText::ResNpcMapPointText& NpcResText) CONST
 {
-#ifdef GameDLL_Release
-	return FALSE;
-#else
-	auto pVec = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<CResText::ResNpcMapPointText>*>(L"ResNpcPointText");
-	return pVec == nullptr ? FALSE : MyTools::CLPublic::Vec_find_if_Const(*pVec, &NpcResText, [wsNpcName](CONST CResText::ResNpcMapPointText& Res_) { return Res_.wsNpcName == wsNpcName; });
-#endif // GameDLL_Release
+	return GetNpcResMapPoint_By_Condition(NpcResText, [wsNpcName](CONST auto& itm) { return itm.wsNpcName == wsNpcName; });
+}
 
+BOOL CResNpcExtend::GetResNpc_By_MapName_NpcName(_In_ CONST std::wstring& wsMapName, _In_ CONST std::wstring& wsNpcName, _Out_ CResText::ResNpcMapPointText& NpcResText)
+{
+	return GetNpcResMapPoint_By_Condition(NpcResText, [wsNpcName, wsMapName](CONST auto& itm) { return itm.wsNpcName == wsNpcName && itm.wsMapName == wsMapName;; });
+}
+
+BOOL CResNpcExtend::GetNpcResMapPoint_By_Condition(_Out_ CResText::ResNpcMapPointText& NpcResText, _In_ CONST std::function<BOOL(CONST CResText::ResNpcMapPointText&)> FilterPtr) CONST
+{
+	auto pVec = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<CResText::ResNpcMapPointText>*>(L"ResNpcPointText");
+	return pVec == nullptr ? FALSE : MyTools::CLPublic::Vec_find_if_Const(*pVec, &NpcResText, FilterPtr);
 }
 
 UINT CResNpcExtend::GetVecResNpc(_Out_ std::vector<CResNpc>& Vec) CONST

@@ -23,12 +23,6 @@ public:
 	{
 		delete reinterpret_cast<CPersonPetExtend*>(lpObjectAddr);
 	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CPersonPetExtend";
-		return wsClassName;
-	}
 };
 
 #endif // !__DHSH_GAMEDLL_GAME_OBJECT_PET_PERSONPETEXTPEND_H__

@@ -33,12 +33,15 @@ BOOL CLogicBagItemAction::AfterFight_Item() CONST
 
 	// 检查自己的HP MP
 	CONST auto pPersonActionPtr = MyTools::InvokeClassPtr<CPersonAction>();
-	if (!pPersonActionPtr->SupplementHp())
+
+	pPersonActionPtr->SupplementHp();
+	pPersonActionPtr->SupplementMp();
+	if (pPersonAttributePtr->GetPercentHp() < 50)
 	{
 		LOG_CF_D(L"HP药不足!");
 		return FALSE;
 	}
-	else if (!pPersonActionPtr->SupplementMp())
+	else if (pPersonAttributePtr->GetPercentMp() < 50)
 	{
 		LOG_CF_D(L"MP药不足!");
 		return FALSE;
@@ -46,17 +49,8 @@ BOOL CLogicBagItemAction::AfterFight_Item() CONST
 
 	// 检查宠物的HP MP
 	CONST auto pPersonPetAction = MyTools::InvokeClassPtr<CPersonPetAction>();
-	if (!pPersonPetAction->SupplementHp())
-	{
-		LOG_CF_D(L"HP药不足!");
-		return FALSE;
-	}
-
-	if (!pPersonPetAction->SupplementMp())
-	{
-		LOG_CF_D(L"MP药不足!");
-		return FALSE;
-	}
+	pPersonPetAction->SupplementHp();
+	pPersonPetAction->SupplementMp();
 
 	// 检查宠物的忠诚度
 	if (!pPersonPetAction->SupplementLoyalty())
@@ -78,48 +72,6 @@ BOOL CLogicBagItemAction::CheckExorcism() CONST
 	});
 
 	return bExist;
-}
-
-BOOL CLogicBagItemAction::Check() CONST
-{
-	BOOL bFaild = FALSE;
-	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_AutoBuyExorcism, 1, [this, &bFaild]
-	{
-		if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"驱魔香") == 0)
-		{
-			LOG_CF_D(L"开启了自动购买驱魔香, 但是身上并不存在驱魔香! 去买驱魔香");
-			bFaild = !SupplementItem(L"驱魔香", 10);
-		}
-	});
-	if (bFaild)
-		return FALSE;
-
-	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_AutoBuyHappyBell, 1, [this, &bFaild]
-	{
-		if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"欢悦铃") == 0)
-		{
-			LOG_CF_D(L"身上并不存在欢悦铃! 去买欢悦铃");
-			bFaild = !SupplementItem(L"欢悦铃", 10);
-		}
-	});
-	if (bFaild)
-		return FALSE;
-
-	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 0, [this]
-	{
-		if (MyTools::InvokeClassPtr<CPersonAttribute>()->ExistPersonBuff_By_PartName(L"驱魔香"))
-		{
-			LOG_CF_D(L"设置不使用驱魔香, 但是却检测到身上有驱魔香BUFF, 放弃驱魔香任务!");
-			RemoveExorcism();
-		}
-	});
-
-	// Set Enter War Pet!
-	MyTools::InvokeClassPtr<CPersonPetAction>()->SetPetEnterWar();
-
-
-
-	return AfterFight_Item();
 }
 
 BOOL CLogicBagItemAction::SupplementItem(_In_ CONST std::wstring& wsItemName, _In_ UINT uCount) CONST

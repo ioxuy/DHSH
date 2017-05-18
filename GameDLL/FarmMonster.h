@@ -50,12 +50,6 @@ public:
 	{
 		delete reinterpret_cast<CFarmMonster*>(lpObjectAddr);
 	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CFarmMonster";
-		return wsClassName;
-	}
 };
 
 #endif // !__DHSH_GAMEDLL_GAME_METHOD_FARM_FARMMONSTER_H__

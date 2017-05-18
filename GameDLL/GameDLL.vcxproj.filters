@@ -181,6 +181,9 @@
     <ClCompile Include="CollectItem.cpp">
       <Filter>Game\Script\Collect</Filter>
     </ClCompile>
+    <ClCompile Include="TextVariable.cpp">
+      <Filter>Game\Text\Variable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="CollectItem.h">
       <Filter>Game\Script\Collect</Filter>
+    </ClInclude>
+    <ClInclude Include="TextVariable.h">
+      <Filter>Game\Text\Variable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

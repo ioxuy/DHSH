@@ -32,12 +32,6 @@ public:
 	{
 		delete reinterpret_cast<CSkillExtend*>(lpObjectAddr);
 	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CSkillExtend";
-		return wsClassName;
-	}
 };
 
 #endif // !__DHSH_GAMEDLL_GAME_OBJECT_SKILL_SKILLEXTEND_H__

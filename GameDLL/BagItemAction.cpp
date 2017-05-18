@@ -13,16 +13,25 @@ BOOL CBagItemAction::UseItem(_In_ CONST std::wstring& wsItemName) CONST
 
 VOID CBagItemAction::DropItem() CONST
 {
-	std::vector<CBagItem> Vec;
-	MyTools::InvokeClassPtr<CBagItemExtend>()->GetVecBagItem(Vec, [](CONST CBagItem& itm) 
-	{
-		return MyTools::InvokeClassPtr<CItemFilter>()->GetItemFilterType(itm.GetName()) == CItemFilter::em_ItemFilterType::em_ItemFilterType_Drop;
-	});
+	std::vector<std::wstring> VecDropItem;
+	MyTools::InvokeClassPtr<CItemFilter>()->GetVecItem_By_FilterType(CItemFilter::em_ItemFilterType::em_ItemFilterType_Drop, VecDropItem);
 
-	for (CONST auto& itm : Vec)
+	BOOL bExist = TRUE;
+	while (GameRun && bExist)
 	{
-		LOG_CF_D(L"DropItem, Name=%s, Count=%d", itm.GetName().c_str(), itm.GetCount());
-		itm.Drop();
+		GameSleep(1000);
+
+		bExist = FALSE;
+		for (CONST auto& itm : VecDropItem)
+		{
+			BOOL bExistItem = MyTools::InvokeClassPtr<CBagItemExtend>()->FindItem_By_Name_To_ExcutePtr(itm, [](CONST auto& BagItem)
+			{
+				LOG_CF_D(L"DropItem, Name=%s, Count=%d", BagItem.GetName().c_str(), BagItem.GetCount());
+				BagItem.Drop();
+			});
+
+			bExist = bExist ? TRUE : bExistItem;
+		}
 	}
 }
 

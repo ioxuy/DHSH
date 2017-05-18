@@ -30,6 +30,18 @@ private:
 
 	//
 	BOOL UsePetDrinks() CONST;
+
+	//
+	VOID SetDefaultValue() CONST;
+
+	//
+	BOOL Collect_In_Home(_In_ CONST std::vector<std::wstring>& VecItem) CONST;
+
+	// 
+	BOOL CollectFurniture(_In_ DWORD dwResId) CONST;
+
+	//
+	BOOL Collect_In_Courtyard(_In_ DWORD dwResId, _In_ CONST std::vector<std::wstring>& VecItem) CONST;
 public:
 	static CCollectItem* CreateInstance()
 	{
@@ -39,12 +51,6 @@ public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CCollectItem*>(lpObjectAddr);
-	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CCollectItem";
-		return wsClassName;
 	}
 	
 	CCollectItem(CONST CCollectItem&) = delete;

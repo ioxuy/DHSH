@@ -51,12 +51,6 @@ public:
 	{
 		delete reinterpret_cast<CPlayerExtend*>(lpObjectAddr);
 	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CPlayerExtend";
-		return wsClassName;
-	}
 };
 
 

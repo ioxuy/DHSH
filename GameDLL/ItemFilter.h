@@ -27,6 +27,9 @@ public:
 	
 	//
 	em_ItemFilterType GetItemFilterType(_In_ CONST std::wstring& wsItemName) CONST;
+
+	//
+	UINT GetVecItem_By_FilterType(_In_ em_ItemFilterType emType, _Out_ std::vector<std::wstring>& Vec) CONST;
 private:
 	std::map<std::wstring, em_ItemFilterType> _MapItemFilter;
 	MyTools::CLLock _Lock;
@@ -39,12 +42,6 @@ public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CItemFilter*>(lpObjectAddr);
-	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CItemFilter";
-		return wsClassName;
 	}
 };
 

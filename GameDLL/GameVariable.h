@@ -27,12 +27,6 @@ public:
 		delete reinterpret_cast<CGameVariable*>(lpObjectAddr);
 	}
 
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CGameVariable";
-		return wsClassName;
-	}
-	
 	CGameVariable(CONST CGameVariable&) = delete;
 	
 	CGameVariable& operator=(CONST CGameVariable&) = delete;

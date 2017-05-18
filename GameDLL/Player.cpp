@@ -62,3 +62,8 @@ float CPlayer::GetDis() CONST
 	return MyTools::CLPublic::GetDisBy2D(MyTools::InvokeClassPtr<CPersonAttribute>()->GetPoint(), GetPoint());
 }
 
+DWORD CPlayer::GetResId() CONST
+{
+	return ReadDWORD(GetNodeBase() + C_huan_ID + 0x4) & 0xFFFF;
+}
+

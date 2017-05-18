@@ -25,12 +25,6 @@ public:
 		delete reinterpret_cast<CNpcExtend*>(lpObjectAddr);
 	}
 
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CNpcExtend";
-		return wsClassName;
-	}
-	
 	CNpcExtend(CONST CNpcExtend&) = delete;
 	
 	CNpcExtend& operator=(CONST CNpcExtend&) = delete;

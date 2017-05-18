@@ -44,12 +44,6 @@ public:
 	{
 		delete reinterpret_cast<CExcuteAction*>(lpObjectAddr);
 	}
-
-	static CONST std::wstring& GetClassName_()
-	{
-		static CONST std::wstring wsClassName = L"CExcuteAction";
-		return wsClassName;
-	}
 };
 
 #endif // !__DHSH_GAMEDLL_GAME_METHOD_CALL_EXCUTEACTION_H__

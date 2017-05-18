@@ -17,6 +17,7 @@
 #include "GameUi.h"
 #include "NpcExtend.h"
 #include "Npc.h"
+#include "ResNpcExtend.h"
 
 #define _SELF L"PlayerMove.cpp"
 BOOL CPlayerMove::MoveToPoint(_In_ CONST Point& TarPoint) CONST
@@ -131,8 +132,7 @@ BOOL CPlayerMove::Action_When_UnMove(_In_ CONST std::wstring& wsMapName, _In_ CO
 		return TRUE;
 	}
 
-	CONST auto CurPoint = MyTools::InvokeClassPtr<CPersonAttribute>()->GetPoint();
-	LOG_CF_D(L"MoveToPoint, Tar=[%s,%d,%d], Now=[%d,%d], dis=%.2f", wsMapName.c_str(), TarPoint.X, TarPoint.Y, CurPoint.X, CurPoint.Y, MyTools::InvokeClassPtr<CPersonAttribute>()->GetDis(TarPoint));
+	
 	Move(wsMapName, TarPoint);
 	GameSleep(1000);
 	return  TRUE;
@@ -186,12 +186,61 @@ BOOL CPlayerMove::FindDlg_By_BindMethod() CONST
 	{
 		for (CONST auto& DlgMethodPtr : Vec)
 		{
-			if (itm.GetName() == DlgMethodPtr.wsDlgText)
+			if (itm.GetName().find(DlgMethodPtr.wsDlgText) != -1)
 				return DlgMethodPtr.MethodPtr(itm);
 		}
 	}
 
 	return FALSE;
+}
+
+BOOL CPlayerMove::MoveToHome() CONST
+{
+	if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != L"应天府")
+	{
+		if (!TransferToCity(L"应天府"))
+		{
+			LOG_CF_E(L"没有应天府的传送符……怎么回家园?");
+			return FALSE;
+		}
+	}
+
+	CResText::ResNpcMapPointText ResNpcPoint;
+	if (!MyTools::InvokeClassPtr<CResNpcExtend>()->GetResNpc_By_MapName_NpcName(L"应天府",L"房屋管理员", ResNpcPoint))
+	{
+		LOG_CF_E(L"Npc资源里面竟然不存在[%s:%s],联系老夫!", L"应天府", L"房屋管理员");
+		return FALSE;
+	}
+	
+
+	if (!MoveToPoint(ResNpcPoint.FixPoint))
+		return FALSE;
+
+
+	DWORD dwNpcId = 0;
+	BOOL bOpenDlg = FALSE;
+	BOOL bClickOption = FALSE;
+	MyTools::InvokeClassPtr<CNpcExtend>()->FindNpc_By_Name_ExcutePtr(L"房屋管理员", [&bOpenDlg, &bClickOption, &dwNpcId](CONST CNpc& Npc)
+	{
+		if (Npc.OpenNpcDlg())
+		{
+			bOpenDlg = TRUE;
+			bClickOption = Npc.CLickOption_DisableDlg(L"DoEnterMyHome", L"npcdlg");
+		}
+	});
+	if (!bOpenDlg)
+	{
+		LOG_CF_E(L"打开Npc[房屋管理员] 失败!");
+		return FALSE;
+	}
+
+	if (!bClickOption)
+	{
+		LOG_CF_E(L"点击Npc选项[房屋管理员] 失败!");
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 BOOL CPlayerMove::ShowQuestion_When_UnMove(CONST CGameUi& Question) CONST
@@ -204,10 +253,10 @@ BOOL CPlayerMove::ShowQuestion_When_UnMove(CONST CGameUi& Question) CONST
 
 	dwBase = ReadDWORD(dwBase + C_dati_erji);
 
-	MyTools::CCharacter::strcpy_my(Buffer1, reinterpret_cast<CHAR*>(ReadDWORD(ReadDWORD(dwBase + 0 * 0x98) + 0x8)));
-	MyTools::CCharacter::strcpy_my(Buffer2, reinterpret_cast<CHAR*>(ReadDWORD(ReadDWORD(dwBase + 1 * 0x98) + 0x8)));
-	MyTools::CCharacter::strcpy_my(Buffer3, reinterpret_cast<CHAR*>(ReadDWORD(ReadDWORD(dwBase + 2 * 0x98) + 0x8)));
-	MyTools::CCharacter::strcpy_my(Buffer4, reinterpret_cast<CHAR*>(ReadDWORD(ReadDWORD(dwBase + 3 * 0x98) + 0x8)));
+	MyTools::CCharacter::strcpy_my(Buffer1, reinterpret_cast<CHAR*>(ReadDWORD(dwBase + 0 * 0x98 + 0x8)));
+	MyTools::CCharacter::strcpy_my(Buffer2, reinterpret_cast<CHAR*>(ReadDWORD(dwBase + 1 * 0x98 + 0x8)));
+	MyTools::CCharacter::strcpy_my(Buffer3, reinterpret_cast<CHAR*>(ReadDWORD(dwBase + 2 * 0x98 + 0x8)));
+	MyTools::CCharacter::strcpy_my(Buffer4, reinterpret_cast<CHAR*>(ReadDWORD(dwBase + 3 * 0x98 + 0x8)));
 
 	DWORD dwAnswer = 0xFF;
 	if (strlen(Buffer1) > 0)
@@ -238,7 +287,12 @@ BOOL CPlayerMove::MoveToGeneralStore(_Out_ std::wstring& wsNpcName) CONST
 	std::wstring wsCurrentMapName = MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName();
 	if (!MyTools::InvokeClassPtr<CMapSearch>()->Exist(wsCurrentMapName))
 	{
-		LOG_MSG_CF(L"当前地图:[%s] 不可识别……先跑到大地图再开始好吗?");
+		if (TransferToCity(L"应天府") || TransferToCity(L"星秀村") || TransferToCity(L"汴京城"))
+		{
+			LOG_CF_D(L"由于处于非大地图的范围……所以先使用回城符!");
+			return MoveToGeneralStore(wsNpcName);
+		}
+		LOG_MSG_CF(L"当前地图:[%s] 不可识别,并且身上不存在回城符……先跑到大地图再开始好吗?");
 		StopGame;
 		return FALSE;
 	}
@@ -270,13 +324,16 @@ BOOL CPlayerMove::MoveToGeneralStore(_Out_ std::wstring& wsNpcName) CONST
 	}
 	
 
-	return MoveToGeneralStoreNpc(wsNpcName);
+	return MoveToGeneralStoreNpc(wsCityName, wsNpcName);
 }
 
 VOID CPlayerMove::Move(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint) CONST
 {
+	CONST auto CurPoint = MyTools::InvokeClassPtr<CPersonAttribute>()->GetPoint();
+	
 	if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() == wsMapName)
 	{
+		LOG_CF_D(L"MoveToPoint, Tar=[%d,%d], Now=[%d,%d], dis=%.2f", TarPoint.X, TarPoint.Y, CurPoint.X, CurPoint.Y, MyTools::InvokeClassPtr<CPersonAttribute>()->GetDis(TarPoint));
 		MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([TarPoint]
 		{
 			MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint(TarPoint);
@@ -284,6 +341,7 @@ VOID CPlayerMove::Move(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& Tar
 	}
 	else
 	{
+		LOG_CF_D(L"MoveToPoint, Tar=[%s,%d,%d], Now=[%d,%d], dis=%.2f", wsMapName.c_str(), TarPoint.X, TarPoint.Y, CurPoint.X, CurPoint.Y, MyTools::InvokeClassPtr<CPersonAttribute>()->GetDis(TarPoint));
 		MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([wsMapName, TarPoint]
 		{
 			MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint(MyTools::CCharacter::UnicodeToASCII(wsMapName).c_str(), TarPoint);
@@ -291,22 +349,18 @@ VOID CPlayerMove::Move(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& Tar
 	}
 }
 
-BOOL CPlayerMove::MoveToGeneralStoreNpc(_In_ CONST std::wstring& wsNpcName) CONST
+BOOL CPlayerMove::MoveToGeneralStoreNpc(_In_ CONST std::wstring& wsMapName, _In_ CONST std::wstring& wsNpcName) CONST
 {
-	auto pNpcVec = MyTools::InvokeClassPtr<CResText>()->GetStructPtr<CONST std::vector<CResText::ResNpcMapPointText>*>(L"ResNpcPointText");
-	if (pNpcVec == nullptr)
-		return FALSE;
-
-	auto pResNpc = MyTools::CLPublic::Vec_find_if_Const(*pNpcVec, [wsNpcName](CONST CResText::ResNpcMapPointText& ResNpc) { return ResNpc.wsNpcName == wsNpcName; });
-	if (pResNpc == nullptr)
+	CResText::ResNpcMapPointText ResNpc;
+	if (!MyTools::InvokeClassPtr<CResNpcExtend>()->GetResNpc_By_MapName_NpcName(wsMapName, wsNpcName, ResNpc))
 	{
 		StopGame;
 		LOG_MSG_CF(L"当前资源文件竟然不存在Npc[%s]", wsNpcName.c_str());
 		return FALSE;
 	}
-
+	
 	LOG_CF_D(L"走到杂货摊Npc[%s]旁边", wsNpcName.c_str());
-	if (!MoveToPoint(pResNpc->FixPoint))
+	if (!MoveToPoint(ResNpc.FixPoint))
 	{
 		LOG_CF_E(L"走到%s失败!", wsNpcName.c_str());
 		return FALSE;
