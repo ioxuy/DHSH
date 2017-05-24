@@ -42,9 +42,42 @@ private:
 	}
 };
 
+class CTest
+{
+public:
+	CTest()
+	{
+		std::cout << typeid(*this).name() << std::endl;
+	}
+	~CTest() = default;
+
+private:
+
+};
+
+
+
+
 int main()
 {
-	std::cout << typeid(CExpr::GetInstance()).hash_code() << std::endl;
+	float f = 1.01f;
+	DWORD dwValue = *reinterpret_cast<DWORD*>(&f);
+	BYTE bArray[4] = { 0 };
+
+	bArray[0] = (static_cast<BYTE>(dwValue & 0xFF));
+	bArray[1] = (static_cast<BYTE>(dwValue >> 0x8 & 0xFF));
+	bArray[2] = (static_cast<BYTE>(dwValue >> 16 & 0xFF));
+	bArray[3] = (static_cast<BYTE>(dwValue >> 24 & 0xFF));
+
+	DWORD dwText;
+	BYTE* ValuePtr = reinterpret_cast<BYTE*>(&dwText);
+	*ValuePtr++ = bArray[0];
+	*ValuePtr++ = bArray[1];
+	*ValuePtr++ = bArray[2];
+	*ValuePtr++ = bArray[3];
+
+	float a = *reinterpret_cast<float*>(&dwText);
+	
 	::Sleep(-1);
 	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))

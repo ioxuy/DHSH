@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="MyTools">
+      <UniqueIdentifier>{fcbee3fe-6c45-4f39-a066-8b73cf888203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Socket">
+      <UniqueIdentifier>{776f5701-720a-4186-8760-3d43bfe9799c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{eed449d9-2828-435e-8028-a4693b0e58db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Echo">
+      <UniqueIdentifier>{fc0a292d-b7bf-43e7-a9e6-3a2a18b64bda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{b1d412e5-ffb4-4371-abb4-c1f4d1ee28d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Account">
+      <UniqueIdentifier>{505ff176-5aff-4e05-a376-b400b2b2f161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{e68626be-b004-40df-89d4-1ec83a836877}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\MyTools\MyTools\ByteBuffer.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\Character.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\ClassInstance.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLErrMsg.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLExpression.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLExpressionCalc.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLFile.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLLock.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLProcess.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLPublic.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLResManager.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLServer.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLTag.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLThread.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLVector.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CmdLog.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\Log.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\RelfexClass.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\RelfexStruct.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\SocketBuffer.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\SocketClient.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\SocketIoEvent.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\TimeTick.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServer.h">
+      <Filter>Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClient.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="EchoPacket.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="DbManager.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="AccountExtend.h">
+      <Filter>Account</Filter>
+    </ClInclude>
+    <ClInclude Include="Account.h">
+      <Filter>Account</Filter>
+    </ClInclude>
+    <ClInclude Include="AccountAction.h">
+      <Filter>Account</Filter>
+    </ClInclude>
+    <ClInclude Include="AccountConfigExtend.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\MyTools\MyTools\Character.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLErrMsg.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLExpression.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLExpressionCalc.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLFile.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLLock.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLProcess.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLServer.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLThread.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CmdLog.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CPublic.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\Log.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\RelfexClass.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\SocketBuffer.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\SocketClient.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\SocketIoEvent.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameClient.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServer.cpp">
+      <Filter>Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="EchoPacket.cpp">
+      <Filter>Echo</Filter>
+    </ClCompile>
+    <ClCompile Include="DbManager.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="AccountExtend.cpp">
+      <Filter>Account</Filter>
+    </ClCompile>
+    <ClCompile Include="Account.cpp">
+      <Filter>Account</Filter>
+    </ClCompile>
+    <ClCompile Include="AccountAction.cpp">
+      <Filter>Account</Filter>
+    </ClCompile>
+    <ClCompile Include="AccountConfigExtend.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

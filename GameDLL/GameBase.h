@@ -299,6 +299,20 @@ enum class em_TextVar
 	em_TextVar_CollectHome_Furniture
 };
 
+enum em_Sock_Msg
+{
+	em_Sock_Msg_KeepLive = 0x1,
+	em_Sock_Msg_QueryCard,
+	em_Sock_Msg_Recharge,
+	em_Sock_Msg_ReadConfig,
+	em_Sock_Msg_WriteConfig,
+	em_Sock_Msg_AccountLogin,
+	em_Sock_Msg_GameLogin,
+	em_Sock_Msg_Register,
+	em_Sock_Msg_QueryHour,
+	em_Sock_Msg_ServerText
+};
+
 
 struct Point
 {
