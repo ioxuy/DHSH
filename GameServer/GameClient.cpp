@@ -14,7 +14,7 @@ VOID CGameClient::Remove() CONST
 
 VOID CGameClient::Add()
 {
-
+	_ulKeepALiveTick = ::GetTickCount64();
 }
 
 VOID CGameClient::SetKeepALiveTick() _NOEXCEPT
@@ -24,7 +24,7 @@ VOID CGameClient::SetKeepALiveTick() _NOEXCEPT
 
 BOOL CGameClient::IsOnLine() CONST _NOEXCEPT
 {
-	return _ulKeepALiveTick != NULL && (::GetTickCount64() - _ulKeepALiveTick >= 30 * 1000);
+	return IsExistClient() && (::GetTickCount64() - _ulKeepALiveTick <= 30 * 1000);
 }
 
 VOID CGameClient::SetIP(_In_ CONST std::wstring& wsClientIP) _NOEXCEPT
@@ -50,4 +50,9 @@ VOID CGameClient::SetToken(_In_ DWORD ulToken) _NOEXCEPT
 DWORD CGameClient::GetToken() CONST _NOEXCEPT
 {
 	return _dwToken;
+}
+
+BOOL CGameClient::IsExistClient() CONST _NOEXCEPT
+{
+	return _ulKeepALiveTick != NULL;
 }

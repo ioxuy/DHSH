@@ -76,6 +76,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Visual Studio 2010\Projects\MyTools;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -89,10 +90,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -186,6 +188,33 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\MyTools\MyTools\Character.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\ClassInstance.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLClient.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLClientIoEvent.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLErrMsg.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLExpression.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLExpressionCalc.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLFile.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLLock.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLPic.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLProcess.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLPublic.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLResManager.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLTag.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLThread.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CmdLog.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\Log.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\RelfexClass.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\RelfexStruct.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\SocketBuffer.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\TimeTick.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h" />
+    <ClInclude Include="ConsoleClient.h" />
+    <ClInclude Include="ConsoleVariable.h" />
+    <ClInclude Include="MainFormDlg.h" />
+    <ClInclude Include="RechargeCardDlg.h" />
+    <ClInclude Include="RechargeCardLogDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -193,6 +222,29 @@
     <ClInclude Include="UserConsoleDlg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\MyTools\MyTools\Character.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLClient.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLClientIoEvent.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLErrMsg.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLExpression.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLExpressionCalc.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLFile.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLLock.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLPic.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLProcess.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLThread.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CmdLog.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CPublic.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\Log.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\RelfexClass.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\SocketBuffer.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp" />
+    <ClCompile Include="ConsoleClient.cpp" />
+    <ClCompile Include="ConsoleVariable.cpp" />
+    <ClCompile Include="MainFormDlg.cpp" />
+    <ClCompile Include="RechargeCardDlg.cpp" />
+    <ClCompile Include="RechargeCardLogDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

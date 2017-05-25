@@ -67,20 +67,16 @@ public:
 	BOOL SetAccountLoginRecord(_In_ DWORD dwAccountId, _In_ CONST std::wstring& wsClientIp) CONST;
 
 
-	// 运行异步执行SQL线程
-	BOOL RunThread();
-
-
-	// Stop 异步执行SQL线程
-	VOID Stop();
-
-
 	// 异步执行SQL
 	VOID AsyncExcuteSQL(_In_ CONST std::wstring& wsSQL);
+
+
+	// 
+	BOOL GetTime_By_AccountId(_In_ DWORD dwAccountId, _Out_ DWORD& dwTime) CONST;
 private:
 
 	// 
-	BOOL ExcuteSQL(_In_ CONST std::wstring& wsSQL) CONST;
+	BOOL ExcuteSQL_No_Result(_In_ CONST std::wstring& wsSQL) CONST;
 
 	//
 	BOOL ExcuteSQL_Ret_Single_Text(_In_ CONST std::wstring& wsSQL, _Out_ std::wstring& wsText) CONST;
@@ -96,14 +92,6 @@ private:
 
 	//
 	VOID FreeMem(_In_ SQLEnvParam& Env) CONST;
-
-	// Thread
-	static DWORD WINAPI _WorkThread(LPVOID lpParam);
-private:
-	HANDLE                   _hThread;
-	BOOL                     _bRun;
-	std::queue<std::wstring> _QueueSQL;
-	MyTools::CLLock			 _Lock;
 };
 
 

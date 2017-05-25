@@ -24,6 +24,8 @@ protected:
 
 	virtual BOOL FindClientSharePtr(_In_ MyTools::CLSocketClient* pSocketClient, _Out_ std::shared_ptr<MyTools::CLSocketClient>& SocketClientPtr) override;
 
+protected:
+	VOID DisClientConnect(_In_ MyTools::CLSocketClient* pSocketClientPt);
 private:
 	static DWORD WINAPI _WorkThread(LPVOID lpParam);
 protected:

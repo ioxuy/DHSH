@@ -1,4 +1,5 @@
 #include "GameServer.h"
+#include <future>
 #include <MyTools/Log.h>
 #include "GameClient.h"
 #include "EchoPacket.h"
@@ -116,7 +117,24 @@ DWORD WINAPI CGameServer::_WorkThread(LPVOID lpParam)
 		pGameServer->_MapLock.Access([pGameServer, &dwCount]
 		{
 			for (CONST auto& itm : pGameServer->_MapClient)
-				dwCount += itm.second->IsOnLine() ? 1 : 0;
+			{
+				if (itm.second->GetAccount() != nullptr)
+				{
+					BOOL bOnLine = itm.second->IsOnLine();
+					BOOL bExistClient = itm.second->IsExistClient();
+				}
+				if (itm.second->IsOnLine())
+				{
+					dwCount += 1;
+					continue;
+				}
+				else if (!itm.second->IsExistClient())
+					continue;
+				
+				std::async(std::launch::async, &CGameServer::DisClientConnect, pGameServer, itm.second.get());
+				itm.second->DisConnect();
+			}
+				
 		});
 
 		LOG_CF_D(L"1分钟在线数量=%d个", dwCount);
@@ -133,4 +151,9 @@ BOOL CGameServer::RunPrintThread()
 CGameServer::~CGameServer()
 {
 
+}
+
+VOID CGameServer::DisClientConnect(_In_ MyTools::CLSocketClient* pSocketClientPt)
+{
+	pSocketClientPt->DisConnect();
 }

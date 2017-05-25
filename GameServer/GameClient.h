@@ -33,6 +33,8 @@ public:
 	VOID SetToken(_In_ DWORD ulToken) _NOEXCEPT;
 
 	DWORD GetToken() CONST _NOEXCEPT;
+
+	BOOL IsExistClient() CONST _NOEXCEPT;
 private:
 	std::shared_ptr<CAccount> _Account;
 	ULONGLONG                 _ulKeepALiveTick;

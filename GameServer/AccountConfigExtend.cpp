@@ -1,4 +1,5 @@
 #include "AccountConfigExtend.h"
+#include <future>
 #include <MyTools/Character.h>
 #include "DbManager.h"
 

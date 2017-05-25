@@ -42,3 +42,11 @@ BOOL CAccountExtend::FindAccount_By_AccountName_And_Action(_In_ CONST std::wstri
 
 	return bRetCode;
 }
+
+VOID CAccountExtend::AddAccount(CONST CAccount& Account)
+{
+	_LockMapAccount.Access([&]
+	{
+		_MapAccount.insert(std::make_pair(Account.GetAccountName(), std::make_shared<CAccount>(Account)));
+	});
+}

@@ -1,4 +1,5 @@
 #include "DbManager.h"
+#include <future>
 #include <MyTools/Log.h>
 #include <MyTools/Character.h>
 #include "Account.h"
@@ -15,7 +16,7 @@ BOOL CDbManager::ExcuteSQL_Ret_Single_Text(_In_ CONST std::wstring& wsSQL, _Out_
 	});
 }
 
-CDbManager::CDbManager() : _hThread(INVALID_HANDLE_VALUE), _bRun(FALSE), _Lock(L"CDbManager._Lock")
+CDbManager::CDbManager()
 {
 
 }
@@ -42,7 +43,7 @@ BOOL CDbManager::GetAccount(_Out_ std::vector<CAccount>& VecAccount)
 		::SQLGetData(hStmt, 4, SQL_C_WCHAR, Text4, uMaxTextSize, NULL);
 		::SQLGetData(hStmt, 5, SQL_C_WCHAR, Text5, uMaxTextSize, NULL);
 
-		CAccount Account(_wtoi(Text1), Text2, Text3, _wtoi(Text4) != 0, _wtoi(Text5));
+		CAccount Account(static_cast<DWORD>(_wtoi(Text1)), std::wstring(Text2), std::wstring(Text3), _wtoi(Text4) != 0 ? TRUE : FALSE, static_cast<DWORD>(_wtoi(Text5)));
 		VecAccount.push_back(std::move(Account));
 	});
 }
@@ -97,7 +98,7 @@ BOOL CDbManager::ExcuteSQL(_In_ CONST std::wstring& wsSQL, std::function<VOID(SQ
 	return TRUE;
 }
 
-BOOL CDbManager::ExcuteSQL(_In_ CONST std::wstring& wsSQL) CONST
+BOOL CDbManager::ExcuteSQL_No_Result(_In_ CONST std::wstring& wsSQL) CONST
 {
 	return ExcuteSQL(wsSQL, nullptr);
 }
@@ -140,41 +141,29 @@ BOOL CDbManager::RegisterAccount(_In_ CONST std::wstring& wsAccountName, _In_ CO
 BOOL CDbManager::SetAccountConfig(_In_ DWORD dwAccountId, _In_ CONST std::wstring& wsConfigName, _In_ CONST std::wstring& wsConfigValue) CONST
 {
 	std::wstring wsSQL;
-	return ExcuteSQL(MyTools::CCharacter::FormatText(wsSQL, L"exec [proc_SetAccountConfig] %d,N'%s',N'%s'", dwAccountId, wsConfigName.c_str(), wsConfigValue.c_str()));
+	return ExcuteSQL_No_Result(MyTools::CCharacter::FormatText(wsSQL, L"exec [proc_SetAccountConfig] %d,N'%s',N'%s'", dwAccountId, wsConfigName.c_str(), wsConfigValue.c_str()));
 }
 
 BOOL CDbManager::SetAccountLoginRecord(_In_ DWORD dwAccountId, _In_ CONST std::wstring& wsClientIp) CONST
 {
 	std::wstring wsSQL;
-	return ExcuteSQL(MyTools::CCharacter::FormatText(wsSQL, L"exec [SetAccountIP] %d,N'%s'", dwAccountId, wsClientIp.c_str()));
+	return ExcuteSQL_No_Result(MyTools::CCharacter::FormatText(wsSQL, L"exec [SetAccountIP] %d,N'%s'", dwAccountId, wsClientIp.c_str()));
 }
 
-BOOL CDbManager::RunThread()
-{
-	if (_hThread != INVALID_HANDLE_VALUE)
-	{
-		LOG_CF_E(L"Thread Already Run...");
-		return FALSE;
-	}
-
-	_bRun = TRUE;
-	_hThread = cbBEGINTHREADEX(NULL, NULL, _WorkThread, this, NULL, NULL);
-	return TRUE;
-}
-
-VOID CDbManager::Stop()
-{
-	if (_hThread == INVALID_HANDLE_VALUE)
-		return;
-
-	_bRun = FALSE;
-	::WaitForSingleObject(_hThread, INFINITE);
-	_hThread = INVALID_HANDLE_VALUE;
-}
 
 VOID CDbManager::AsyncExcuteSQL(_In_ CONST std::wstring& wsSQL)
 {
-	_Lock.Access([&] { _QueueSQL.push(wsSQL); });
+	std::async(std::launch::async, &CDbManager::ExcuteSQL_No_Result, this, wsSQL);
+}
+
+BOOL CDbManager::GetTime_By_AccountId(_In_ DWORD dwAccountId, _Out_ DWORD& dwTime) CONST
+{
+	std::wstring wsText, wsSQL;
+	if (!ExcuteSQL_Ret_Single_Text(MyTools::CCharacter::FormatText(wsSQL, L"exec [GetAccountById] %d", dwAccountId), wsText))
+		return FALSE;
+
+	dwTime = _wtoi(wsText.c_str());
+	return TRUE;
 }
 
 BOOL CDbManager::InitializeSQLEnv(_Out_ SQLEnvParam& Env) CONST
@@ -291,35 +280,3 @@ VOID CDbManager::FreeMem(_In_ SQLEnvParam& Env) CONST
 	}
 }
 
-DWORD WINAPI CDbManager::_WorkThread(LPVOID lpParam)
-{
-	auto pDbManager = static_cast<CDbManager *>(lpParam);
-
-	BOOL bExist = FALSE;
-	std::wstring wsSQL;
-
-	while (pDbManager->_bRun)
-	{
-		pDbManager->_Lock.Access([&wsSQL, &bExist, pDbManager]
-		{
-			if (pDbManager->_QueueSQL.empty())
-				bExist = FALSE;
-			else
-			{
-				bExist = TRUE;
-				wsSQL = std::move(pDbManager->_QueueSQL.front());
-				pDbManager->_QueueSQL.pop();
-			}	
-		});
-
-		if (!bExist)
-		{
-			::Sleep(100);
-			continue;
-		}
-
-		pDbManager->ExcuteSQL(wsSQL);
-	}
-
-	return 0;
-}	

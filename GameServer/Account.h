@@ -7,7 +7,7 @@
 class CAccount
 {
 public:
-	CAccount(_In_ DWORD dwAccountId, _In_ CONST std::wstring& wsAccountName, _In_ CONST std::wstring& wsAccountPass, _In_ BOOL bForzen, _In_ UINT uHour);
+	CAccount(_In_ DWORD dwAccountId, _In_ CONST std::wstring& wsAccountName, _In_ CONST std::wstring& wsAccountPass, _In_ BOOL bForzen, _In_ INT uHour);
 	~CAccount() = default;
 
 	// ’ ∫≈ID
@@ -33,6 +33,9 @@ public:
 	VOID SetTokenCount(em_Token_Action emAction);
 
 	DWORD GetTokenCount() CONST;
+
+
+	VOID SetNewTime(_In_ int nTime);
 protected:
 	std::wstring            _wsAccountName;
 	std::wstring            _wsAccountPass;

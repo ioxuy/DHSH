@@ -10,6 +10,15 @@
 
 int main()
 {
+	CONST static std::wstring wsMutexName = L"CL_GAMESERVER";
+	if (OpenMutexW(MUTEX_ALL_ACCESS, FALSE, wsMutexName.c_str()) != NULL)
+	{
+		std::wcout << L"Server Already Exist!" << std::endl;
+		::Sleep(3000);
+		return 0;
+	}
+	::CreateMutexW(NULL, FALSE, wsMutexName.c_str());
+
 	MyTools::CLog::GetInstance().SetClientName(L"GameServer", L"C:\\", FALSE, 100 * 1024 * 1024);
 	if (!CAccountExtend::GetInstance().Initialize())
 	{
@@ -21,11 +30,6 @@ int main()
 		std::wcout << L"CAccountConfigExtend::Initialize Faild!" << std::endl;
 		goto lb_Exit;
 	}
-	if (!CDbManager::GetInstance().RunThread())
-	{
-		std::wcout << L"CDbManager::RunThread Faild!" << std::endl;
-		goto lb_Exit;
-	}
 	if (!CEchoPacket::GetInstance().ReadLocalVersion())
 	{
 		std::wcout << L"CEchoPacket::ReadLocalVersion Faild!" << std::endl;
@@ -33,8 +37,9 @@ int main()
 	}
 
 	CGameServer::GetInstance().Run(12345, 3000);
+	CGameServer::GetInstance().RunPrintThread();
 	std::wcout << L"Runing..." << std::endl;
 lb_Exit:;
-	system("pause");
+	::Sleep(-1);
 	return 0;
 }

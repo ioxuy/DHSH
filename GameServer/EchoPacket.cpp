@@ -118,6 +118,14 @@ BOOL CEchoPacket::Register(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocket
 		*pSocketBuffer << L"创建帐号失败……联系作者查询详细原因!";
 		return TRUE;
 	}
+	else if (wsText.find(L"创建成功!") != -1)
+	{
+		DWORD dwAccountId = _wtoi(wsText.substr(wsText.find(L"=") + 1).c_str());
+		CAccount Account(dwAccountId, RegisterContent.wsAccountName, RegisterContent.wsAccountPass, FALSE, 0);
+		CAccountExtend::GetInstance().AddAccount(Account);
+
+		wsText = L"创建成功!";
+	}
 	
 	pSocketBuffer->clear();
 	pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_Register);
@@ -129,6 +137,8 @@ BOOL CEchoPacket::KeepALive(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocke
 {
 	pGameClient->SetKeepALiveTick();
 	pSocketBuffer->clear();
+	pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_KeepLive);
+	*pSocketBuffer << pGameClient->GetAccount()->GetEffectiveHour();
 	return TRUE;
 }
 
@@ -157,8 +167,15 @@ BOOL CEchoPacket::RechargeCard(_In_ CGameClient* pGameClient, _In_ MyTools::CLSo
 	pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_Recharge);
 
 	std::wstring wsText;
+	DWORD dwNewTime = 0;
 	if (CDbManager::GetInstance().RechargeCard(pGameClient->GetAccount()->GetAccountId(), wsCardNo, wsText))
+	{
+		if (wsText == L"充值完毕!" && CDbManager::GetInstance().GetTime_By_AccountId(pGameClient->GetAccount()->GetAccountId(), dwNewTime))
+		{
+			pGameClient->GetAccount()->SetNewTime(dwNewTime);
+		}
 		*pSocketBuffer << wsText;
+	}
 	else
 		*pSocketBuffer << L"充值失败……请咨询作者查询详细原因!";
 

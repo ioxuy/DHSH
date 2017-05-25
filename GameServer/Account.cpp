@@ -1,12 +1,15 @@
 #include "Account.h"
 
-CAccount::CAccount(_In_ DWORD dwAccountId, _In_ CONST std::wstring& wsAccountName, _In_ CONST std::wstring& wsAccountPass, _In_ BOOL bForzen, _In_ UINT uHour) :
+CAccount::CAccount(_In_ DWORD dwAccountId, _In_ CONST std::wstring& wsAccountName, _In_ CONST std::wstring& wsAccountPass, _In_ BOOL bForzen, _In_ INT uHour) :
 	_dwAccountId(dwAccountId),
 	_wsAccountName(wsAccountName),
+	_wsAccountPass(wsAccountPass),
 	_ulToken(NULL),
-	_dwTokenCount(NULL)
+	_dwTokenCount(NULL),
+	_bForzen(bForzen),
+	_uEffectiveHour(uHour < 0 ? 0 : uHour)
 {
-
+	_ulEffectiveTick = ::GetTickCount64();
 }
 
 DWORD CAccount::GetAccountId() CONST _NOEXCEPT
@@ -17,7 +20,7 @@ DWORD CAccount::GetAccountId() CONST _NOEXCEPT
 UINT CAccount::GetEffectiveHour() CONST _NOEXCEPT
 {
 	UINT uHour = static_cast<decltype(uHour)>((::GetTickCount64() - _ulEffectiveTick) / 1000 / 60 / 60);
-	return (_ulEffectiveTick == NULL || uHour <= _uEffectiveHour) ? 0 : uHour - _uEffectiveHour;
+	return (_uEffectiveHour == 0 || _ulEffectiveTick == NULL || uHour >= _uEffectiveHour) ? 0 : _uEffectiveHour - uHour;
 }
 
 BOOL CAccount::IsForzen() CONST _NOEXCEPT
@@ -63,4 +66,13 @@ VOID CAccount::SetTokenCount(em_Token_Action emAction)
 DWORD CAccount::GetTokenCount() CONST
 {
 	return _dwTokenCount;
+}
+
+VOID CAccount::SetNewTime(_In_ int nTime)
+{
+	if (nTime > 0)
+	{
+		_uEffectiveHour = nTime;
+		_ulEffectiveTick = ::GetTickCount64();
+	}
 }

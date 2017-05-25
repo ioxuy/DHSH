@@ -299,6 +299,8 @@ enum class em_TextVar
 	em_TextVar_CollectHome_Furniture
 };
 
+
+#define GAMEVERSION 1.01f
 enum em_Sock_Msg
 {
 	em_Sock_Msg_KeepLive = 0x1,
@@ -390,7 +392,9 @@ typedef struct GameAccountShareContent
 
 struct GameShareGlobalConfig
 {
-
+	DWORD dwToken;
+	DWORD dwHour;
+	ULONGLONG ulTimeTick;
 };
 
 typedef struct GameShareContent

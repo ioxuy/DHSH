@@ -16,6 +16,9 @@ public:
 
 	//
 	BOOL FindAccount_By_AccountName_And_Action(_In_ CONST std::wstring& wsAccountName, _In_ std::function<VOID(std::shared_ptr<CAccount>)> ActionPtr) CONST;
+
+	//
+	VOID AddAccount(CONST CAccount& Account);
 private:
 	std::map<std::wstring,std::shared_ptr<CAccount>> _MapAccount;
 	MyTools::CLLock _LockMapAccount;

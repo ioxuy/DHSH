@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Code">
+      <UniqueIdentifier>{6c081591-3f6c-4a8e-9eb3-6b41e9c63b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Socket">
+      <UniqueIdentifier>{e429fcd5-795e-4065-ab79-6a829fd0a53b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyTools">
+      <UniqueIdentifier>{1f105181-85a9-4f8e-8043-e5b52576c244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Variable">
+      <UniqueIdentifier>{9e6359e5-58c9-406e-886e-9cdfeb7aecaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -33,6 +45,87 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ConsoleClient.h">
+      <Filter>Code\Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\Character.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\ClassInstance.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLClient.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLClientIoEvent.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLErrMsg.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLExpression.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLExpressionCalc.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLFile.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLLock.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLPic.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLProcess.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLPublic.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLResManager.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLTag.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLThread.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CmdLog.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\Log.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\RelfexClass.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\RelfexStruct.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\SocketBuffer.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\TimeTick.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleVariable.h">
+      <Filter>Code\Variable</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFormDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RechargeCardDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RechargeCardLogDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UserConsole.cpp">
@@ -42,6 +135,75 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleClient.cpp">
+      <Filter>Code\Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\Character.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLClient.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLClientIoEvent.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLErrMsg.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLExpression.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLExpressionCalc.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLFile.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLLock.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLPic.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLProcess.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLThread.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CmdLog.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CPublic.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\Log.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\RelfexClass.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\SocketBuffer.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleVariable.cpp">
+      <Filter>Code\Variable</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFormDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RechargeCardDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RechargeCardLogDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

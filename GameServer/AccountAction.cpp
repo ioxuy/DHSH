@@ -7,7 +7,7 @@ BOOL CAccountAction::Login(_In_ CONST std::wstring& wsAccountName, _In_ CONST st
 	BOOL bExist = FALSE;
 	CAccountExtend::GetInstance().FindAccount_By_AccountName_And_Action(wsAccountName, [wsAccountPass, &Account, &bExist](std::shared_ptr<CAccount> itm)
 	{
-		if (Account->GetAccountPass() == wsAccountPass)
+		if (itm->GetAccountPass() == wsAccountPass)
 		{
 			Account = itm;
 			bExist = TRUE;
