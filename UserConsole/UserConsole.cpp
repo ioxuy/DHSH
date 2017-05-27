@@ -7,6 +7,7 @@
 #include "UserConsoleDlg.h"
 #include "ConsoleVariable.h"
 #include "MainFormDlg.h"
+#include "UserConfigDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

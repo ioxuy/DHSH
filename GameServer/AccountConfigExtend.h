@@ -13,6 +13,13 @@ public:
 		std::wstring wsConfigName;
 		std::wstring wsConfigValue;
 	};
+
+	struct WriteConfigText
+	{
+		std::wstring wsPlayerName;
+		std::wstring wsType;
+		std::vector<CAccountConfigExtend::AccountConfig> VecConfig;
+	};
 public:
 	CAccountConfigExtend();
 	~CAccountConfigExtend() = default;
@@ -24,7 +31,7 @@ public:
 	BOOL FindConfig(_In_ DWORD dwAccountId, _In_ CONST std::wstring& wsConfigName, _Out_ std::wstring& wsConfigValue) CONST;
 
 	//
-	VOID WriteConfig(_In_ DWORD dwAccountId, _In_ CONST std::vector<AccountConfig>& Vec);
+	VOID WriteConfig(_In_ DWORD dwAccountId, _In_ CONST WriteConfigText& WriteConfigText_);
 private:
 	MyTools::CLLock        _Lock;
 	std::map<std::wstring, std::wstring> _MapConfig;

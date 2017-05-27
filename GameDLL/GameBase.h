@@ -312,7 +312,7 @@ enum em_Sock_Msg
 	em_Sock_Msg_GameLogin,
 	em_Sock_Msg_Register,
 	em_Sock_Msg_QueryHour,
-	em_Sock_Msg_ServerText
+	em_Sock_Msg_ServerText,
 };
 
 
@@ -342,6 +342,13 @@ struct Point
 };
 
 
+struct ConfigText
+{
+	std::wstring wsConfigName;
+	std::wstring wsConfigValue;
+};
+
+
 ///////Account Share///////////////////////////////////////////////////////////////////
 
 struct GameAccountContent
@@ -367,6 +374,7 @@ struct GameAccountStatus
 
 enum em_PersonFightMode
 {
+	em_PersonFightMode_None,
 	em_PersonFightMode_FixF1,
 	em_PersonFightMode_NormalAttack,
 	em_PersonFightMode_SwitchF1F2
@@ -374,6 +382,7 @@ enum em_PersonFightMode
 
 enum em_PetFightMode
 {
+	em_PetFightMode_None,
 	em_PersonFightMode_Denfence,
 	em_PersonFightMode_Skill
 };

@@ -34,7 +34,11 @@
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
 
-
+enum em_Button_Config_Status
+{
+	em_Button_Config_Status_Lock,
+	em_Button_Config_Status_Update
+};
 
 
 

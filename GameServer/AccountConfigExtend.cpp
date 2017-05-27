@@ -43,12 +43,12 @@ BOOL CAccountConfigExtend::FindConfig(_In_ DWORD dwAccountId, _In_ CONST std::ws
 	return bExist;
 }
 
-VOID CAccountConfigExtend::WriteConfig(_In_ DWORD dwAccountId, _In_ CONST std::vector<AccountConfig>& Vec)
+VOID CAccountConfigExtend::WriteConfig(_In_ DWORD dwAccountId, _In_ CONST WriteConfigText& WriteConfigText_)
 {
 	_Lock.Access([&]
 	{
 		std::wstring wsKey;
-		for (CONST auto& itm : Vec)
+		for (CONST auto& itm : WriteConfigText_.VecConfig)
 		{
 			auto itr = _MapConfig.find(MyTools::CCharacter::FormatText(wsKey, L"%d-%s", dwAccountId, itm.wsConfigName.c_str()));
 			if (itr == _MapConfig.end())

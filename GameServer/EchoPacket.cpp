@@ -184,32 +184,40 @@ BOOL CEchoPacket::RechargeCard(_In_ CGameClient* pGameClient, _In_ MyTools::CLSo
 
 BOOL CEchoPacket::ReadConfig(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocketBuffer* pSocketBuffer) CONST
 {
-	auto Vec = ExtractPacket<std::vector<std::wstring>>([&pSocketBuffer]
+	struct ReadConfigText
 	{
-		std::vector<std::wstring> Vec;
+		std::wstring wsPlayerName;
+		std::wstring wsType;
+		std::vector<std::wstring> VecText;
+	};
+	auto Vec = ExtractPacket<ReadConfigText>([&pSocketBuffer]
+	{
+		ReadConfigText ReadConfigText_;
 
 		DWORD dwSize = 0;
-		*pSocketBuffer >> dwSize;
+		*pSocketBuffer >> ReadConfigText_.wsPlayerName >> ReadConfigText_.wsType >> dwSize;
 
 		std::wstring wsConfigName;
 		for (decltype(dwSize) i = 0; i < dwSize; ++i)
 		{
 			*pSocketBuffer >> wsConfigName;
-			Vec.push_back(wsConfigName);
+			ReadConfigText_.VecText.push_back(wsConfigName);
 		}
 
-		return Vec;
+		return ReadConfigText_;
 	});
 
 	pSocketBuffer->clear();
 	pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_ReadConfig);
+	*pSocketBuffer << Vec.VecText.size();
 
+	std::wstring wsFormatText;
 	auto AccountId = pGameClient->GetAccount()->GetAccountId();
-	for (CONST auto& itm : Vec)
+	for (CONST auto& itm : Vec.VecText)
 	{
 		std::wstring wsConfigValue = L"Empty";
-		CAccountConfigExtend::GetInstance().FindConfig(AccountId, itm, wsConfigValue);
-		
+
+		CAccountConfigExtend::GetInstance().FindConfig(AccountId, MyTools::CCharacter::FormatText(wsFormatText, L"%s-%s-%s", Vec.wsPlayerName.c_str(), Vec.wsType.c_str(), itm.c_str()), wsConfigValue);
 		*pSocketBuffer << itm << wsConfigValue;
 	}
 	return TRUE;
@@ -217,27 +225,31 @@ BOOL CEchoPacket::ReadConfig(_In_ CGameClient* pGameClient, _In_ MyTools::CLSock
 
 BOOL CEchoPacket::WriteConfig(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocketBuffer* pSocketBuffer) CONST
 {
-	auto Vec = ExtractPacket<std::vector<CAccountConfigExtend::AccountConfig>>([&pSocketBuffer]
+	auto WriteConfigText_ = ExtractPacket<CAccountConfigExtend::WriteConfigText>([&pSocketBuffer]
 	{
-		std::vector<CAccountConfigExtend::AccountConfig> Vec;
+		CAccountConfigExtend::WriteConfigText WriteConfigText_;
 
 		DWORD dwSize = 0;
-		*pSocketBuffer >> dwSize;
+		*pSocketBuffer >> WriteConfigText_.wsPlayerName >> WriteConfigText_.wsType >> dwSize;
 		for (decltype(dwSize) i = 0;i < dwSize; ++i)
 		{
 			CAccountConfigExtend::AccountConfig ConfigPacket_;
-			*pSocketBuffer >> ConfigPacket_.wsConfigName >> ConfigPacket_.wsConfigValue;
-			Vec.push_back(std::move(ConfigPacket_));
+
+			std::wstring wsConfigValue;
+			*pSocketBuffer >> ConfigPacket_.wsConfigName >> wsConfigValue;
+
+			MyTools::CCharacter::FormatText(ConfigPacket_.wsConfigValue, L"%s-%s-%s", WriteConfigText_.wsPlayerName.c_str(), WriteConfigText_.wsType.c_str(), wsConfigValue.c_str());
+			WriteConfigText_.VecConfig.push_back(std::move(ConfigPacket_));
 		}
 	
-		return Vec;
+		return WriteConfigText_;
 	});
 
 	pSocketBuffer->clear();
 	pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_WriteConfig);
 
 	auto AccountId = pGameClient->GetAccount()->GetAccountId();
-	CAccountConfigExtend::GetInstance().WriteConfig(AccountId, Vec);
+	CAccountConfigExtend::GetInstance().WriteConfig(AccountId, WriteConfigText_);
 
 	return TRUE;
 }
