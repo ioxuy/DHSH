@@ -86,10 +86,8 @@ DWORD WINAPI _WorkThread(LPVOID)
 	MyTools::InvokeClassPtr<CExcuteAction>()->SetRun(TRUE);
 	pGameVariable->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_IsRunDlg, FALSE, [pGameVariable]
 	{
-		::MessageBoxW(NULL, L"WaitToLogining", L"", NULL);
 		while (bRunGame && MyTools::InvokeClassPtr<CPersonAttribute>()->GetLevel() == 0)
 			::Sleep(3 * 1000);
-		::MessageBoxW(NULL, L"Done", L"", NULL);
 
 		CPlayer Person;
 		if (!MyTools::InvokeClassPtr<CPlayerExtend>()->GetPerson(&Person))

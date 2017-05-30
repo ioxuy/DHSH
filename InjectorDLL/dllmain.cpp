@@ -163,7 +163,6 @@ DWORD WINAPI _WorkThread(LPVOID)
 		{
 			MyTools::CLNoModuleDLL NoModuleDLL;
 			NoModuleDLL.LoadMemoryDLL(GameDLLMemory.lpDLLContentAddr, GameDLLMemory.uSize);
-			::MessageBoxW(NULL, L"game", L"", NULL);
 		}
 		else
 			::MessageBoxW(NULL, L"GetShareMemory Faild!", L"", NULL);

@@ -30,7 +30,8 @@ CRunGame::~CRunGame()
 
 BOOL CRunGame::Run()
 {
-	return ExistGameProtectt() ? RunMainGame() : RunGameProtect();
+	//return ExistGameProtectt() ? RunMainGame() : RunGameProtect();
+	return RunGameProtect();
 }
 
 BOOL CRunGame::InitializeGameDLLMemory(_In_ LPVOID lpGameDLLContent, _In_ UINT uSize)
