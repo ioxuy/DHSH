@@ -10,6 +10,7 @@
 #include <MyTools/Log.h>
 #include <MyTools/CLPublic.h>
 #include <MyTools/CLFile.h>
+#include <MyTools/CLProcess.h>
 #include "ConsoleVariable.h"
 #include "MainFormDlg.h"
 #include "RunGame.h"
@@ -111,6 +112,26 @@ BOOL CUserConsoleDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
+	if (MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"Game.exe"))
+	{
+		AfxMessageBox(L"检查进程存在游戏'Game.exe', 请先关闭游戏再打开本程序!");
+		ExitProcess(0);
+		return TRUE;
+	}
+	
+#ifndef _DEBUG
+	HANDLE hMutex = ::OpenMutexW(MUTEX_ALL_ACCESS, FALSE, L"CL_DHSH_USERCONSOLE");
+	if (hMutex != NULL && hMutex != INVALID_HANDLE_VALUE)
+	{
+		AfxMessageBox(L"进程还存在'UserConsole.exe', 不能同时开2个本程序!");
+		::CloseHandle(hMutex);
+		ExitProcess(0);
+		return TRUE;
+	}
+#endif // _DEBUG
+
+	CreateMutexW(NULL, FALSE, L"CL_DHSH_USERCONSOLE");
+
 	WCHAR wszLogPath[MAX_PATH] = { 0 };
 	::GetCurrentDirectoryW(MAX_PATH, wszLogPath);
 	::lstrcatW(wszLogPath, LR"(\Log\)");
@@ -127,7 +148,6 @@ BOOL CUserConsoleDlg::OnInitDialog()
 	});
 
 	reinterpret_cast<CButton *>(GetDlgItem(IDC_BUTTON_TEST))->ShowWindow(SW_HIDE);
-
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -192,8 +212,12 @@ void CUserConsoleDlg::OnBnClickedButtonLogin()
 	pAccountEdit->GetWindowTextW(strAccountName);
 	pPassEdit->GetWindowTextW(strAccountPass);
 
-	strAccountName = L"admin";
-	strAccountPass = L"admin";
+	if (strAccountName == L"")
+	{
+		strAccountName = L"admin";
+		strAccountPass = L"admin";
+	}
+	
 
 	if (strAccountName.GetLength() > 16 || strAccountPass.GetLength() > 16)
 	{
@@ -231,6 +255,9 @@ void CUserConsoleDlg::OnBnClickedButtonLogin()
 		return;
 	}
 	
+	auto& GlobalConfig = CConsoleVariable::GetInstance().GetSareContent()->GlobalConfig;
+	MyTools::CCharacter::wstrcpy_my(GlobalConfig.wszAccountName, strAccountName.GetBuffer());
+	MyTools::CCharacter::wstrcpy_my(GlobalConfig.wszAccountPass, strAccountPass.GetBuffer());
 	this->PostMessageW(WM_CLOSE);
 }
 

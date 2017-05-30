@@ -70,14 +70,22 @@ BOOL CEchoPacket::GameLogin(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocke
 		std::wstring wsAccountName;
 		std::wstring wsAccountPass;
 		DWORD		 dwToken;
+
+		GameLoginPacket()
+		{
+			dwToken = NULL;
+		}
 	};
 
 	auto LoginContent_ = ExtractPacket<GameLoginPacket>([&pSocketBuffer]
 	{
 		GameLoginPacket LoginContent_;
-		*pSocketBuffer >> LoginContent_.wsAccountName >> LoginContent_.wsAccountPass << LoginContent_.dwToken;;
+		*pSocketBuffer >> LoginContent_.wsAccountName >> LoginContent_.wsAccountPass >> LoginContent_.dwToken;;
 		return LoginContent_;
 	});
+
+	// ..............
+	pGameClient->SetToken(LoginContent_.dwToken);
 
 	pSocketBuffer->clear();
 	if (!CAccountAction::GetInstance().Login(LoginContent_.wsAccountName, LoginContent_.wsAccountPass, pGameClient->GetAccount()))
@@ -99,6 +107,8 @@ BOOL CEchoPacket::GameLogin(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocke
 
 
 	pGameClient->GetAccount()->SetTokenCount(CAccount::em_Token_Action::em_Token_Action_Add);
+	pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_GameLogin);
+	*pSocketBuffer << TRUE;
 	return TRUE;
 }
 
@@ -199,7 +209,7 @@ BOOL CEchoPacket::RechargeCard(_In_ CGameClient* pGameClient, _In_ MyTools::CLSo
 
 BOOL CEchoPacket::ReadConfig(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocketBuffer* pSocketBuffer) CONST
 {
-	if (!CheckTime(pGameClient, pSocketBuffer))
+	if (pGameClient->GetAccount() != nullptr && !CheckTime(pGameClient, pSocketBuffer))
 		return TRUE;
 
 

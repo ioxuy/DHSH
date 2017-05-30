@@ -57,7 +57,7 @@ VOID CGameClient::SetEchoErrorPtr(_In_ std::function<VOID(VOID)> EchoErrorPtr)
 
 VOID CGameClient::RunKeepALive()
 {
-	if (_hKeepALiveThread != INVALID_HANDLE_VALUE)
+	if (_hKeepALiveThread == INVALID_HANDLE_VALUE)
 	{
 		_hKeepALiveThread = cbBEGINTHREADEX(NULL, NULL, CGameClient::_KeepALiveThread, this, NULL, NULL);
 	}
@@ -75,7 +75,7 @@ BOOL CGameClient::GameLogin()
 	{
 		SocketBuffer >> dwRetCode;
 	});
-
+	LOG_C_D(L"dwRetCode=%d", dwRetCode);
 	return dwRetCode != 0;
 }
 
@@ -102,7 +102,7 @@ VOID CGameClient::EchoPacket(_In_ MyTools::CLSocketBuffer& SocketBuffer)
 
 	if (_hEvent == INVALID_HANDLE_VALUE || SocketBuffer.GetMsgHead<DWORD>() != _dwMsgHead)
 	{
-		LOG_CF_E(L"服务器回发了一个包,Head=%X", emSockMsg);
+		//LOG_CF_E(L"服务器回发了一个包,Head=%X", emSockMsg);
 		return;
 	}
 

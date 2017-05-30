@@ -34,7 +34,7 @@ BOOL CPlayerMove::MoveToMapPoint(_In_ CONST std::wstring& wsMapName, _In_ CONST 
 	while (GameRun && (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != wsMapName || pPersonAttributePtr->GetDis(TarPoint) != 0.0f))
 	{
 		GameSleep(500);
-		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 10 * 1000)
+		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 30 * 1000)
 		{
 			CONST auto CurPoint = pPersonAttributePtr->GetPoint();
 
@@ -72,7 +72,7 @@ BOOL CPlayerMove::TransferToCity(_In_ CONST std::wstring& wsCityName) CONST
 			{
 				LOG_CF_D(L"使用[%s]回城符", wsCityName.c_str());
 				MyTools::InvokeClassPtr<CBagItemAction>()->UseItem(wsCityName + itmText);
-				GameSleep(1000);
+				GameSleep(3000);
 				bExist = TRUE;
 				break;
 			}
@@ -240,6 +240,72 @@ BOOL CPlayerMove::MoveToHome() CONST
 		return FALSE;
 	}
 
+	return TRUE;
+}
+
+BOOL CPlayerMove::MoveToResNpc(_In_ CONST std::wstring& wsNpcName) CONST
+{
+	CResText::ResNpcMapPointText ResNpcPoint;
+	if (!MyTools::InvokeClassPtr<CResNpcExtend>()->GetResNpc_By_MapName_NpcName(L"应天府", L"帮派传送员", ResNpcPoint))
+	{
+		LOG_MSG_CF(L"Npc资源里面竟然不存在[%s:%s],联系老夫!", L"应天府", L"帮派传送员");
+		return FALSE;
+	}
+
+	std::wstring wsCurrentMapName = MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName();
+	if (!MyTools::InvokeClassPtr<CMapSearch>()->Exist(wsCurrentMapName))
+	{
+		if (TransferToCity(L"应天府") || TransferToCity(L"星秀村") || TransferToCity(L"汴京城"))
+			LOG_CF_D(L"由于处于非大地图的范围……所以先使用回城符!");
+		else
+		{
+			LOG_MSG_CF(L"当前地图:[%s] 不可识别,并且身上不存在回城符……先跑到大地图再开始好吗?");
+			StopGame;
+			return FALSE;
+		}
+	}
+
+	if (!TransferToCity(L"应天府"))
+	{
+		std::wstring wsCityName = GetRecentlyCityName();
+		LOG_CF_D(L"当前离你最近的城市是:%s", wsCityName.c_str());
+		TransferToCity(wsCityName);
+	}
+
+	return MoveToMapPoint(L"应天府", ResNpcPoint.FixPoint);
+
+}
+
+BOOL CPlayerMove::MoveToSpecialMap(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint, _In_ CONST std::wstring wsSpecialMapName) CONST
+{
+	MyTools::CTimeTick TimeTick;
+	CONST auto pPersonAttributePtr = MyTools::InvokeClassPtr<CPersonAttribute>();
+	CONST auto pGameUiExtend = MyTools::InvokeClassPtr<CGameUiExtend>();
+
+	while (GameRun && (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != wsSpecialMapName))
+	{
+		GameSleep(500);
+		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 10 * 1000)
+		{
+			CONST auto CurPoint = pPersonAttributePtr->GetPoint();
+
+			LOG_CF_E(L"10s之内都无法移动! 当前地图=%s,Tar=[%d,%d], Now=[%d,%d], dis=%.2f", pPersonAttributePtr->GetCurrentMapName().c_str(), TarPoint.X, TarPoint.Y, CurPoint.X, CurPoint.Y, pPersonAttributePtr->GetDis(TarPoint));
+			StopGame;
+			return FALSE;
+		}
+		if (!pPersonAttributePtr->IsMoving())
+		{
+			if (!Action_When_UnMove(wsMapName, TarPoint))
+				return FALSE;
+
+			TimeTick.Reset();
+			continue;
+		}
+
+		// 检查驱魔香
+		MyTools::InvokeClassPtr<CLogicBagItemAction>()->CheckExorcism();
+		TimeTick.Reset();
+	}
 	return TRUE;
 }
 

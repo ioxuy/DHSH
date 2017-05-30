@@ -20,6 +20,9 @@ public:
 	DWORD GetCount_By_ItemName(_In_ CONST std::wstring& wsItemName) CONST;
 
 	//
+	DWORD GetCount_By_ItemPartName(_In_ CONST std::wstring& wsItemName) CONST;
+
+	//
 	UINT GetVecBagItem(_Out_ std::vector<CBagItem>& Vec, _In_ std::function<BOOL(CONST CBagItem&)> FilterPtr) CONST;
 
 	//

@@ -33,6 +33,7 @@ BOOL CGameUiExtend::IsShowNpcDlg() CONST
 VOID CGameUiExtend::CloseNpcDlg() CONST
 {
 	MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([this] {MyTools::InvokeClassPtr<CGameCALL>()->CloseNpcDlg(); });
+	GameSleep(2 * 1000);
 }
 
 BOOL CGameUiExtend::FindText_In_NpcDlg(_In_ CONST std::wstring& wsText) CONST

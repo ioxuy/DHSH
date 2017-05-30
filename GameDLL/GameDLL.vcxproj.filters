@@ -196,6 +196,27 @@
     <ClCompile Include="GameClient.cpp">
       <Filter>Game\Socket</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLClient.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\SocketBuffer.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\SocketIoEvent.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLClientIoEvent.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Task.cpp">
+      <Filter>Game\Object\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskExtend.cpp">
+      <Filter>Game\Object\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="BangTask.cpp">
+      <Filter>Game\Script\Bang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -407,6 +428,27 @@
     <ClInclude Include="GameClient.h">
       <Filter>Game\Socket</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLClient.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\SocketBuffer.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\SocketIoEvent.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLClientIoEvent.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Game\Object\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskExtend.h">
+      <Filter>Game\Object\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="BangTask.h">
+      <Filter>Game\Script\Bang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -502,9 +544,6 @@
     <Filter Include="Expression">
       <UniqueIdentifier>{bfad8c82-7a7f-4809-860c-154070de8ace}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Script\帮派">
-      <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Script\答题">
       <UniqueIdentifier>{4b49357d-c100-431d-b8eb-14fe9ac77287}</UniqueIdentifier>
     </Filter>
@@ -522,6 +561,12 @@
     </Filter>
     <Filter Include="Game\Script\Collect">
       <UniqueIdentifier>{42721005-920f-42bd-89ac-346b4e3d19c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Task">
+      <UniqueIdentifier>{835d1471-9e82-4c13-aad4-cf65cf00d888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\Bang">
+      <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

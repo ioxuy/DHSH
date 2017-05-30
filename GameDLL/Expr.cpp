@@ -30,6 +30,8 @@
 #include "ItemFilter.h"
 #include "BagItemAction.h"
 #include "Scanbase.h"
+#include "Task.h"
+#include "TaskExtend.h"
 
 #define _SELF L"Expr.cpp"
 CExpr::CExpr()
@@ -58,6 +60,8 @@ std::vector<MyTools::ExpressionFunPtr>& CExpr::GetVec()
 		{ std::bind(&CExpr::PrintUiDlg,this, std::placeholders::_1),L"PrintUiDlg" },
 		{ std::bind(&CExpr::PrintBuff,this, std::placeholders::_1),L"PrintBuff" },
 		{ std::bind(&CExpr::ScanBase,this, std::placeholders::_1),L"ScanBase" },
+		{ std::bind(&CExpr::PrintTask,this, std::placeholders::_1),L"PrintTask" },
+		{ std::bind(&CExpr::PrintCurMap,this, std::placeholders::_1),L"PrintCurMap" },
 	};
 
 	return Vec;
@@ -109,6 +113,19 @@ VOID CExpr::ScanBase(CONST std::vector<std::wstring>&)
 
 VOID CExpr::TestPtr(CONST std::vector<std::wstring>& VecParm)
 {
-	LOG_C_D(L"Level=%d", MyTools::InvokeClassPtr<CPersonAttribute>()->GetLevel());
 	
+}
+
+VOID CExpr::PrintTask(CONST std::vector<std::wstring>& VecParm)
+{
+	std::vector<CTaskObject> Vec;
+	MyTools::InvokeClassPtr<CTaskExtend>()->GetTask(Vec, nullptr);
+
+	for (CONST auto& itm : Vec)
+		LOG_C_D(L"dwAddr=%X, Name=%s, Content=%s", itm.GetNodeBase(), itm.GetName().c_str(), itm.GetTaskContent().c_str());
+}
+
+VOID CExpr::PrintCurMap(CONST std::vector<std::wstring>& VecParm)
+{
+	LOG_C_D(L"%s",MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName().c_str());
 }

@@ -80,8 +80,6 @@ BOOL CMainFormDlg::OnInitDialog()
 	std::wstring wsTitleText;
 	this->SetWindowTextW(MyTools::CCharacter::FormatText(wsTitleText, L"%08X", CConsoleVariable::GetInstance().GetSareContent()->GlobalConfig.dwConsoleTitle).c_str());
 
-	std::async(std::launch::async, &CMainFormDlg::SyncGamePath, this);
-
 	_bRun = TRUE;
 	_hKeepALiveThread = cbBEGINTHREADEX(NULL, NULL, _KeepALiveThread, this, NULL, NULL);
 	return TRUE;
@@ -201,6 +199,9 @@ void CMainFormDlg::OnBnClickedButtonRungame()
 		AfxMessageBox(L"有效时间不足!");
 		return;
 	}
+
+	if (CConsoleVariable::GetInstance().GetSareContent()->wszGamePath[0] == L'\0')
+		SyncGamePath();
 
 	std::wstring wsGamePath;
 	MyTools::CCharacter::FormatText(wsGamePath, L"%s\\Game.exe", CConsoleVariable::GetInstance().GetSareContent()->wszGamePath);

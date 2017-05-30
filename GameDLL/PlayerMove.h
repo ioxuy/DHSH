@@ -22,11 +22,17 @@ public:
 	// Pure Move
 	VOID Move(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint) CONST;
 
-	// 
+	// 绑定窗口事件
 	BOOL FindDlg_By_BindMethod() CONST;
 
-	//
+	// 回家园
 	BOOL MoveToHome() CONST;
+
+	// 走到某个Npc
+	BOOL MoveToResNpc(_In_ CONST std::wstring& wsNpcName) CONST;
+
+	// 去特殊地图……
+	BOOL MoveToSpecialMap(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint, _In_ CONST std::wstring wsSpecialMapName) CONST;
 private:
 	// 跑到杂货摊Npc坐标点
 	BOOL MoveToGeneralStoreNpc(_In_ CONST std::wstring& wsMapName, _In_ CONST std::wstring& wsNpcName) CONST;

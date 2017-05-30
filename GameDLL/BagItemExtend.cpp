@@ -40,6 +40,19 @@ DWORD CBagItemExtend::GetCount_By_ItemName(_In_ CONST std::wstring& wsItemName) 
 	return dwCount;
 }
 
+DWORD CBagItemExtend::GetCount_By_ItemPartName(_In_ CONST std::wstring& wsItemName) CONST
+{
+	std::vector<CBagItem> Vec;
+	if (GetVecBagItem(Vec, [wsItemName](CONST CBagItem& item) { return item.GetName().find(wsItemName) != -1; }) == NULL)
+		return 0;
+
+	DWORD dwCount = 0;
+	for (CONST auto& itm : Vec)
+		dwCount += itm.GetCount();
+
+	return dwCount;
+}
+
 UINT CBagItemExtend::GetVecBagItem(_Out_ std::vector<CBagItem>& Vec, _In_ std::function<BOOL(CONST CBagItem&)> FilterPtr) CONST
 {
 	DWORD dwRoot = ReadDWORD(ReadDWORD(C_Box_base) + C_Box_yiji);

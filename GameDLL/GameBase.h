@@ -305,7 +305,11 @@ enum class em_TextVar
 	// 购买宠物饮料数量
 	em_TextVar_AutoBuyPetDrinksCount,
 	// 家园采集的家具名称
-	em_TextVar_CollectHome_Furniture
+	em_TextVar_CollectHome_Furniture,
+	// 是否使用超程符
+	em_TextVar_UseReturnSymbol,
+	// 是否自动购买超程符
+	em_TextVar_AutoBuyReturnSymbol
 };
 
 

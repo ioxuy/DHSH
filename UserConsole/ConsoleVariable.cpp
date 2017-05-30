@@ -28,7 +28,7 @@ PGameShareContent& CConsoleVariable::GetSareContent() CONST
 VOID CConsoleVariable::InitShareContent()
 {
 	auto& p = GetSareContent();
-	_hFileMap = ::OpenFileMappingW(PAGE_READWRITE, FALSE, SZSHARENAME_CONSOLE);
+	_hFileMap = ::OpenFileMappingW(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, SZSHARENAME_CONSOLE);
 	if (_hFileMap == NULL || _hFileMap == INVALID_HANDLE_VALUE)
 		_hFileMap = ::CreateFileMappingW(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, NULL, sizeof(GameShareContent), SZSHARENAME_CONSOLE);
 	

@@ -28,6 +28,10 @@ private:
 	virtual VOID ScanBase(CONST std::vector<std::wstring>& VecParm);
 
 	virtual VOID TestPtr(CONST std::vector<std::wstring>& VecParm);
+
+	virtual VOID PrintTask(CONST std::vector<std::wstring>& VecParm);
+
+	virtual VOID PrintCurMap(CONST std::vector<std::wstring>& VecParm);
 };
 
 

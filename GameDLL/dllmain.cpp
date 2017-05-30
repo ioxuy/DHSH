@@ -65,6 +65,7 @@ DWORD WINAPI _WorkThread(LPVOID)
 	while (bRunGame && EnumWindows((WNDENUMPROC)EnumSetWinName, NULL))
 		::Sleep(1000);
 
+
 	auto pGameVariable = MyTools::InvokeClassPtr<CGameVariable>();
 	if (!pGameVariable->SetGameSharePtr())
 	{
@@ -81,6 +82,11 @@ DWORD WINAPI _WorkThread(LPVOID)
 		pGameVariable->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_IsRunDlg, TRUE);
 
 		MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd = hGameWnd;
+	}
+	else if (!MyTools::InvokeClassPtr<CGameClient>()->Run(SERVERIP, SERVERPORT, 3 * 1000))
+	{
+		::MessageBoxW(NULL, L"连接服务器失败!", L"", NULL);
+		ExitProcess(0);
 	}
 
 	// Hook PeekMessage
@@ -113,20 +119,17 @@ DWORD WINAPI _WorkThread(LPVOID)
 		wsLogPath += LR"(\Log\)";
 
 		MyTools::CLog::GetInstance().SetClientName(Person.GetName(), wsLogPath, TRUE, 20 * 1024 * 1024);
-		MyTools::CCmdLog::GetInstance().Run(Person.GetName(), CExpr::GetInstance().GetVec());
 
+		MyTools::CCmdLog::GetInstance().Run(Person.GetName(), CExpr::GetInstance().GetVec());
 		MyTools::InvokeClassPtr<CGameClient>()->SetEchoErrorPtr([] {ExitProcess(0); });
 
-		if (!MyTools::InvokeClassPtr<CGameClient>()->Run(SERVERIP, SERVERPORT, 5 * 1000))
-		{
-			::MessageBoxW(NULL, L"连接服务器失败!", L"", NULL);
-			ExitProcess(0);
-		}
 		if (!MyTools::InvokeClassPtr<CGameClient>()->GameLogin())
 		{
 			::MessageBoxW(NULL, L"登录失败……或许是有效时间不足!", L"", NULL);
 			ExitProcess(0);
 		}
+		else
+			LOG_C_D(L"Login Succ!");
 
 		// Set KeepALive
 		MyTools::InvokeClassPtr<CGameClient>()->RunKeepALive();
