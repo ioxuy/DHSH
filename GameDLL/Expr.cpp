@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Expr.h"
+#include <future>
 #include <MyTools/Log.h>
 #include <MyTools/CLThread.h>
 #include "PlayerExtend.h"
@@ -28,6 +29,7 @@
 #include "CollectItem.h"
 #include "ItemFilter.h"
 #include "BagItemAction.h"
+#include "Scanbase.h"
 
 #define _SELF L"Expr.cpp"
 CExpr::CExpr()
@@ -55,6 +57,7 @@ std::vector<MyTools::ExpressionFunPtr>& CExpr::GetVec()
 		{ std::bind(&CExpr::TestPtr,this, std::placeholders::_1),L"TestPtr" },
 		{ std::bind(&CExpr::PrintUiDlg,this, std::placeholders::_1),L"PrintUiDlg" },
 		{ std::bind(&CExpr::PrintBuff,this, std::placeholders::_1),L"PrintBuff" },
+		{ std::bind(&CExpr::ScanBase,this, std::placeholders::_1),L"ScanBase" },
 	};
 
 	return Vec;
@@ -99,17 +102,13 @@ VOID CExpr::PrintBuff(CONST std::vector<std::wstring>& VecParm)
 		LOG_C_D(L"Text=%s",itm.wsName.c_str());
 }
 
+VOID CExpr::ScanBase(CONST std::vector<std::wstring>&)
+{
+	std::async(std::launch::async, &CScanBase::Start, MyTools::InvokeClassPtr<CScanBase>());
+}
+
 VOID CExpr::TestPtr(CONST std::vector<std::wstring>& VecParm)
 {
-	MyTools::InvokeClassPtr<CTestFunction>()->InitTestShareContent();
-
-	StartGame;
-	if (!MyTools::InvokeClassPtr<CFarmField>()->Check())
-		return;
-
-	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 0);
-	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_PersonFightMode, em_PersonFightMode::em_PersonFightMode_FixF1);
-	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_PetFightMode, em_PetFightMode::em_PersonFightMode_Denfence);
-	MyTools::InvokeClassPtr<CFarmField>()->Run(L"γκΎ©Ά«½Ό", Point(103,45));
+	LOG_C_D(L"Level=%d", MyTools::InvokeClassPtr<CPersonAttribute>()->GetLevel());
 	
 }

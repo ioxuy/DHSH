@@ -35,4 +35,5 @@ public:
 	afx_msg void OnBnClickedButtonLogin();
 	afx_msg void OnBnClickedButtonRegister();
 	virtual void OnOK();
+	afx_msg void OnBnClickedButtonTest();
 };

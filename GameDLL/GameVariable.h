@@ -6,22 +6,27 @@
 class CGameVariable : public MyTools::CRelfexBaseClass, public MyTools::CVariable<em_TextVar, DWORD>
 {
 public:
-	CGameVariable() = default;
-	~CGameVariable() = default;
+	CGameVariable();
+	~CGameVariable();
 	
 	// 初始化血量的设置, 比如<?吃红, 吃蓝
 	VOID InitVariable() CONST;
 	
-	GameShareContent*& GetGameShareContent() CONST;
+	GameShareContent*& GetGameShareContent();
 
-	GameAccountShareContent*& GetAccountShareContent() CONST;
+	GameAccountShareContent*& GetAccountShareContent();
 	
+	BOOL SetGameSharePtr();
+
+	BOOL SetAccountGameShare(_In_ CONST std::wstring& wsPlayerName);
+
+private:
+	VOID SetAccountGameShare(_In_ UINT uIndex, _In_ CONST std::wstring& wsPlayerName);
+private:
+	HANDLE _hFileMap;
+	GameShareContent* _pGameShareContent;
+	GameAccountShareContent* _pGameAccountShareContent;
 public:
-	static CGameVariable* CreateInstance()
-	{
-		return new CGameVariable;
-	}
-	
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
 		delete reinterpret_cast<CGameVariable*>(lpObjectAddr);

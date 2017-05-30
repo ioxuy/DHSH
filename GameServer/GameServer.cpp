@@ -111,7 +111,7 @@ DWORD WINAPI CGameServer::_WorkThread(LPVOID lpParam)
 
 	for (;;)
 	{
-		::Sleep(60 * 1000);
+		::Sleep(30 * 1000);
 
 		DWORD dwCount = 0;
 		pGameServer->_MapLock.Access([pGameServer, &dwCount]
@@ -120,19 +120,18 @@ DWORD WINAPI CGameServer::_WorkThread(LPVOID lpParam)
 			{
 				if (itm.second->GetAccount() != nullptr)
 				{
-					BOOL bOnLine = itm.second->IsOnLine();
-					BOOL bExistClient = itm.second->IsExistClient();
+					//BOOL bOnLine = itm.second->IsOnLine();
+					//BOOL bExistClient = itm.second->IsExistClient();
 				}
-				if (itm.second->IsOnLine())
+				if (!itm.second->IsExistClient())
+					continue;
+				else if (itm.second->IsOnLine())
 				{
 					dwCount += 1;
 					continue;
 				}
-				else if (!itm.second->IsExistClient())
-					continue;
-				
+
 				std::async(std::launch::async, &CGameServer::DisClientConnect, pGameServer, itm.second.get());
-				itm.second->DisConnect();
 			}
 				
 		});

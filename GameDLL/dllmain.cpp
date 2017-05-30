@@ -8,8 +8,12 @@
 #include "ResText.h"
 #include "ExcuteAction.h"
 #include "GameVariable.h"
+#include "PersonAttribute.h"
+#include "Player.h"
+#include "PlayerExtend.h"
 #define _SELF L"dllmain.cpp"
 
+HWND hGameWnd = NULL;
 BOOL CALLBACK EnumSetWinName(HWND hLauncher, LPARAM l)
 {
 	if (IsWindow(hLauncher) && IsWindowVisible(hLauncher) && (GetWindowLong(hLauncher, GWL_EXSTYLE)&WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW && (GetWindowLong(hLauncher, GWL_HWNDPARENT) == 0))
@@ -25,7 +29,7 @@ BOOL CALLBACK EnumSetWinName(HWND hLauncher, LPARAM l)
 				::GetWindowThreadProcessId(hLauncher, &PID);
 				if (PID == ::GetCurrentProcessId())
 				{
-					MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd = hLauncher;
+					hGameWnd = hLauncher;
 					return FALSE;
 				}
 			}
@@ -34,43 +38,109 @@ BOOL CALLBACK EnumSetWinName(HWND hLauncher, LPARAM l)
 	return TRUE;
 }
 
-HANDLE hWorkThread = NULL;
-DWORD WINAPI _WorkThread(LPVOID)
+HANDLE hKeepALiveThread = NULL;
+BOOL bRunGame = TRUE;
+DWORD WINAPI _KeepALiveThread(LPVOID lpParam)
 {
-	WCHAR wszGamePath[MAX_PATH] = { 0 };
-	::GetCurrentDirectoryW(MAX_PATH, wszGamePath);
-	lstrcatW(wszGamePath, L"\\Log\\");
+	LOG_CF_D(L"Runing KeepALive Thread");
+	while (bRunGame)
+	{
+		MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.ulOnlineTick = ::GetTickCount64();
+		// Socket~ Keep ALive
 
-	MyTools::CLog::GetInstance().SetClientName(L"Game", wszGamePath, TRUE, 20 * 1024 * 1024);
-	MyTools::CCmdLog::GetInstance().Run(L"Game", CExpr::GetInstance().GetVec());
-
-	MyTools::InvokeClassPtr<CResText>()->Initialize();
-	MyTools::InvokeClassPtr<CGameVariable>()->InitVariable();
-
-	auto pGameVariable = MyTools::InvokeClassPtr<CGameVariable>();
-	pGameVariable->GetGameShareContent() = new GameShareContent;
-	pGameVariable->GetAccountShareContent() = &pGameVariable->GetGameShareContent()->arrGameArrount[0];
-
-	while (EnumWindows((WNDENUMPROC)EnumSetWinName, NULL))
-		::Sleep(1000);
-
-	MyTools::InvokeClassPtr<CExcuteAction>()->SetRun(TRUE);
+		for (int i = 0; i < 5 && bRunGame; ++i)
+			::Sleep(1000);
+		
+	}
 	return 0;
 }
 
-BOOL APIENTRY DllMain(HMODULE ,DWORD dwReason ,LPVOID )
+HANDLE hWorkThread = NULL;
+DWORD WINAPI _WorkThread(LPVOID)
+{
+	MyTools::InvokeClassPtr<CResText>()->Initialize();
+	MyTools::InvokeClassPtr<CGameVariable>()->InitVariable();
+
+	while (bRunGame && EnumWindows((WNDENUMPROC)EnumSetWinName, NULL))
+		::Sleep(1000);
+
+	auto pGameVariable = MyTools::InvokeClassPtr<CGameVariable>();
+	if (!pGameVariable->SetGameSharePtr())
+	{
+		WCHAR wszGamePath[MAX_PATH] = { 0 };
+		::GetCurrentDirectoryW(MAX_PATH, wszGamePath);
+		lstrcatW(wszGamePath, L"\\Log\\");
+
+		MyTools::CLog::GetInstance().SetClientName(L"Game", wszGamePath, TRUE, 20 * 1024 * 1024);
+		MyTools::CCmdLog::GetInstance().Run(L"Game", CExpr::GetInstance().GetVec());
+
+		pGameVariable->GetGameShareContent() = new GameShareContent;
+		ZeroMemory(pGameVariable->GetGameShareContent(), sizeof(GameShareContent));
+		pGameVariable->GetAccountShareContent() = &pGameVariable->GetGameShareContent()->arrGameArrount[0];
+		pGameVariable->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_IsRunDlg, TRUE);
+
+		MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd = hGameWnd;
+	}
+
+	// Hook PeekMessage
+	MyTools::InvokeClassPtr<CExcuteAction>()->SetRun(TRUE);
+	pGameVariable->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_IsRunDlg, FALSE, [pGameVariable]
+	{
+		::MessageBoxW(NULL, L"WaitToLogining", L"", NULL);
+		while (bRunGame && MyTools::InvokeClassPtr<CPersonAttribute>()->GetLevel() == 0)
+			::Sleep(3 * 1000);
+		::MessageBoxW(NULL, L"Done", L"", NULL);
+
+		CPlayer Person;
+		if (!MyTools::InvokeClassPtr<CPlayerExtend>()->GetPerson(&Person))
+		{
+			LOG_CF_D(L"Person = NULL;");
+			return;
+		}
+
+		if (!pGameVariable->SetAccountGameShare(Person.GetName()))
+		{
+			LOG_CF_D(L"SetAccountGameShare = FALSE;");
+			return;
+		}
+
+		while (bRunGame && EnumWindows((WNDENUMPROC)EnumSetWinName, NULL))
+			::Sleep(1000);
+
+		MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd = hGameWnd;
+
+		// Set Log
+		std::wstring wsLogPath = pGameVariable->GetGameShareContent()->wszConsolePath;
+		wsLogPath += LR"(\Log\)";
+
+		MyTools::CLog::GetInstance().SetClientName(Person.GetName(), wsLogPath, TRUE, 20 * 1024 * 1024);
+		MyTools::CCmdLog::GetInstance().Run(Person.GetName(), CExpr::GetInstance().GetVec());
+
+		// Set KeepALive
+		hKeepALiveThread = cbBEGINTHREADEX(NULL, NULL, _KeepALiveThread, NULL, NULL, NULL);
+	});
+	return 0;
+}
+
+BOOL APIENTRY DllMain(HMODULE hModule,DWORD dwReason ,LPVOID )
 {
 	if (dwReason == DLL_PROCESS_ATTACH && hWorkThread == NULL)
 	{
 		hWorkThread = cbBEGINTHREADEX(NULL, NULL, _WorkThread, NULL, NULL, NULL);
 		::CloseHandle(hWorkThread);
+		::DisableThreadLibraryCalls(hModule);
 	}
 	else if (dwReason == DLL_PROCESS_DETACH)
 	{
+		bRunGame = FALSE;
 		StopGame;
 		MyTools::InvokeClassPtr<CExcuteAction>()->SetRun(FALSE);
 		MyTools::CCmdLog::GetInstance().Stop();
-		delete MyTools::InvokeClassPtr<CGameVariable>()->GetGameShareContent();
+		if (hKeepALiveThread != NULL)
+		{
+			::WaitForSingleObject(hKeepALiveThread, INFINITE);
+			hKeepALiveThread = NULL;
+		}
 	}
 	return TRUE;
 }

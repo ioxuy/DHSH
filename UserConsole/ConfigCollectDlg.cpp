@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include <string.h>
 #include <algorithm>
+#include <future>
 #include <MyTools/CLPublic.h>
 #include <MyTools/Character.h>
 #include "ConsoleClient.h"
@@ -62,6 +63,7 @@ BOOL CConfigCollectDlg::OnInitDialog()
 
 	SwapButtonFieldSumit();
 	SetEnableFurniture(FALSE);
+	SyncReadConfig();
 	return TRUE;
 }
 
@@ -185,6 +187,7 @@ VOID CConfigCollectDlg::SyncReadConfig()
 			_VecConfig.push_back(std::move(ConfigText_));
 		}
 	});
+	SyncServerConfigToLocal();
 }
 
 VOID CConfigCollectDlg::SyncServerConfigToLocal()
@@ -324,5 +327,6 @@ void CConfigCollectDlg::OnBnClickedButtonCollectReadconfigOtherplayer()
 	{
 		_VecConfig.clear();
 		_VecConfig = dlg.GetVecConfig();
+		SyncServerConfigToLocal();
 	}
 }

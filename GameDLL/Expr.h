@@ -25,6 +25,8 @@ private:
 
 	virtual VOID PrintBuff(CONST std::vector<std::wstring>& VecParm);
 
+	virtual VOID ScanBase(CONST std::vector<std::wstring>& VecParm);
+
 	virtual VOID TestPtr(CONST std::vector<std::wstring>& VecParm);
 };
 

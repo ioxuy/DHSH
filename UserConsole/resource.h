@@ -15,6 +15,8 @@
 #define IDD_DIALOG_CONFIG_COLLECT       140
 #define IDD_DIALOG_CONFIGMODE           142
 #define IDD_DIALOG_READCONFIG_OTHERPLAYER 148
+#define IDR_DLL1                        155
+#define IDR_INJECTORDLL1                156
 #define IDC_EDIT_ACCOUNT                1000
 #define IDC_EDIT_PASS                   1001
 #define IDC_BUTTON_LOGIN                1002
@@ -56,14 +58,15 @@
 #define IDC_BUTTON_FIELD_READCONFIG_OTHERPLAYER 1052
 #define IDC_EDIT_PLAYERNAME             1053
 #define IDC_BUTTON_READCONFIG           1054
+#define IDC_BUTTON_TEST                 1055
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        150
-#define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1055
+#define _APS_NEXT_RESOURCE_VALUE        157
+#define _APS_NEXT_COMMAND_VALUE         32773
+#define _APS_NEXT_CONTROL_VALUE         1056
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

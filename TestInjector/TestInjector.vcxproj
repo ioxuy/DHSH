@@ -127,6 +127,13 @@
     <ClInclude Include="..\..\MyTools\MyTools\RelfexStruct.h" />
     <ClInclude Include="..\..\MyTools\MyTools\TimeTick.h" />
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TestInjector.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Debug\GameDLL.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

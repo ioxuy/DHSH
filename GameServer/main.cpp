@@ -40,6 +40,6 @@ int main()
 	CGameServer::GetInstance().RunPrintThread();
 	std::wcout << L"Runing..." << std::endl;
 lb_Exit:;
-	::Sleep(-1);
+	::Sleep(INFINITE);
 	return 0;
 }

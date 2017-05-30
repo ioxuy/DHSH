@@ -6,7 +6,9 @@
 #include "UserConfigDlg.h"
 #include "afxdialogex.h"
 #include <algorithm>
+#include <MyTools/Log.h>
 
+#define _SELF L"UserConfigDlg.cpp"
 // CUserConfigDlg dialog
 
 IMPLEMENT_DYNAMIC(CUserConfigDlg, CDialogEx)
@@ -15,13 +17,15 @@ CUserConfigDlg::CUserConfigDlg(_In_ CONST std::wstring& wsPlayerName, CWnd* pPar
 	: CDialogEx(IDD_DIALOG_USERCONFIG, pParent), 
 	_wsPlayerName(wsPlayerName), 
 	_CollectDlg(_wsPlayerName), 
-	_FieldDlg(wsPlayerName)
+	_FieldDlg(wsPlayerName),
+	_bClose(FALSE)
 {
-
+	
 }
 
 CUserConfigDlg::~CUserConfigDlg()
 {
+	LOG_C_D(L"CUserConfigDlg::~CUserConfigDlg");
 }
 
 void CUserConfigDlg::DoDataExchange(CDataExchange* pDX)
@@ -58,11 +62,13 @@ BOOL CUserConfigDlg::OnInitDialog()
 	}
 	_ConfigModeDlg.SetWindowPos(NULL, tabRect.left, tabRect.top, tabRect.Width(), tabRect.Height(), SWP_SHOWWINDOW);
 
+	this->SetWindowTextW(_wsPlayerName.c_str());
 	return TRUE;
 }
 
 BEGIN_MESSAGE_MAP(CUserConfigDlg, CDialogEx)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CUserConfigDlg::OnTcnSelchangeTab1)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -94,4 +100,20 @@ void CUserConfigDlg::OnTcnSelchangeTab1(NMHDR *, LRESULT *pResult)
 CONST std::wstring& CUserConfigDlg::GetPlayerName() CONST
 {
 	return _wsPlayerName;
+}
+
+
+VOID CUserConfigDlg::MyDestoreWindows()
+{
+	_bClose = TRUE;
+	this->PostMessageW(WM_CLOSE);
+}
+
+void CUserConfigDlg::OnClose()
+{
+	// TODO: Add your message handler code here and/or call default
+	if (_bClose)
+		CDialogEx::OnClose();
+	else
+		this->ShowWindow(SW_HIDE);
 }

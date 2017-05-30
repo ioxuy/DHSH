@@ -184,6 +184,15 @@
     <ClCompile Include="TextVariable.cpp">
       <Filter>Game\Text\Variable</Filter>
     </ClCompile>
+    <ClCompile Include="Scanbase.cpp">
+      <Filter>Game\Method\ScanBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\LDasm.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -382,6 +391,15 @@
     </ClInclude>
     <ClInclude Include="TextVariable.h">
       <Filter>Game\Text\Variable</Filter>
+    </ClInclude>
+    <ClInclude Include="Scanbase.h">
+      <Filter>Game\Method\ScanBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\LDasm.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h">
+      <Filter>MyTools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

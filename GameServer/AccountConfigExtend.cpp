@@ -47,17 +47,23 @@ VOID CAccountConfigExtend::WriteConfig(_In_ DWORD dwAccountId, _In_ CONST WriteC
 {
 	_Lock.Access([&]
 	{
-		std::wstring wsKey;
+		std::wstring wsConfigName;
 		for (CONST auto& itm : WriteConfigText_.VecConfig)
 		{
-			auto itr = _MapConfig.find(MyTools::CCharacter::FormatText(wsKey, L"%d-%s", dwAccountId, itm.wsConfigName.c_str()));
+			auto itr = _MapConfig.find(MyTools::CCharacter::FormatText(wsConfigName, L"%d-%s", dwAccountId, itm.wsConfigName.c_str()));
 			if (itr == _MapConfig.end())
-				continue;
+			{
+				_MapConfig.insert(std::make_pair(wsConfigName, itm.wsConfigValue));
+			}
+			else
+			{
+				if (itr->second == itm.wsConfigValue)
+					continue;
 
-			if (itr->second == itm.wsConfigValue)
-				continue;
+				itr->second = itm.wsConfigValue;
+			}
 
-			itr->second = itm.wsConfigValue;
+			
 
 			std::wstring wsSQL;
 			CDbManager::GetInstance().AsyncExcuteSQL(MyTools::CCharacter::FormatText(wsSQL, L"exec [proc_SetAccountConfig] %d,N'%s',N'%s'", dwAccountId, itm.wsConfigName.c_str(), itm.wsConfigValue.c_str()));

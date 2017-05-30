@@ -1,10 +1,11 @@
 #ifndef __DHSH_GAMEDLL_GAME_OBJECT_PLAYER_PLAYEREXTEND_H__
 #define __DHSH_GAMEDLL_GAME_OBJECT_PLAYER_PLAYEREXTEND_H__
 
-#include "Player.h"
+#include "GameVariable.h"
+#include <MyTools/CLPublic.h>
 #include <MyTools/Character.h>
-#include <MyTools/Log.h>
 
+class CPlayer;
 class CPlayerExtend : public MyTools::CRelfexBaseClass
 {
 public:
@@ -12,7 +13,7 @@ public:
 	~CPlayerExtend() = default;
 	
 	template<typename T>
-	UINT GetAroundObject(_Out_ std::vector<T>& Vec, _In_ std::function<BOOL(CONST CPlayer&)> fnFilter)
+	UINT GetAroundObject(_Out_ std::vector<T>& Vec, _In_ std::function<BOOL(CONST CPlayer&)> fnFilter) CONST
 	{
 		DWORD dwRoot = ReadDWORD(ReadDWORD(C_huan_base) + C_huan_yiji);
 		DWORD dwNextNode = ReadDWORD(dwRoot + 0x0);
@@ -41,6 +42,7 @@ public:
 		return Vec.size();
 	}
 
+	BOOL GetPerson(_Out_ CPlayer* pPlayer) CONST;
 public:
 	static CPlayerExtend* CreateInstance()
 	{

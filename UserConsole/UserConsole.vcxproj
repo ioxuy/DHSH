@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{04AC8654-0346-4BD7-94BA-DE2EFD83B7EB}</ProjectGuid>
     <RootNamespace>UserConsole</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -83,6 +83,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\Visual Studio 2010\Projects\MyTools;$(IncludePath)</IncludePath>
+    <OutDir>\\192.168.0.106\Share\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -197,6 +199,7 @@
     <ClInclude Include="..\..\MyTools\MyTools\CLExpressionCalc.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLFile.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLLock.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLNoModuleDLL.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLPic.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLProcess.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLPublic.h" />
@@ -204,6 +207,8 @@
     <ClInclude Include="..\..\MyTools\MyTools\CLTag.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLThread.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CmdLog.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\LDasm.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h" />
     <ClInclude Include="..\..\MyTools\MyTools\Log.h" />
     <ClInclude Include="..\..\MyTools\MyTools\RelfexClass.h" />
     <ClInclude Include="..\..\MyTools\MyTools\RelfexStruct.h" />
@@ -220,6 +225,7 @@
     <ClInclude Include="RechargeCardDlg.h" />
     <ClInclude Include="RechargeCardLogDlg.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="RunGame.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UserConfigDlg.h" />
@@ -235,11 +241,14 @@
     <ClCompile Include="..\..\MyTools\MyTools\CLExpressionCalc.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CLFile.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CLLock.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLNoModuleDLL.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CLPic.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CLProcess.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CLThread.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CmdLog.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CPublic.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\LDasm.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\Log.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\RelfexClass.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp" />
@@ -254,6 +263,7 @@
     <ClCompile Include="MainFormDlg.cpp" />
     <ClCompile Include="RechargeCardDlg.cpp" />
     <ClCompile Include="RechargeCardLogDlg.cpp" />
+    <ClCompile Include="RunGame.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -268,6 +278,8 @@
     <ResourceCompile Include="UserConsole.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Release\GameDLL.dll" />
+    <None Include="..\Release\InjectorDLL.dll" />
     <None Include="res\UserConsole.rc2" />
   </ItemGroup>
   <ItemGroup>

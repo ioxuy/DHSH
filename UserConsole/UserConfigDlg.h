@@ -26,12 +26,16 @@ protected:
 	DECLARE_MESSAGE_MAP()
 protected:
 	afx_msg void OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult);
-	std::wstring _wsPlayerName;
 public:
 	CONST std::wstring& GetPlayerName() CONST;
+	VOID  MyDestoreWindows();
 private:
-	CConfigCollectDlg _CollectDlg;
-	CConfigFielddlg _FieldDlg;
-	CConfigModeDlg _ConfigModeDlg;
+	std::wstring _wsPlayerName;
+	CConfigCollectDlg       _CollectDlg;
+	CConfigFielddlg         _FieldDlg;
+	CConfigModeDlg          _ConfigModeDlg;
 	std::vector<CDialogEx*> _VecDlg;
+	BOOL                    _bClose;
+public:
+	afx_msg void OnClose();
 };

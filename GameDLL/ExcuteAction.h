@@ -4,7 +4,6 @@
 #include "GameBase.h"
 #include <queue>
 #include <MyTools/CLLock.h>
-#include <MyTools/CLHook.h>
 
 //#define MESSAGE_CUSTOME WM_USER + 0x1A5
 class CExcuteAction : public MyTools::CRelfexBaseClass
@@ -15,6 +14,8 @@ public:
 		std::function<VOID(VOID)> ThreadExcutePtr;
 		HANDLE                    hEvent;
 	};
+
+	using PeekMessageAPtr = BOOL(WINAPI*)(_Out_ LPMSG lpMsg, _In_opt_ HWND hWnd, _In_ UINT wMsgFilterMin, _In_ UINT wMsgFilterMax, _In_ UINT wRemoveMsg);
 public:
 	CExcuteAction();
 	~CExcuteAction() = default;
@@ -27,13 +28,18 @@ public:
 	VOID SetRun(_In_ BOOL bRun);
 
 private:
-	MyTools::MYHOOK_CONTENT HookGetMessageAContent;
+	static BOOL WINAPI PeekMessage_(_Out_ LPMSG lpMsg, _In_opt_ HWND hWnd, _In_ UINT wMsgFilterMin, _In_ UINT wMsgFilterMax, _In_ UINT wRemoveMsg);
+
+	static VOID SendKeyToConsole(_In_ DWORD dwMsg);
 private:
 	// 主线程执行函数队列
 	std::queue<ThreadMethodInfo> _QueMethodPtr;
 
 	// 队列锁
 	MyTools::CLLock _LockQueMethodPtr;
+
+	//
+	static PeekMessageAPtr _OldPeekMessagePtr;
 public:
 	static CExcuteAction* CreateInstance()
 	{

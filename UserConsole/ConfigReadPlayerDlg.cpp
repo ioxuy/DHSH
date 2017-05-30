@@ -53,7 +53,7 @@ void CConfigReadPlayerDlg::OnBnClickedButtonReadconfig()
 
 
 	MyTools::CLSocketBuffer SocketBuffer(em_Sock_Msg::em_Sock_Msg_ReadConfig);
-	SocketBuffer << strPlayerName.Trim().GetBuffer() << _VecConfigName.size();
+	SocketBuffer << strPlayerName.Trim().GetBuffer() << _wsTypeText << _VecConfigName.size();
 	for (CONST auto& itm : _VecConfigName)
 		SocketBuffer << itm;
 

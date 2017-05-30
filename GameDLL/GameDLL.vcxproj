@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\..\MyTools;$(IncludePath)</IncludePath>
-    <OutDir>\\192.168.0.106\Share\</OutDir>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -102,6 +102,8 @@
     <ClInclude Include="..\..\MyTools\MyTools\CLThread.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLVector.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CmdLog.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\LDasm.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h" />
     <ClInclude Include="..\..\MyTools\MyTools\Log.h" />
     <ClInclude Include="..\..\MyTools\MyTools\RelfexClass.h" />
     <ClInclude Include="..\..\MyTools\MyTools\RelfexStruct.h" />
@@ -112,6 +114,7 @@
     <ClInclude Include="BagItemExtend.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="CollectItem.h" />
+    <ClInclude Include="Scanbase.h" />
     <ClInclude Include="ExcuteAction.h" />
     <ClInclude Include="Expr.h" />
     <ClInclude Include="FarmField.h" />
@@ -167,6 +170,8 @@
     <ClCompile Include="..\..\MyTools\MyTools\CLThread.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CmdLog.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CPublic.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\LDasm.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\Log.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\RelfexClass.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp" />
@@ -215,6 +220,7 @@
     <ClCompile Include="PersonAttribute.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="ResText.cpp" />
+    <ClCompile Include="Scanbase.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillExtend.cpp" />
     <ClCompile Include="stdafx.cpp">

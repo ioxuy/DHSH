@@ -8,8 +8,11 @@
 #include "afxdialogex.h"
 #include "ConsoleClient.h"
 #include <MyTools/Log.h>
+#include <MyTools/CLPublic.h>
+#include <MyTools/CLFile.h>
 #include "ConsoleVariable.h"
 #include "MainFormDlg.h"
+#include "RunGame.h"
 
 #define _SELF L"UserConsoleDlg.cpp"
 #ifdef _DEBUG
@@ -71,6 +74,7 @@ BEGIN_MESSAGE_MAP(CUserConsoleDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON_LOGIN, &CUserConsoleDlg::OnBnClickedButtonLogin)
 	ON_BN_CLICKED(IDC_BUTTON_REGISTER, &CUserConsoleDlg::OnBnClickedButtonRegister)
+	ON_BN_CLICKED(IDC_BUTTON_TEST, &CUserConsoleDlg::OnBnClickedButtonTest)
 END_MESSAGE_MAP()
 
 
@@ -107,12 +111,22 @@ BOOL CUserConsoleDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
+	WCHAR wszLogPath[MAX_PATH] = { 0 };
+	::GetCurrentDirectoryW(MAX_PATH, wszLogPath);
+	::lstrcatW(wszLogPath, LR"(\Log\)");
+	if (!MyTools::CLPublic::FileExist(wszLogPath))
+		MyTools::CLFile::CreateMyDirectory(wszLogPath);
+
+	MyTools::CLog::GetInstance().SetClientName(L"UserConsole", wszLogPath, FALSE, 20 * 1024 * 1024);
+
 	// TODO: Add extra initialization here
 	CConsoleVariable::GetInstance().InitShareContent();
 	CConsoleClient::GetInstance().SetEchoErrorPtr([] 
 	{
 		ExitProcess(0);
 	});
+
+	reinterpret_cast<CButton *>(GetDlgItem(IDC_BUTTON_TEST))->ShowWindow(SW_HIDE);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -178,17 +192,26 @@ void CUserConsoleDlg::OnBnClickedButtonLogin()
 	pAccountEdit->GetWindowTextW(strAccountName);
 	pPassEdit->GetWindowTextW(strAccountPass);
 
+	strAccountName = L"admin";
+	strAccountPass = L"admin";
+
 	if (strAccountName.GetLength() > 16 || strAccountPass.GetLength() > 16)
 	{
 		AfxMessageBox(L"长度不可超过16位!");
 		return;
 	}
+	if (strAccountName.GetLength() <= 4 || strAccountPass.GetLength() <= 4)
+	{
+		AfxMessageBox(L"长度不可小于5位!");
+		return;
+	}
 
 	if (!CConsoleClient::GetInstance().IsConnect())
 	{
-		if (!CConsoleClient::GetInstance().Run(L"127.0.0.1", 12345))
+		if (!CConsoleClient::GetInstance().Run(SERVERIP, SERVERPORT, 3 * 1000))
 		{
 			LOG_MSG_CF(L"连接服务器失败!");
+			this->PostMessageW(WM_CLOSE);
 			return;
 		}
 	}
@@ -227,12 +250,18 @@ void CUserConsoleDlg::OnBnClickedButtonRegister()
 		AfxMessageBox(L"长度不可超过16位!");
 		return;
 	}
+	if (strAccountName.GetLength() <= 4 || strAccountPass.GetLength() <= 4)
+	{
+		AfxMessageBox(L"长度不可小于5位!");
+		return;
+	}
 
 	if (!CConsoleClient::GetInstance().IsConnect())
 	{
-		if (!CConsoleClient::GetInstance().Run(L"127.0.0.1", 12345))
+		if (!CConsoleClient::GetInstance().Run(SERVERIP, SERVERPORT, 3 * 1000))
 		{
 			LOG_MSG_CF(L"连接服务器失败!");
+			this->PostMessageW(WM_CLOSE);
 			return;
 		}
 	}
@@ -255,4 +284,15 @@ void CUserConsoleDlg::OnOK()
 	// TODO: Add your specialized code here and/or call the base class
 
 	//CDialogEx::OnOK();
+}
+
+
+void CUserConsoleDlg::OnBnClickedButtonTest()
+{
+	CFileDialog Dialog_(TRUE, L"exe", NULL, NULL, L"Game.exe", NULL, NULL, NULL);
+
+	if (Dialog_.DoModal() == IDOK)
+	{
+		AfxMessageBox(Dialog_.GetPathName().GetBuffer());
+	}
 }

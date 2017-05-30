@@ -152,5 +152,16 @@
     <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TestInjector.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Debug\GameDLL.dll" />
   </ItemGroup>
 </Project>

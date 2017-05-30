@@ -25,6 +25,9 @@
     <Filter Include="Code\Variable">
       <UniqueIdentifier>{9e6359e5-58c9-406e-886e-9cdfeb7aecaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\RunGame">
+      <UniqueIdentifier>{4157f9c1-1eb4-4737-80fa-80ce4fd9eded}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -141,6 +144,18 @@
     <ClInclude Include="ConfigReadPlayerDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLNoModuleDLL.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\LDasm.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="RunGame.h">
+      <Filter>Code\RunGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UserConsole.cpp">
@@ -236,6 +251,18 @@
     <ClCompile Include="ConfigReadPlayerDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLNoModuleDLL.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\LDasm.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
+    <ClCompile Include="RunGame.cpp">
+      <Filter>Code\RunGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="UserConsole.rc">
@@ -246,6 +273,8 @@
     <None Include="res\UserConsole.rc2">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Release\GameDLL.dll" />
+    <None Include="..\Release\InjectorDLL.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\UserConsole.ico">

@@ -8,6 +8,7 @@
 #include <vector>
 #include <string.h>
 #include <algorithm>
+#include <future>
 #include <MyTools/Character.h>
 #include <MyTools/CLPublic.h>
 #include "ConsoleClient.h"
@@ -229,6 +230,8 @@ VOID CConfigFielddlg::SyncReadConfig()
 			_VecConfigText.push_back(std::move(ConfigText_));
 		}
 	});
+
+	SyncServerConfigToLocal();
 }
 
 VOID CConfigFielddlg::SyncServerConfigToLocal()
@@ -288,5 +291,6 @@ void CConfigFielddlg::OnBnClickedButtonFieldReadconfigOtherplayer()
 	{
 		_VecConfigText.clear();
 		_VecConfigText = dlg.GetVecConfig();
+		SyncServerConfigToLocal();
 	}
 }

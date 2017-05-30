@@ -35,6 +35,13 @@ BOOL CEchoPacket::AccountLogin(_In_ CGameClient* pGameClient, _In_ MyTools::CLSo
 	});
 
 	pSocketBuffer->clear();
+	if (LoginContent_.wsAccountName.length() >= 16 || LoginContent_.wsAccountName.length() <= 4 || LoginContent_.wsAccountPass.length() >= 16 || LoginContent_.wsAccountPass.length() <= 4)
+	{
+		pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_ServerText);
+		*pSocketBuffer << L"长度不对!";
+		return TRUE;
+	}
+
 	if (!CAccountAction::GetInstance().Login(LoginContent_.wsAccountName, LoginContent_.wsAccountPass, pGameClient->GetAccount()))
 	{
 		pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_AccountLogin);
@@ -108,7 +115,13 @@ BOOL CEchoPacket::Register(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocket
 		return LoginContent_;
 	});
 
-	
+	if (RegisterContent.wsAccountName.length() >= 16 || RegisterContent.wsAccountName.length() <= 4 || RegisterContent.wsAccountPass.length() >= 16 || RegisterContent.wsAccountPass.length() <= 4)
+	{
+		pSocketBuffer->clear();
+		pSocketBuffer->InitializeHead(em_Sock_Msg::em_Sock_Msg_ServerText);
+		*pSocketBuffer << L"长度不对!";
+		return TRUE;
+	}
 
 	std::wstring wsText;
 	if (!CDbManager::GetInstance().RegisterAccount(RegisterContent.wsAccountName, RegisterContent.wsAccountPass, pGameClient->GetIP(), wsText))
@@ -235,10 +248,10 @@ BOOL CEchoPacket::WriteConfig(_In_ CGameClient* pGameClient, _In_ MyTools::CLSoc
 		{
 			CAccountConfigExtend::AccountConfig ConfigPacket_;
 
-			std::wstring wsConfigValue;
-			*pSocketBuffer >> ConfigPacket_.wsConfigName >> wsConfigValue;
+			std::wstring wsConfigName;
+			*pSocketBuffer >> wsConfigName >> ConfigPacket_.wsConfigValue;
 
-			MyTools::CCharacter::FormatText(ConfigPacket_.wsConfigValue, L"%s-%s-%s", WriteConfigText_.wsPlayerName.c_str(), WriteConfigText_.wsType.c_str(), wsConfigValue.c_str());
+			MyTools::CCharacter::FormatText(ConfigPacket_.wsConfigName, L"%s-%s-%s", WriteConfigText_.wsPlayerName.c_str(), WriteConfigText_.wsType.c_str(), wsConfigName.c_str());
 			WriteConfigText_.VecConfig.push_back(std::move(ConfigPacket_));
 		}
 	

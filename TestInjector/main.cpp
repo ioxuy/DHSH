@@ -9,45 +9,21 @@
 #include <MyTools/CmdLog.h>
 #include <MyTools/CLExpression.h>
 #include <future>
+#include "resource.h"
 
 #define _SELF L"main.cpp"
-
-class CExpr : public MyTools::CExprFunBase, virtual public MyTools::CClassInstance<CExpr>
-{
-public:
-	CExpr() = default;
-	virtual ~CExpr()
-	{
-
-	}
-
-	virtual VOID Release()
-	{
-
-	}
-
-	virtual std::vector<MyTools::ExpressionFunPtr>& GetVec()
-	{
-		static std::vector<MyTools::ExpressionFunPtr> Vec =
-		{
-			{ std::bind(&CExpr::Help,this, std::placeholders::_1),L"Help" }
-		};
-
-		return Vec;
-	}
-
-private:
-	virtual VOID Help(CONST std::vector<std::wstring>& VecParm)
-	{
-
-	}
-};
 
 
 int main()
 {
-	std::wstring wsText = L"创建成功!ID=54";
-	auto Text =  wsText.substr(wsText.find(L"="));
+	WCHAR wszResourceType[] = { L"kernel" };
+	HMODULE hm = NULL;
+	HRSRC hRsrc = ::FindResourceW(hm, reinterpret_cast<LPCWSTR>(IDR_GAMEDLL), wszResourceType);
+	if (hRsrc)
+	{
+		DWORD dwSize = ::SizeofResource(hm, hRsrc);
+		dwSize = 0;
+	}
 	::Sleep(-1);
 	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))
