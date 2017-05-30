@@ -114,6 +114,7 @@
     <ClInclude Include="BagItemExtend.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="CollectItem.h" />
+    <ClInclude Include="GameClient.h" />
     <ClInclude Include="Scanbase.h" />
     <ClInclude Include="ExcuteAction.h" />
     <ClInclude Include="Expr.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="FarmMonster.cpp" />
     <ClCompile Include="GameBase.cpp" />
     <ClCompile Include="GameCALL.cpp" />
+    <ClCompile Include="GameClient.cpp" />
     <ClCompile Include="GameDLL.cpp" />
     <ClCompile Include="GameUi.cpp" />
     <ClCompile Include="GameUiExtend.cpp" />

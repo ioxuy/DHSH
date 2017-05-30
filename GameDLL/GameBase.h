@@ -421,6 +421,8 @@ typedef struct GameAccountShareContent
 
 struct GameShareGlobalConfig
 {
+	WCHAR	  wszAccountName[32];
+	WCHAR     wszAccountPass[32];
 	DWORD     dwToken;
 	DWORD     dwHour;
 	ULONGLONG ulTimeTick;

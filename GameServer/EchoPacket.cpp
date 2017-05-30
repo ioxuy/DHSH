@@ -94,6 +94,8 @@ BOOL CEchoPacket::GameLogin(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocke
 		*pSocketBuffer << L"登录已达到最大的上限10个了!";
 		return TRUE;
 	}
+	else if (!CheckTime(pGameClient, pSocketBuffer))
+		return TRUE;
 
 
 	pGameClient->GetAccount()->SetTokenCount(CAccount::em_Token_Action::em_Token_Action_Add);
@@ -197,6 +199,10 @@ BOOL CEchoPacket::RechargeCard(_In_ CGameClient* pGameClient, _In_ MyTools::CLSo
 
 BOOL CEchoPacket::ReadConfig(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocketBuffer* pSocketBuffer) CONST
 {
+	if (!CheckTime(pGameClient, pSocketBuffer))
+		return TRUE;
+
+
 	struct ReadConfigText
 	{
 		std::wstring wsPlayerName;
@@ -238,6 +244,9 @@ BOOL CEchoPacket::ReadConfig(_In_ CGameClient* pGameClient, _In_ MyTools::CLSock
 
 BOOL CEchoPacket::WriteConfig(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocketBuffer* pSocketBuffer) CONST
 {
+	if (!CheckTime(pGameClient, pSocketBuffer))
+		return TRUE;
+
 	auto WriteConfigText_ = ExtractPacket<CAccountConfigExtend::WriteConfigText>([&pSocketBuffer]
 	{
 		CAccountConfigExtend::WriteConfigText WriteConfigText_;
@@ -306,6 +315,17 @@ BOOL CEchoPacket::CheckIsLogin(_In_ CGameClient* pGameClient, _In_ MyTools::CLSo
 	}
 
 	return TRUE;
+}
+
+BOOL CEchoPacket::CheckTime(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocketBuffer* pSocketBuffer) CONST
+{
+	if (pGameClient->GetAccount() != nullptr && pGameClient->GetAccount()->GetEffectiveHour() > 0)
+		return TRUE;
+
+	pSocketBuffer->clear();
+	pSocketBuffer->InitializeHead<em_Sock_Msg>(em_Sock_Msg::em_Sock_Msg_ServerText);
+	*pSocketBuffer << L"有效时间不足!";
+	return FALSE;
 }
 
 BOOL CEchoPacket::ReadLocalVersion()

@@ -11,6 +11,7 @@
 #include "PersonAttribute.h"
 #include "Player.h"
 #include "PlayerExtend.h"
+#include "GameClient.h"
 #define _SELF L"dllmain.cpp"
 
 HWND hGameWnd = NULL;
@@ -114,7 +115,21 @@ DWORD WINAPI _WorkThread(LPVOID)
 		MyTools::CLog::GetInstance().SetClientName(Person.GetName(), wsLogPath, TRUE, 20 * 1024 * 1024);
 		MyTools::CCmdLog::GetInstance().Run(Person.GetName(), CExpr::GetInstance().GetVec());
 
+		MyTools::InvokeClassPtr<CGameClient>()->SetEchoErrorPtr([] {ExitProcess(0); });
+
+		if (!MyTools::InvokeClassPtr<CGameClient>()->Run(SERVERIP, SERVERPORT, 5 * 1000))
+		{
+			::MessageBoxW(NULL, L"连接服务器失败!", L"", NULL);
+			ExitProcess(0);
+		}
+		if (!MyTools::InvokeClassPtr<CGameClient>()->GameLogin())
+		{
+			::MessageBoxW(NULL, L"登录失败……或许是有效时间不足!", L"", NULL);
+			ExitProcess(0);
+		}
+
 		// Set KeepALive
+		MyTools::InvokeClassPtr<CGameClient>()->RunKeepALive();
 		hKeepALiveThread = cbBEGINTHREADEX(NULL, NULL, _KeepALiveThread, NULL, NULL, NULL);
 	});
 	return 0;

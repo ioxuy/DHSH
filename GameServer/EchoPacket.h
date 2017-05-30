@@ -47,6 +47,9 @@ public:
 	// 检查登录
 	BOOL CheckIsLogin(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocketBuffer* pSocketBuffer) CONST;
 
+	// 检查有效时间
+	BOOL CheckTime(_In_ CGameClient* pGameClient, _In_ MyTools::CLSocketBuffer* pSocketBuffer) CONST;
+
 	// 获取本地的版本号
 	BOOL ReadLocalVersion();
 

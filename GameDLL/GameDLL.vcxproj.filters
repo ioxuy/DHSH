@@ -193,6 +193,9 @@
     <ClCompile Include="..\..\MyTools\MyTools\LdrHeader.cpp">
       <Filter>MyTools</Filter>
     </ClCompile>
+    <ClCompile Include="GameClient.cpp">
+      <Filter>Game\Socket</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -400,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="..\..\MyTools\MyTools\LdrHeader.h">
       <Filter>MyTools</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClient.h">
+      <Filter>Game\Socket</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
