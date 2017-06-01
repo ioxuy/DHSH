@@ -220,6 +220,9 @@
     <ClCompile Include="PurifyWaterTask.cpp">
       <Filter>Game\Script\PurifyWater</Filter>
     </ClCompile>
+    <ClCompile Include="HotFireTask.cpp">
+      <Filter>Game\Script\HotFire</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -455,6 +458,9 @@
     <ClInclude Include="PurifyWaterTask.h">
       <Filter>Game\Script\PurifyWater</Filter>
     </ClInclude>
+    <ClInclude Include="HotFireTask.h">
+      <Filter>Game\Script\HotFire</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -576,6 +582,9 @@
     </Filter>
     <Filter Include="Game\Script\PurifyWater">
       <UniqueIdentifier>{4651a962-da5e-4950-835f-a4c7ac23f3cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\HotFire">
+      <UniqueIdentifier>{3a15d3e5-1d0b-4e82-bbe5-337e807a40c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

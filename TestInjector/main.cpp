@@ -16,7 +16,7 @@
 
 int main()
 {
-	std::wstring wsText = LR"(#C20[活动]物资筹集, Content=去找一个木弓回来交给{【星】军需官|NPC星秀村|【星】军需官}。)";
+	std::wstring wsText = LR"(去黄泥岗（135，73）处干掉那个{辽国眼线|POS黄泥岗|135|73}。)";
 	wsText = wsText.substr(wsText.find(L"去找一个") + 4);
 	wsText = wsText.substr(0, wsText.find(L"回来交给"));
 	::Sleep(-1);

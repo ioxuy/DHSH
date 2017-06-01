@@ -20,11 +20,6 @@ BOOL CPurifyWaterTask::Run()
 {
 	while (GameRun)
 	{
-		/*if (IsEnoughMoney())
-		{
-			LOG_MSG_CF(L"当前帮贡或者金钱不足了……停止做净水任务!");
-			break;
-		}*/
 		CTaskObject TaskObject(NULL);
 		if (!ExistTask(&TaskObject))
 		{
@@ -99,15 +94,6 @@ BOOL CPurifyWaterTask::PickTask() CONST
 	if (MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
 		MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
 
-	return TRUE;
-}
-
-BOOL CPurifyWaterTask::IsEnoughMoney() CONST
-{
-	if (MyTools::InvokeClassPtr<CGameVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_PurifyWater_PromiseType) == 0)
-		return MyTools::InvokeClassPtr<CPersonAttribute>()->GetMoney() >= 30000;
-
-	// ???
 	return TRUE;
 }
 

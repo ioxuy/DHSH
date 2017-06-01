@@ -275,7 +275,7 @@ BOOL CPlayerMove::MoveToResNpc(_In_ CONST std::wstring& wsCityName, _In_ CONST s
 			LOG_CF_D(L"由于处于非大地图的范围……所以先使用回城符!");
 		else if (MyTools::CLPublic::Vec_find_if_Const(VecFilterMapName, [wsCurrentMapName](_In_ CONST std::wstring& wsMapName) { return wsCurrentMapName == wsMapName; }) == nullptr)
 		{
-			LOG_MSG_CF(L"当前地图:[%s] 不可识别,并且身上不存在回城符或者禁止使用超程符……先跑到大地图再开始好吗?");
+			LOG_MSG_CF(L"当前地图:[%s] 不可识别,并且身上不存在回城符或者禁止使用超程符……先跑到大地图再开始好吗?", wsCurrentMapName.c_str());
 			StopGame;
 			return FALSE;
 		}
@@ -287,7 +287,7 @@ BOOL CPlayerMove::MoveToResNpc(_In_ CONST std::wstring& wsCityName, _In_ CONST s
 		LOG_CF_D(L"当前离你最近的城市是:%s", wsRecentlyCityName.c_str());
 		TransferToCity(wsRecentlyCityName);
 	}
-	
+
 	return MoveToMapPoint(wsCityName, ResNpcPoint.FixPoint);
 
 }

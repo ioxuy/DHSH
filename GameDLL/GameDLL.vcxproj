@@ -121,6 +121,7 @@
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="CollectItem.h" />
     <ClInclude Include="GameClient.h" />
+    <ClInclude Include="HotFireTask.h" />
     <ClInclude Include="PurifyWaterTask.h" />
     <ClInclude Include="Scanbase.h" />
     <ClInclude Include="ExcuteAction.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="GameDLL.cpp" />
     <ClCompile Include="GameUi.cpp" />
     <ClCompile Include="GameUiExtend.cpp" />
+    <ClCompile Include="HotFireTask.cpp" />
     <ClCompile Include="HotKey.cpp" />
     <ClCompile Include="HotKeyExtend.cpp" />
     <ClCompile Include="ItemFilter.cpp" />

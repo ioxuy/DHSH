@@ -312,7 +312,9 @@ enum class em_TextVar
 	// 是否自动购买超程符
 	em_TextVar_AutoBuyReturnSymbol,
 	// 净水的类型 0=金钱 1=帮贡
-	em_TextVar_PurifyWater_PromiseType
+	em_TextVar_PurifyWater_PromiseType,
+	// 旺火的类型 0=金钱 1=帮贡
+	em_TextVar_HotFire_PromiseType,
 };
 
 

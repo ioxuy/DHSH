@@ -43,7 +43,7 @@ BOOL CUserConfigDlg::OnInitDialog()
 	pTabCtrl->InsertItem(1, L"Ò°ÍâË¢¹Ö");
 	pTabCtrl->InsertItem(2, L"²É¼¯");
 	pTabCtrl->InsertItem(3, L"Ê¤Ä¾");
-	pTabCtrl->InsertItem(4, L"¾»Ë®");
+	pTabCtrl->InsertItem(4, L"¾»Ë®/Íú»ð");
 
 	_ConfigModeDlg.Create(IDD_DIALOG_CONFIGMODE, reinterpret_cast<CWnd *>(pTabCtrl));
 	_FieldDlg.Create(IDD_DIALOG_CONFIG_FIELD, reinterpret_cast<CWnd *>(pTabCtrl));

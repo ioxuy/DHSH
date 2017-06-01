@@ -34,6 +34,7 @@
 #include "TaskExtend.h"
 #include "BangTask.h"
 #include "PurifyWaterTask.h"
+#include "HotFireTask.h"
 
 #define _SELF L"Expr.cpp"
 CExpr::CExpr()
@@ -119,7 +120,7 @@ VOID CExpr::TestPtr(CONST std::vector<std::wstring>& VecParm)
 	MyTools::InvokeClassPtr<CGameVariable>()->InitVariable();
 
 	StartGame;
-	MyTools::InvokeClassPtr<CPurifyWaterTask>()->Run();
+	MyTools::InvokeClassPtr<CHotFireTask>()->Run();
 }
 
 VOID CExpr::PrintTask(CONST std::vector<std::wstring>& VecParm)
