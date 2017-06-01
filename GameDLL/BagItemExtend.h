@@ -17,6 +17,12 @@ public:
 	BOOL FindItem_By_Name_To_ExcutePtr(_In_ CONST std::wstring& wsItemName, _In_ std::function<VOID(CONST CBagItem&)> ExcutePtr) CONST;
 
 	//
+	BOOL FindItem_By_PartName_To_ExcutePtr(_In_ CONST std::wstring& wsItemName, _In_ std::function<VOID(CONST CBagItem&)> ExcutePtr) CONST;
+
+	//
+	BOOL FindItem_By_Condition_To_ExcutePtr(_In_ std::function<VOID(CONST CBagItem&)> ExcutePtr, _In_ std::function<BOOL(CONST CBagItem&)> ConditionPtr) CONST;
+
+	//
 	DWORD GetCount_By_ItemName(_In_ CONST std::wstring& wsItemName) CONST;
 
 	//

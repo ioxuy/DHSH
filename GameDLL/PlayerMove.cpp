@@ -243,12 +243,12 @@ BOOL CPlayerMove::MoveToHome() CONST
 	return TRUE;
 }
 
-BOOL CPlayerMove::MoveToResNpc(_In_ CONST std::wstring& wsNpcName) CONST
+BOOL CPlayerMove::MoveToResNpc(_In_ CONST std::wstring& wsCityName, _In_ CONST std::wstring& wsNpcName) CONST
 {
 	CResText::ResNpcMapPointText ResNpcPoint;
-	if (!MyTools::InvokeClassPtr<CResNpcExtend>()->GetResNpc_By_MapName_NpcName(L"应天府", L"帮派传送员", ResNpcPoint))
+	if (!MyTools::InvokeClassPtr<CResNpcExtend>()->GetResNpc_By_MapName_NpcName(wsCityName, wsNpcName, ResNpcPoint))
 	{
-		LOG_MSG_CF(L"Npc资源里面竟然不存在[%s:%s],联系老夫!", L"应天府", L"帮派传送员");
+		LOG_MSG_CF(L"Npc资源里面竟然不存在[%s:%s],联系老夫!", wsCityName.c_str(), wsNpcName.c_str());
 		return FALSE;
 	}
 
@@ -265,14 +265,14 @@ BOOL CPlayerMove::MoveToResNpc(_In_ CONST std::wstring& wsNpcName) CONST
 		}
 	}
 
-	if (!TransferToCity(L"应天府"))
+	if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != wsCityName)
 	{
-		std::wstring wsCityName = GetRecentlyCityName();
-		LOG_CF_D(L"当前离你最近的城市是:%s", wsCityName.c_str());
-		TransferToCity(wsCityName);
+		std::wstring wsRecentlyCityName = GetRecentlyCityName();
+		LOG_CF_D(L"当前离你最近的城市是:%s", wsRecentlyCityName.c_str());
+		TransferToCity(wsRecentlyCityName);
 	}
-
-	return MoveToMapPoint(L"应天府", ResNpcPoint.FixPoint);
+	
+	return MoveToMapPoint(wsCityName, ResNpcPoint.FixPoint);
 
 }
 

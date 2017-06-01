@@ -21,7 +21,7 @@
 #define C_Skill_Num          0x264
 
 #define C_Pet_Skill_base     0x943808
-#define C_Get_Skill_name_CALL  0x006CD930
+#define C_Get_Skill_name_CALL  0x006CD9F0
 ////////////////////////////////////////////////////////
 //宠物
 ///////////////////////////////////////////////////////
@@ -158,8 +158,8 @@
 //#define C_chongwu_chushi    0x0050DEB0
 //#define C_chongwu_base      0x0050CE40 
 #define C_chongwu_tili      0x26
-#define C_caiji_CALL_chushi 0x0051C7E0
-#define C_caiji_CALL        0x0051CA70
+#define C_caiji_CALL_chushi 0x0051C650
+#define C_caiji_CALL        0x0051C8E0
 ////////////////////////////////////////////
 //UI 怪物数组
 ////////////////////////////////////////////
@@ -187,69 +187,69 @@
 ////////////////////////////////////////////
 
 //#define C_CALL_dati         0x007491D0  0x5332B0
-#define C_CALL_dati         0x5340B0 //答题三CALL 上层
-#define C_CALL_dati1        0x007D4285
-#define C_CALL_dati2        0x00534040
+#define C_CALL_dati         0x533EB0 //答题三CALL 上层
+#define C_CALL_dati1        0x007D4545
+#define C_CALL_dati2        0x00533E40
 #define C_CALL_fabao_base   0x8F4950
-#define C_CALL_fabao        0x0064FAD0
+#define C_CALL_fabao        0x0064FA90
 #define C_CALL_close_maimai  C_NPC_state
-#define C_CALL_CloseNPC     0x00752700
+#define C_CALL_CloseNPC     0x007527F0
 //#define C_CALL_hanhua       0x005FEAD0
-#define C_CALL_zoulu        0x0042FB80
+#define C_CALL_zoulu        0x0042FCB0
 #define  C_xunlu_base       0x8F5E64 //C_CALL_xunlu1 内
-#define C_CALL_xunlu1       0x0042FAD0
-#define C_CALL_xunlu        0x00430360
-#define C_call_dianji       0x006505C0//?
+#define C_CALL_xunlu1       0x0042FC00
+#define C_CALL_xunlu        0x00430490
+#define C_call_dianji       0x00650580//?
 #define C_Set_Skill_base    0x8F60B8
-#define C_CALL_Set_Skill    0x00489980
+#define C_CALL_Set_Skill    0x00489930
 #define C_base_kuaijie      0x8F8CBC// 快捷键基址 ??
-#define C_CALL_kuaijie      0x004FA260// 快捷键CALL ??
+#define C_CALL_kuaijie      0x004FA2A0// 快捷键CALL ??
 #define C_base_dianguai     0x8FB14C//战斗点击怪物基址 //?
 #define C_zhandou_huihe     0x0c      //战斗回合数
 #define C_base_xing         0x40      // 快捷键形态
 #define C_base_baobaoxing   0x84     //宝宝快捷键形态
 #define	C_base_zhuangtai    0x10      // 战斗场景人物状态 5,人物未攻击  6宠物未攻击 0 未进入战斗  3人物正在攻击
-#define C_CALL_dianguai     0x00642440// 技能点击怪物
-#define C_CALL_ADDHP        0x006506E0
+#define C_CALL_dianguai     0x00642470// 技能点击怪物
+#define C_CALL_ADDHP        0x006506A0
 #define C_CALL_maichu      C_CALL_ADDHP
 #define C_chaxun_Offset     0x6E4 //--
 #define C_chushi_Offset     0x4C8 //--
 #define C_CALL_chushi       0x0053A130 //--
 #define C_CALL_chaxun       0x00539EE0 //--
 #define C_call_jianwu       C_CALL_ADDHP   //
-#define C_CALL_taopao       0x00642810
+#define C_CALL_taopao       0x00642840
 
 //#define C_jiasu_xuhanshu    0x7E8644
 #define C_zidong_base       0x8FB148
-#define C_CALL_zidong       0x0063F710
+#define C_CALL_zidong       0x0063F740
 
 #define C_Auto_Skill        C_CALL_taopao
 
-#define C_Auto_Skill_      0x00645740
-#define C_CALL_IsFly       0x006AC180//0x00693580
+#define C_Auto_Skill_      0x00645700
+#define C_CALL_IsFly       0x006AC130//0x00693580
 
 #define C_CALL_NPC_寻路CALL  C_CALL_xunlu1
-#define C_CALL_NPC_寻路CALL1  0x004305F0
+#define C_CALL_NPC_寻路CALL1  0x00430720
 
 
-#define C_CALL_猜拳          0x00641A30
+#define C_CALL_猜拳          0x00641A60
 
-#define C_CALL_Open_give    0x004C9EC0
-#define C_CALL_Start_打地鼠  0x00650740
-#define C_CALL_give_Enter            0x004C9C00//确认给予
-#define C_CALL_Give_Set            0x0076D800
-#define C_CALL_Give_Set1            0x00770C00
-#define C_CALL_Give_Set2           0x0076DAB0
+#define C_CALL_Open_give    0x004C9F40
+#define C_CALL_Start_打地鼠  0x00650700
+#define C_CALL_give_Enter            0x004C9C80//确认给予
+#define C_CALL_Give_Set            0x0076D960
+#define C_CALL_Give_Set1            0x00770D90
+#define C_CALL_Give_Set2           0x0076DC40
 
 
 
 #define C_verify_Base           0x90B630
-#define C_CALL_Key_InPut        0x00772DD0
+#define C_CALL_Key_InPut        0x00772F60
 #define C_CALL_Login_Base       0x8F8CCC
-#define C_CALL_Login             0x004FC920
-#define C_CALL_Check_Btn        0x0077F8C0
+#define C_CALL_Login             0x004FC970
+#define C_CALL_Check_Btn        0x0077FA50
 
-#define 自动走路CALL 0x409350
+#define 自动走路CALL 0x409320
 #define NPC选项文本偏移 0x24C
 #define NPC选项发包偏移 0x58
 #define 家园基址 0x8F8B60

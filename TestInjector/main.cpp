@@ -16,14 +16,10 @@
 
 int main()
 {
-	WCHAR wszResourceType[] = { L"kernel" };
-	HMODULE hm = NULL;
-	HRSRC hRsrc = ::FindResourceW(hm, reinterpret_cast<LPCWSTR>(IDR_GAMEDLL), wszResourceType);
-	if (hRsrc)
-	{
-		DWORD dwSize = ::SizeofResource(hm, hRsrc);
-		dwSize = 0;
-	}
+	std::wstring wsText = LR"(把帮派的混天剑打造成神工品质交给金库管理员，各地的铁匠可以帮助您。（当前第2次）
+		<BR>)";
+	wsText = wsText.substr(wsText.find(L"打造成") + 3);
+	wsText = wsText.substr(0, wsText.find(L"品质"));
 	::Sleep(-1);
 	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))

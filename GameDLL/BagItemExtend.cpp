@@ -17,10 +17,20 @@ BOOL CBagItemExtend::GetShopEquiResText(_In_ CONST std::wstring& wsEquiName, _Ou
 
 BOOL CBagItemExtend::FindItem_By_Name_To_ExcutePtr(_In_ CONST std::wstring& wsItemName, _In_ std::function<VOID(CONST CBagItem & )> ExcutePtr) CONST
 {
+	return FindItem_By_Condition_To_ExcutePtr(ExcutePtr, [wsItemName](CONST CBagItem& item) { return item.GetName() == wsItemName; });
+}
+
+BOOL CBagItemExtend::FindItem_By_PartName_To_ExcutePtr(_In_ CONST std::wstring& wsItemName, _In_ std::function<VOID(CONST CBagItem&)> ExcutePtr) CONST
+{
+	return FindItem_By_Condition_To_ExcutePtr(ExcutePtr, [wsItemName](CONST CBagItem& item) { return item.GetName().find(wsItemName) != -1; });
+}
+
+BOOL CBagItemExtend::FindItem_By_Condition_To_ExcutePtr(_In_ std::function<VOID(CONST CBagItem & )> ExcutePtr, _In_ std::function<BOOL(CONST CBagItem & )> ConditionPtr) CONST
+{
 	std::vector<CBagItem> Vec;
-	if (GetVecBagItem(Vec, [wsItemName](CONST CBagItem& item) { return item.GetName() == wsItemName; }) != NULL)
+	if (GetVecBagItem(Vec, ConditionPtr) != NULL)
 	{
-		if(ExcutePtr != nullptr)
+		if (ExcutePtr != nullptr)
 			ExcutePtr(Vec.at(0));
 		return TRUE;
 	}

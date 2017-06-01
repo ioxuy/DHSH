@@ -29,7 +29,7 @@ public:
 	BOOL MoveToHome() CONST;
 
 	// 走到某个Npc
-	BOOL MoveToResNpc(_In_ CONST std::wstring& wsNpcName) CONST;
+	BOOL MoveToResNpc(_In_ CONST std::wstring& wsCityName, _In_ CONST std::wstring& wsNpcName) CONST;
 
 	// 去特殊地图……
 	BOOL MoveToSpecialMap(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint, _In_ CONST std::wstring wsSpecialMapName) CONST;

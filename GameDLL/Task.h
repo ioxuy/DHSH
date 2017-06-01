@@ -10,7 +10,9 @@ public:
 	{
 		em_Task_Gang_Type_None,
 		// ´òÔìÎäÆ÷
-		em_Task_Gang_Type_MakeEqui
+		em_Task_Gang_Type_MakeEqui,
+		// »÷É±Ç¿µÁ
+		em_Task_Gang_Type_KillMonster,
 	};
 
 	struct BangTaskNpc

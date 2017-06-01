@@ -75,3 +75,9 @@ VOID CBagItem::Save() CONST
 	});
 }
 
+std::wstring CBagItem::GetItemQuality() CONST
+{
+	std::wstring wsItemName = MyTools::CCharacter::ASCIIToUnicode(reinterpret_cast<CHAR*>(ReadDWORD(GetNodeBase() + C_BOX_shuxing1)));
+	return std::move(wsItemName);
+}
+

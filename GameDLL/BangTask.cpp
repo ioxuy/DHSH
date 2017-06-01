@@ -2,6 +2,8 @@
 #include "BangTask.h"
 #include <MyTools/Log.h>
 #include <MyTools/TimeTick.h>
+#include <MyTools/CLPublic.h>
+#include <MyTools/Character.h>
 #include "BagItemExtend.h"
 #include "LogicBagItemAction.h"
 #include "GameVariable.h"
@@ -12,6 +14,8 @@
 #include "GameUiExtend.h"
 #include "Task.h"
 #include "TaskExtend.h"
+#include "BagItem.h"
+#include "FarmMonster.h"
 
 #define _SELF L"BangTask.cpp"
 BOOL CBangTask::Check() CONST
@@ -35,6 +39,9 @@ BOOL CBangTask::Check() CONST
 			return FALSE;
 		}
 	}
+
+	// 使用驱魔香
+	MyTools::InvokeClassPtr<CLogicBagItemAction>()->CheckExorcism();
 	
 	// 
 	if (!MyTools::InvokeClassPtr<CBagItemExtend>()->IsBagFull(2))
@@ -47,7 +54,10 @@ BOOL CBangTask::Check() CONST
 
 BOOL CBangTask::MoveToBang() CONST
 {
-	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToResNpc(L"帮派传送员"))
+	if (!Check())
+		return FALSE;
+
+	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToResNpc(L"应天府", L"帮派传送员"))
 	{
 		LOG_CF_E(L"走到帮派传送员失败!");
 		return FALSE;
@@ -82,24 +92,223 @@ BOOL CBangTask::MoveToBang() CONST
 
 BOOL CBangTask::MoveToManagerNpc() CONST
 {
-	if (!MoveToBang())
+	if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != L"帮派" && !MoveToBang())
 		return FALSE;
 
-	return MyTools::InvokeClassPtr<CPlayerMove>()->MoveToSpecialMap(L"帮派", Point(21, 30), L"金库");
+	LOG_C_D(L"走到[虎虎家园传送员]");
+	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToPoint(Point(91, 93)))
+		return FALSE;
+
+	BOOL bOpenDlg = FALSE;
+	MyTools::InvokeClassPtr<CNpcExtend>()->FindNpc_By_Name_ExcutePtr(L"虎虎家园传送员", [&bOpenDlg](CONST CNpc& Npc)
+	{
+		if (Npc.OpenNpcDlg())
+		{
+			bOpenDlg = TRUE;
+			if (!Npc.CLickOption_DisableDlg(L"moveto,6", L"npcdlg") && MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
+				MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
+		}
+	});
+	if (!bOpenDlg)
+	{
+		LOG_CF_E(L"打开Npc[虎虎家园传送员] 失败!");
+		return FALSE;
+	}
+	return TRUE;
 }
 
-BOOL CBangTask::ExistBangTask() CONST
+BOOL CBangTask::ExistBangTask(_Out_ CTaskObject* pTaskObject) CONST
 {
-	return MyTools::InvokeClassPtr<CTaskExtend>()->ExistTask_By_PartName_Action(L"[帮派]", nullptr);
+	return MyTools::InvokeClassPtr<CTaskExtend>()->ExistTask_By_PartName_Action(L"[帮派]", [&pTaskObject](CONST CTaskObject& TaskObject)
+	{
+		MyTools::CLPublic::SetPtr(pTaskObject, TaskObject);
+	});;
 }
 
-BOOL CBangTask::PickBangTask() CONST
+BOOL CBangTask::MoveToBangDelivery() CONST
 {
-	if (!MoveToManagerNpc())
+	// 43.37
+	LOG_C_D(L"走出金库");
+	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToSpecialMap(L"金库", Point(43, 37), L"帮派"))
+		return  FALSE;
+
+	LOG_C_D(L"走到[虎虎家园传送员]");
+	return MyTools::InvokeClassPtr<CPlayerMove>()->MoveToPoint(Point(91, 93));
+}
+
+std::wstring CBangTask::GetBangTaskRequestItemQuality(_In_ CONST CTaskObject& TaskObject) CONST
+{
+	std::wstring wsItemQuality = TaskObject.GetTaskContent();
+	if (wsItemQuality.find(L"打造成") == -1)
+		return std::wstring();
+
+	// 把帮派的混天剑打造成神工品质交给金库管理员，各地的铁匠可以帮助您。（当前第2次）
+	wsItemQuality = wsItemQuality.substr(wsItemQuality.find(L"打造成") + 3);
+	wsItemQuality = wsItemQuality.substr(0, wsItemQuality.find(L"品质"));
+	return wsItemQuality;
+}
+
+BOOL CBangTask::Task_MakeEquiment(_In_ CONST CTaskObject& TaskObject, _In_ CONST std::wstring& wsItemQuality) CONST
+{
+	if (!MoveToBangDelivery())
+		return FALSE;
+
+	BOOL bOpenDlg = FALSE;
+	MyTools::InvokeClassPtr<CNpcExtend>()->FindNpc_By_Name_ExcutePtr(L"虎虎家园传送员", [&bOpenDlg](CONST CNpc& Npc)
+	{
+		if (Npc.OpenNpcDlg())
+		{
+			bOpenDlg = TRUE;
+			if (!Npc.CLickOption_DisableDlg(L"moveto,1", L"npcdlg") && MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
+				MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
+		}
+	});
+	if (!bOpenDlg)
+	{
+		LOG_CF_E(L"打开Npc[虎虎家园传送员] 失败!");
+		return FALSE;
+	}
+
+	struct BangTask_MakeEquiment_Text
+	{
+		std::wstring wsMapName;
+		std::wstring wsNpcName;
+	};
+
+	CONST static std::vector<BangTask_MakeEquiment_Text> Vec = 
+	{
+		{ L"应天府",L"应天府铁匠" },
+		{ L"星秀村",L"星秀村铁匠" },
+		{ L"林中小居",L"林中小居铁匠" },
+		{ L"景阳岗",L"景阳岗铁匠" },
+		{ L"柴家庄",L"柴家庄铁匠" },
+	};
+
+	for (CONST auto& itm : Vec)
+	{
+		if (!Task_MoveToBlackSmith(itm.wsMapName, itm.wsNpcName))
+			return FALSE;
+
+		if (BangTask_IsFinishMakeEquiment(wsItemQuality))
+		{
+			LOG_CF_D(L"帮派任务[打造精品]完成!");
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+BOOL CBangTask::Task_MoveToBlackSmith(_In_ CONST std::wstring& wsMapName, _In_ CONST std::wstring& wsNpcName) CONST
+{
+	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToResNpc(wsMapName, wsNpcName))
+		return FALSE;
+
+	BOOL bOpenDlg = FALSE;
+	MyTools::InvokeClassPtr<CNpcExtend>()->FindNpc_By_Name_ExcutePtr(wsNpcName, [&bOpenDlg](CONST CNpc& Npc)
+	{
+		if (Npc.OpenNpcDlg())
+		{
+			bOpenDlg = TRUE;
+			Npc.ClickOption(L"CheckMake", L"npcdlg");
+			Npc.CLickOption_DisableDlg(L"DoMake", L"npcdlg");
+		}
+	});
+	if (!bOpenDlg)
+	{
+		LOG_CF_E(L"打开Npc[%s] 失败!", wsNpcName.c_str());
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL CBangTask::BangTask_IsFinishMakeEquiment(_In_ CONST std::wstring& wsItemQuality) CONST
+{
+	BOOL bFinish = FALSE;
+	MyTools::InvokeClassPtr<CBagItemExtend>()->FindItem_By_PartName_To_ExcutePtr(L"帮派的", [wsItemQuality, &bFinish](CONST CBagItem& itm)
+	{
+		bFinish = itm.GetItemQuality() == wsItemQuality;
+	});
+
+	return bFinish;
+}
+
+BOOL CBangTask::KillRobber(_In_ CONST CTaskObject& TaskObject) CONST
+{
+	RobberContent RobberContent_;
+	if (!GetRobberPoint(TaskObject, RobberContent_))
+		return FALSE;
+
+	if (!MoveToBangDelivery())
+		return FALSE;
+
+	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToMapPoint(RobberContent_.wsMapName, RobberContent_.TarPoint))
+		return FALSE;
+
+	BOOL bOpenDlg = FALSE;
+	MyTools::InvokeClassPtr<CNpcExtend>()->FindNpc_By_Name_ExcutePtr(RobberContent_.wsMonsterName, [&bOpenDlg](CONST CNpc& Npc)
+	{
+		if (Npc.OpenNpcDlg())
+		{
+			bOpenDlg = TRUE;
+			if (!Npc.CLickOption_DisableDlg(L"DoFight", L"npcdlg") && MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
+				MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
+		}
+	});
+
+	if (!bOpenDlg)
+	{
+		LOG_CF_E(L"打开Monster[%s] 失败!", RobberContent_.wsMonsterName.c_str());
+		return FALSE;
+	}
+
+	if (!MyTools::InvokeClassPtr<CFarmMonster>()->Fight())
+		return FALSE;
+
+	GameSleep(2 * 1000);
+	if (MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
+		MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
+
+	return TRUE;
+}
+
+BOOL CBangTask::GetRobberPoint(_In_ CONST CTaskObject& TaskObject, _Out_ RobberContent& RobberContent_) CONST
+{
+	auto wsContent = TaskObject.GetTaskContent();
+
+	static CONST std::vector<std::wstring> VecText = { L"[",L"]" };
+
+	std::vector<std::wstring> VecResult;
+	MyTools::CCharacter::GetSplit_By_List(wsContent, VecText, VecResult, Split_Option_RemoveEmptyEntries);
+	if (VecResult.size() == 0)
+	{
+		LOG_CF_E(L"GetRobberPoint Faild! Text=%s", wsContent.c_str());
+		return FALSE;
+	}
+
+	// 强盗雷富昌|POS应天府西|12|14
+	std::vector<std::wstring> VecRobberContent;
+	if (MyTools::CCharacter::Split(VecResult.at(0), L"|", VecRobberContent, Split_Option_RemoveEmptyEntries) != 4)
+	{
+		LOG_CF_E(L"VecResult=%s", VecResult.at(0).c_str());
+		return FALSE;
+	}
+
+	RobberContent_.wsMonsterName = VecRobberContent.at(0);
+	RobberContent_.wsMapName = VecRobberContent.at(1).substr(3);
+	RobberContent_.TarPoint = Point(std::stoi(VecRobberContent.at(2)), std::stoi(VecRobberContent.at(3)));
+	LOG_CF_D(L"强盗名称[%s], 所在地图[%s],坐标[%d,%d]", RobberContent_.wsMonsterName.c_str(), RobberContent_.wsMapName.c_str(), RobberContent_.TarPoint.X, RobberContent_.TarPoint.Y);
+	return TRUE;
+}
+
+BOOL CBangTask::PickBangTask(_Out_ CTaskObject* pTaskObject) CONST
+{
+	if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != L"金库" && !MoveToManagerNpc())
 		return FALSE;
 
 	MyTools::CTimeTick TimeTick;
-	while (GameRun && TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Minute) < 7 && !ExistBangTask())
+	while (GameRun && TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Minute) < 7 && !ExistBangTask(nullptr))
 	{
 		DWORD dwNpcId = 0;
 		BOOL bOpenDlg = FALSE;
@@ -109,8 +318,18 @@ BOOL CBangTask::PickBangTask() CONST
 			if (Npc.OpenNpcDlg())
 			{
 				bOpenDlg = TRUE;
-				if (!Npc.CLickOption_DisableDlg(L"AcceptTask", L"npcdlg") && MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
-					MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
+
+				// get dlg Text = '这是给您的奖励？要多为帮派经营做贡献哦'
+				if (MyTools::InvokeClassPtr<CGameUiExtend>()->FindText_In_NpcDlg(L"这是给您的奖励") || MyTools::InvokeClassPtr<CGameUiExtend>()->FindText_In_NpcDlg(L"您来得正好")) // Show 
+				{
+					if (!Npc.CLickOption_DisableDlg(L"AcceptTask", L"npcdlg") && MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
+						MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
+				}
+				else
+				{
+					LOG_C_D(L"放弃任务后需要等待一段时间……设置等待30s后再接任务");
+					GameSleep(30 * 1000);
+				}
 			}
 		});
 		if (!bOpenDlg)
@@ -118,26 +337,37 @@ BOOL CBangTask::PickBangTask() CONST
 			LOG_CF_E(L"打开Npc[金库管理员] 失败!");
 		}
 
-		GameSleep(5 * 1000);
+		GameSleep(1000);
 	}
 
 	if (MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
 		MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
 
-	return ExistBangTask();
+	return ExistBangTask(pTaskObject);
 }
 
 BOOL CBangTask::Run()
 {
 	while (GameRun)
 	{
-		if (!PickBangTask())
+		CTaskObject CurrentTaskObject(NULL);
+		if (!PickBangTask(&CurrentTaskObject))
 		{
 			LOG_MSG_CF(L"接帮派任务失败!");
 			break;
 		}
 
-
+		switch (CurrentTaskObject.GetBangTaskType())
+		{
+		case CTaskObject::em_Task_Gang_Type::em_Task_Gang_Type_MakeEqui:	
+			Task_MakeEquiment(CurrentTaskObject, GetBangTaskRequestItemQuality(CurrentTaskObject));
+			break;
+		case CTaskObject::em_Task_Gang_Type::em_Task_Gang_Type_KillMonster:
+			KillRobber(CurrentTaskObject);
+			break;
+		default:
+			break;
+		}
 	}
 
 	return TRUE;
