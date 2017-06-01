@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "PersonAction.h"
 #include <MyTools/Log.h>
+#include <MyTools/Character.h>
+#include <MyTools/CLPublic.h>
 #include "ExcuteAction.h"
 #include "GameCALL.h"
 #include "PersonAttribute.h"
@@ -29,5 +31,14 @@ VOID CPersonAction::SupplementMp() CONST
 	{
 		LOG_CF_D(L"人物的MP=%d, 低于设定的值=%d, 吃药!", pPersonAttributePtr->GetPercentMp(), dwValue);
 		MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([] {MyTools::InvokeClassPtr<CGameCALL>()->AddHp(0x2); });
+	}
+}
+
+VOID CPersonAction::DisableOtherPlayer() CONST
+{
+	if ((ReadDWORD(是否屏蔽玩家基址) & 0xFF) != 1)
+	{
+		LOG_CF_D(L"屏蔽周围玩家~");
+		MyTools::InvokeClassPtr<CGameCALL>()->SetHotKey(VK_F9);
 	}
 }

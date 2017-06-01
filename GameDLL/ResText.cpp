@@ -299,6 +299,7 @@ VOID CResText::RegisterResNpcMapText()
 		{ L"【星】杂货摊老板", L"星秀村", L"星秀村", Point(187, 114) },
 		{ L"【应】杂货摊老板", L"应天府", L"应天府", Point(131, 139) },
 		{ L"【汴】杂货摊老板", L"星秀村", L"星秀村", Point(32, 229) },
+		{ L"【星】军需官", L"星秀村", L"星秀村", Point(166, 145) },
 	};
 
 	Register(L"ResNpcPointText", &Vec);

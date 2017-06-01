@@ -121,6 +121,7 @@
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="CollectItem.h" />
     <ClInclude Include="GameClient.h" />
+    <ClInclude Include="PurifyWaterTask.h" />
     <ClInclude Include="Scanbase.h" />
     <ClInclude Include="ExcuteAction.h" />
     <ClInclude Include="Expr.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="PersonPetExtend.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerExtend.cpp" />
+    <ClCompile Include="PurifyWaterTask.cpp" />
     <ClCompile Include="ResNpc.cpp" />
     <ClCompile Include="ResNpcExtend.cpp" />
     <ClCompile Include="PersonAction.cpp" />

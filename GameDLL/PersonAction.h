@@ -14,6 +14,9 @@ public:
 	
 	// ≤π≥‰MP
 	VOID SupplementMp() CONST;
+
+	// Disable Other Player
+	VOID DisableOtherPlayer() CONST;
 public:
 	static CPersonAction* CreateInstance()
 	{

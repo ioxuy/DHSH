@@ -219,6 +219,7 @@
     <ClInclude Include="ConfigCollectDlg.h" />
     <ClInclude Include="ConfigFielddlg.h" />
     <ClInclude Include="ConfigModeDlg.h" />
+    <ClInclude Include="ConfigPurifyWaterDlg.h" />
     <ClInclude Include="ConfigReadPlayerDlg.h" />
     <ClInclude Include="ConsoleClient.h" />
     <ClInclude Include="ConsoleVariable.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="ConfigCollectDlg.cpp" />
     <ClCompile Include="ConfigFielddlg.cpp" />
     <ClCompile Include="ConfigModeDlg.cpp" />
+    <ClCompile Include="ConfigPurifyWaterDlg.cpp" />
     <ClCompile Include="ConfigReadPlayerDlg.cpp" />
     <ClCompile Include="ConsoleClient.cpp" />
     <ClCompile Include="ConsoleVariable.cpp" />

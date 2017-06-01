@@ -255,6 +255,7 @@
 #define 家园基址 0x8F8B60
 #define 家园偏移 0x498
 #define 家园活力偏移 0x2B
+#define 是否屏蔽玩家基址 0x9211A4
 
 #define ReadDWORD(Addr) MyTools::CCharacter::ReadDWORD(Addr)
 
@@ -309,7 +310,9 @@ enum class em_TextVar
 	// 是否使用超程符
 	em_TextVar_UseReturnSymbol,
 	// 是否自动购买超程符
-	em_TextVar_AutoBuyReturnSymbol
+	em_TextVar_AutoBuyReturnSymbol,
+	// 净水的类型 0=金钱 1=帮贡
+	em_TextVar_PurifyWater_PromiseType
 };
 
 

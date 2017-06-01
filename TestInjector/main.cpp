@@ -16,10 +16,9 @@
 
 int main()
 {
-	std::wstring wsText = LR"(把帮派的混天剑打造成神工品质交给金库管理员，各地的铁匠可以帮助您。（当前第2次）
-		<BR>)";
-	wsText = wsText.substr(wsText.find(L"打造成") + 3);
-	wsText = wsText.substr(0, wsText.find(L"品质"));
+	std::wstring wsText = LR"(#C20[活动]物资筹集, Content=去找一个木弓回来交给{【星】军需官|NPC星秀村|【星】军需官}。)";
+	wsText = wsText.substr(wsText.find(L"去找一个") + 4);
+	wsText = wsText.substr(0, wsText.find(L"回来交给"));
 	::Sleep(-1);
 	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))

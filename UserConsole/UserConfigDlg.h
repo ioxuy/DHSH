@@ -7,6 +7,8 @@
 #include "ConfigCollectDlg.h"
 #include "ConfigModeDlg.h"
 #include "ConfigBangTaskDlg.h"
+#include "ConfigPurifyWaterDlg.h"
+
 
 class CUserConfigDlg : public CDialogEx
 {
@@ -36,6 +38,7 @@ private:
 	CConfigFielddlg         _FieldDlg;
 	CConfigModeDlg          _ConfigModeDlg;
 	CConfigBangTaskDlg		_BangTaskDlg;
+	CConfigPurifyWaterDlg	_PurifyWaterDlg;
 	std::vector<CDialogEx*> _VecDlg;
 	BOOL                    _bClose;
 public:

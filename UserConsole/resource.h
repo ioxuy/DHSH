@@ -18,6 +18,8 @@
 #define IDR_DLL1                        155
 #define IDR_INJECTORDLL1                156
 #define IDD_DIALOG_CONFIG_BANGTASK      157
+#define IDD_DIALOG_PURIFYWATER          159
+#define IDD_DIALOG_CONFIG_PURIFYWATER   159
 #define IDC_EDIT_ACCOUNT                1000
 #define IDC_EDIT_PASS                   1001
 #define IDC_BUTTON_LOGIN                1002
@@ -66,14 +68,17 @@
 #define IDC_CHECK_BANGTASK_DEFAULTCONFIG 1060
 #define IDC_BUTTON_BANGTASK_READCONFIG_OTHERPLAYER 1061
 #define IDC_BUTTON_BANGTASK_SUMIT       1062
+#define IDC_RADIO_PURIFYWATER_MONEY     1063
+#define IDC_RADIO_PURIFYWATER_BANG      1064
+#define IDC_BUTTON_PURIFYWATER_SUMIT    1065
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        159
+#define _APS_NEXT_RESOURCE_VALUE        161
 #define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         1063
+#define _APS_NEXT_CONTROL_VALUE         1066
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

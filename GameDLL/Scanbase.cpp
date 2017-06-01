@@ -32,5 +32,8 @@ VOID CScanBase::Start() CONST
 
 	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	家园活力偏移	0x2B");
 
+	dwBase = MyTools::CLSearchBase::FindBase("8A????3C040F??????????3C09", 0x6AB1B2 - 0x6AB191, 1, 0, L"Game.exe");
+	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	是否屏蔽玩家基址	0x%X", dwBase);
+
 	LOG_CF_D(L"SpendTime/s = %d", static_cast<DWORD>(TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Second)));
 }

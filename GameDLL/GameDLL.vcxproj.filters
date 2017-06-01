@@ -217,6 +217,9 @@
     <ClCompile Include="BangTask.cpp">
       <Filter>Game\Script\Bang</Filter>
     </ClCompile>
+    <ClCompile Include="PurifyWaterTask.cpp">
+      <Filter>Game\Script\PurifyWater</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -449,6 +452,9 @@
     <ClInclude Include="BangTask.h">
       <Filter>Game\Script\Bang</Filter>
     </ClInclude>
+    <ClInclude Include="PurifyWaterTask.h">
+      <Filter>Game\Script\PurifyWater</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -567,6 +573,9 @@
     </Filter>
     <Filter Include="Game\Script\Bang">
       <UniqueIdentifier>{427414a8-6d88-496d-99a0-3965af7ef208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\PurifyWater">
+      <UniqueIdentifier>{4651a962-da5e-4950-835f-a4c7ac23f3cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

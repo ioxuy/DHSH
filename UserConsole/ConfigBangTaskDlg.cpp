@@ -39,6 +39,9 @@ BOOL CConfigBangTaskDlg::OnInitDialog()
 	_VecCtrl.push_back(GetDlgItem(IDC_CHECK_BANGTASK_AUTOBUY_RETURNSYMBOL));
 	_VecCtrl.push_back(GetDlgItem(IDC_CHECK_BANGTASK_AUTOBUYEXORCISM));
 	_VecCtrl.push_back(GetDlgItem(IDC_CHECK_BANGTASK_USE_RETURNSYMBOL));
+
+	SwapButtonFieldSumit();
+	SyncReadConfig();
 	return TRUE;
 }
 

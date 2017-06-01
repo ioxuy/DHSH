@@ -266,9 +266,14 @@ BOOL CPlayerMove::MoveToResNpc(_In_ CONST std::wstring& wsCityName, _In_ CONST s
 	std::wstring wsCurrentMapName = MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName();
 	if (!MyTools::InvokeClassPtr<CMapSearch>()->Exist(wsCurrentMapName))
 	{
+		CONST static std::vector<std::wstring> VecFilterMapName = 
+		{
+			L"武器店",L"防具店",L"饰品店"
+		};
+
 		if (TransferToCity(L"应天府") || TransferToCity(L"星秀村") || TransferToCity(L"汴京城"))
 			LOG_CF_D(L"由于处于非大地图的范围……所以先使用回城符!");
-		else
+		else if (MyTools::CLPublic::Vec_find_if_Const(VecFilterMapName, [wsCurrentMapName](_In_ CONST std::wstring& wsMapName) { return wsCurrentMapName == wsMapName; }) == nullptr)
 		{
 			LOG_MSG_CF(L"当前地图:[%s] 不可识别,并且身上不存在回城符或者禁止使用超程符……先跑到大地图再开始好吗?");
 			StopGame;

@@ -85,7 +85,7 @@ BOOL CNpc::ClickOption_By_Condition(_In_ CONST std::wstring& wsOptionText, _In_ 
 		{
 			MyTools::InvokeClassPtr<CGameCALL>()->ClickNpcOption(GetId(), MyTools::CCharacter::UnicodeToASCII(wsOptionText).c_str());
 		});
-		GameSleep(1000);
+		GameSleep(3 * 1000);
 	}
 	return fnExitPtr();
 }

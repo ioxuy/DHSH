@@ -19,6 +19,7 @@ CUserConfigDlg::CUserConfigDlg(_In_ CONST std::wstring& wsPlayerName, CWnd* pPar
 	_CollectDlg(_wsPlayerName), 
 	_FieldDlg(wsPlayerName),
 	_BangTaskDlg(wsPlayerName),
+	_PurifyWaterDlg(wsPlayerName),
 	_bClose(FALSE)
 {
 	
@@ -42,16 +43,19 @@ BOOL CUserConfigDlg::OnInitDialog()
 	pTabCtrl->InsertItem(1, L"野外刷怪");
 	pTabCtrl->InsertItem(2, L"采集");
 	pTabCtrl->InsertItem(3, L"胜木");
+	pTabCtrl->InsertItem(4, L"净水");
 
 	_ConfigModeDlg.Create(IDD_DIALOG_CONFIGMODE, reinterpret_cast<CWnd *>(pTabCtrl));
 	_FieldDlg.Create(IDD_DIALOG_CONFIG_FIELD, reinterpret_cast<CWnd *>(pTabCtrl));
 	_CollectDlg.Create(IDD_DIALOG_CONFIG_COLLECT, reinterpret_cast<CWnd *>(pTabCtrl));
 	_BangTaskDlg.Create(IDD_DIALOG_CONFIG_BANGTASK, reinterpret_cast<CWnd *>(pTabCtrl));
+	_PurifyWaterDlg.Create(IDD_DIALOG_CONFIG_PURIFYWATER, reinterpret_cast<CWnd *>(pTabCtrl));
 
 	_VecDlg.push_back(&_ConfigModeDlg);
 	_VecDlg.push_back(&_FieldDlg);
 	_VecDlg.push_back(&_CollectDlg);
 	_VecDlg.push_back(&_BangTaskDlg);
+	_VecDlg.push_back(&_PurifyWaterDlg);
 
 	CRect tabRect;
 	pTabCtrl->GetClientRect(&tabRect);

@@ -15,11 +15,21 @@ public:
 		Point        FixPoint;
 	};
 
+	enum em_StoreIndex
+	{
+		em_StoreIndex_Ying_Weaspon = 0x1,
+		em_StoreIndex_Ying_Defence = 0x2,
+		em_StoreIndex_Ying_Jewelry = 0x3,
+		em_StoreIndex_Xing_Weaspon = 0x4,
+		em_StoreIndex_Xing_Defence = 0x5,
+		em_StoreIndex_Xing_Jewelry = 0x6,
+	};
+
 	struct ResShopEquiText
 	{
-		std::wstring wsEquiName;
-		DWORD		 dwStoreIndex;
-		DWORD		 dwItemIndex;
+		std::wstring    wsEquiName;
+		DWORD			dwStoreIndex;
+		DWORD		    dwItemIndex;
 	};
 
 	struct ResStoreItemText
