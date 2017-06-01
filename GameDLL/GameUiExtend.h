@@ -20,6 +20,8 @@ public:
 
 	BOOL FindText_In_NpcDlg(_In_ CONST std::wstring& wsText) CONST;
 
+	std::wstring GetNpcDlgText() CONST;
+
 	BOOL IsShowDlg(_In_ CONST std::wstring& wsDlgName) CONST;
 
 	BOOL CloseDlg(_In_ CONST std::wstring& wsDlgName) CONST;

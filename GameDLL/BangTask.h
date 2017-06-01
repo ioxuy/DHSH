@@ -21,7 +21,7 @@ private:
 	BOOL MoveToManagerNpc() CONST;
 
 	// PickTask
-	BOOL PickBangTask(_Out_ CTaskObject* pTaskObject) CONST;
+	BOOL PickBangTask(_Out_ CTaskObject* pTaskObject);
 
 	// 
 	BOOL ExistBangTask(_Out_ CTaskObject* pTaskObject) CONST;
@@ -37,7 +37,7 @@ private: // 打造神兵
 	BOOL Task_MakeEquiment(_In_ CONST CTaskObject& TaskObject, _In_ CONST std::wstring& wsItemQuality) CONST;
 
 	//
-	BOOL Task_MoveToBlackSmith(_In_ CONST std::wstring& wsMapName, _In_ CONST std::wstring& wsNpcName) CONST;
+	BOOL Task_MoveToBlackSmith(_In_ CONST std::wstring& wsMapName, _In_ CONST std::wstring& wsNpcName, _In_ CONST std::wstring& wsClickText) CONST;
 
 	//
 	BOOL BangTask_IsFinishMakeEquiment(_In_ CONST std::wstring& wsItemQuality) CONST;
@@ -53,6 +53,8 @@ private: // 击杀强盗
 		Point TarPoint;
 	};
 	BOOL GetRobberPoint(_In_ CONST CTaskObject& TaskObject, _Out_ RobberContent& RobberContent_) CONST;
+private:
+	mutable BOOL _bFinishTask;
 public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{

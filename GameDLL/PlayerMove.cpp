@@ -18,6 +18,7 @@
 #include "NpcExtend.h"
 #include "Npc.h"
 #include "ResNpcExtend.h"
+#include "GameVariable.h"
 
 #define _SELF L"PlayerMove.cpp"
 BOOL CPlayerMove::MoveToPoint(_In_ CONST Point& TarPoint) CONST
@@ -31,9 +32,9 @@ BOOL CPlayerMove::MoveToMapPoint(_In_ CONST std::wstring& wsMapName, _In_ CONST 
 	CONST auto pPersonAttributePtr = MyTools::InvokeClassPtr<CPersonAttribute>();
 	CONST auto pGameUiExtend = MyTools::InvokeClassPtr<CGameUiExtend>();
 	
-	while (GameRun && (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != wsMapName || pPersonAttributePtr->GetDis(TarPoint) != 0.0f))
+	while (GameRun && (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != wsMapName || pPersonAttributePtr->GetDis(TarPoint) > 1.0f))
 	{
-		GameSleep(500);
+		GameSleep(1000);
 		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 30 * 1000)
 		{
 			CONST auto CurPoint = pPersonAttributePtr->GetPoint();
@@ -44,6 +45,9 @@ BOOL CPlayerMove::MoveToMapPoint(_In_ CONST std::wstring& wsMapName, _In_ CONST 
 		}
 		if (!pPersonAttributePtr->IsMoving())
 		{
+			if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() == wsMapName && pPersonAttributePtr->GetDis(TarPoint) <= 7.0f)
+				break;
+
 			if (!Action_When_UnMove(wsMapName, TarPoint))
 				return FALSE;
 
@@ -55,11 +59,15 @@ BOOL CPlayerMove::MoveToMapPoint(_In_ CONST std::wstring& wsMapName, _In_ CONST 
 		MyTools::InvokeClassPtr<CLogicBagItemAction>()->CheckExorcism();
 		TimeTick.Reset();
 	}
+	GameSleep(3 * 1000);
 	return TRUE;
 }
 
 BOOL CPlayerMove::TransferToCity(_In_ CONST std::wstring& wsCityName) CONST
 {
+	if (MyTools::InvokeClassPtr<CGameVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_UseReturnSymbol) == 0)
+		return FALSE;
+
 	auto pPersonAttributePtr = MyTools::InvokeClassPtr<CPersonAttribute>();
 
 	CONST static std::vector<std::wstring> VecItemText = { L"回城符",L"超程符" };
@@ -145,7 +153,7 @@ BOOL CPlayerMove::ShowNpcDlg_When_Move(CONST CGameUi& npcdlg) CONST
 		LOG_CF_D(L"走路过程中出现了Npc 寻路 对话框");
 		BOOL bFind = MyTools::InvokeClassPtr<CNpcExtend>()->FindPlayer_By_Condition_ExcuteAction([](CONST CPlayer& Player)
 		{
-			return Player.GetDis() == 0 && Player.GetType() == CPlayer::em_PlayerType_Npc;
+			return Player.GetDis() <= 1.0f && Player.GetType() == CPlayer::em_PlayerType_Npc;
 		}, [dlgText](CONST CNpc& Npc)
 		{
 			LOG_CF_D(L"点击Npc选项[%s]->[%s]", dlgText.wsOptionText.c_str(), dlgText.wsClickText.c_str());
@@ -153,7 +161,10 @@ BOOL CPlayerMove::ShowNpcDlg_When_Move(CONST CGameUi& npcdlg) CONST
 		});
 
 		if (!bFind)
-			LOG_MSG_CF(L"不太可能……出现了寻路的对话框, 但是距离Npc距离过远……真的吗?");
+		{
+			LOG_CF_E(L"不太可能……出现了寻路的对话框, 但是距离Npc距离过远……真的吗?");
+			MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
+		}
 	});
 
 	if (!bFind)
@@ -259,7 +270,7 @@ BOOL CPlayerMove::MoveToResNpc(_In_ CONST std::wstring& wsCityName, _In_ CONST s
 			LOG_CF_D(L"由于处于非大地图的范围……所以先使用回城符!");
 		else
 		{
-			LOG_MSG_CF(L"当前地图:[%s] 不可识别,并且身上不存在回城符……先跑到大地图再开始好吗?");
+			LOG_MSG_CF(L"当前地图:[%s] 不可识别,并且身上不存在回城符或者禁止使用超程符……先跑到大地图再开始好吗?");
 			StopGame;
 			return FALSE;
 		}
@@ -282,9 +293,13 @@ BOOL CPlayerMove::MoveToSpecialMap(_In_ CONST std::wstring& wsMapName, _In_ CONS
 	CONST auto pPersonAttributePtr = MyTools::InvokeClassPtr<CPersonAttribute>();
 	CONST auto pGameUiExtend = MyTools::InvokeClassPtr<CGameUiExtend>();
 
-	while (GameRun && (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != wsSpecialMapName))
+	auto fnExitPtr = [wsSpecialMapName]
 	{
-		GameSleep(500);
+		return MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != wsSpecialMapName;
+	};
+	while (GameRun && fnExitPtr())
+	{
+		GameSleep(1000);
 		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 10 * 1000)
 		{
 			CONST auto CurPoint = pPersonAttributePtr->GetPoint();
@@ -293,7 +308,7 @@ BOOL CPlayerMove::MoveToSpecialMap(_In_ CONST std::wstring& wsMapName, _In_ CONS
 			StopGame;
 			return FALSE;
 		}
-		if (!pPersonAttributePtr->IsMoving())
+		if (!pPersonAttributePtr->IsMoving() && fnExitPtr())
 		{
 			if (!Action_When_UnMove(wsMapName, TarPoint))
 				return FALSE;

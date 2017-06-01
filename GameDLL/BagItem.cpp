@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "BagItem.h"
 #include <MyTools/Character.h>
+#include <MyTools/Log.h>
 #include "ExcuteAction.h"
 #include "GameCALL.h"
 #include "Npc.h"
 
+#define _SELF L"BagItem.cpp"
 CBagItem::CBagItem()
 {
 	_dwNodeBase = NULL;
@@ -77,7 +79,16 @@ VOID CBagItem::Save() CONST
 
 std::wstring CBagItem::GetItemQuality() CONST
 {
-	std::wstring wsItemName = MyTools::CCharacter::ASCIIToUnicode(reinterpret_cast<CHAR*>(ReadDWORD(GetNodeBase() + C_BOX_shuxing1)));
-	return std::move(wsItemName);
+	DWORD dwAddr = 0;
+	if (ReadDWORD(GetNodeBase() + C_BOX_shuxing1 + 0x14) <= 0xF)
+		dwAddr = GetNodeBase() + C_BOX_shuxing1;
+	else
+		dwAddr = ReadDWORD(GetNodeBase() + C_BOX_shuxing1);
+
+	std::wstring wsItemQuality;
+	if ((dwAddr & 0xFF) != NULL)
+		wsItemQuality = MyTools::CCharacter::ASCIIToUnicode(reinterpret_cast<CHAR*>(dwAddr));
+
+	return std::move(wsItemQuality);
 }
 

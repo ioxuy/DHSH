@@ -46,6 +46,12 @@ BOOL CGameUiExtend::FindText_In_NpcDlg(_In_ CONST std::wstring& wsText) CONST
 	return wsNpcDlgText.find(wsText) != -1 ? TRUE : FALSE;
 }
 
+std::wstring CGameUiExtend::GetNpcDlgText() CONST
+{
+	DWORD dwBase = ReadDWORD(ReadDWORD(C_NPC_state) + C_NPC_neirong);
+	return dwBase == NULL ? std::wstring() : MyTools::CCharacter::ASCIIToUnicode(std::string(reinterpret_cast<CHAR *>(dwBase)));
+}
+
 BOOL CGameUiExtend::IsShowDlg(_In_ CONST std::wstring& wsDlgName) CONST
 {
 	CGameUi GameUi;

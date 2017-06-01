@@ -62,6 +62,9 @@ VOID CGameVariable::InitVariable() CONST
 
 	//
 	SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_AutoBuyPetDrinksCount, 30);
+
+	//
+	SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_AutoBuyReturnSymbol, 0);
 }
 
 GameShareContent*& CGameVariable::GetGameShareContent()

@@ -32,6 +32,8 @@ private:
 	virtual VOID PrintTask(CONST std::vector<std::wstring>& VecParm);
 
 	virtual VOID PrintCurMap(CONST std::vector<std::wstring>& VecParm);
+
+	virtual VOID PrintBag(CONST std::vector<std::wstring>& VecParm);
 };
 
 

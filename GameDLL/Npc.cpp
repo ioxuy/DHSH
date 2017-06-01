@@ -53,6 +53,17 @@ BOOL CNpc::ClickOption(_In_ CONST std::wstring& wsOptionText, _In_ CONST std::ws
 	return ClickOption_By_Condition(wsOptionText, [wsNewDlg] { return MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowDlg(wsNewDlg); });
 }
 
+
+BOOL CNpc::ClickOption_Once(_In_ CONST std::wstring& wsOptionText) CONST
+{
+	BOOL bClick = FALSE;
+	return ClickOption_By_Condition(wsOptionText, [&bClick]
+	{ 
+		bClick = !bClick;
+		return !bClick;
+	});
+}
+
 BOOL CNpc::CLickOption_DisableDlg(_In_ CONST std::wstring& wsOptionText, _In_ CONST std::wstring& wsDlg) CONST
 {
 	return ClickOption_By_Condition(wsOptionText, [wsDlg] { return !MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowDlg(wsDlg); });

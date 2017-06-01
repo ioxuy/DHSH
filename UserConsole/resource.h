@@ -17,6 +17,7 @@
 #define IDD_DIALOG_READCONFIG_OTHERPLAYER 148
 #define IDR_DLL1                        155
 #define IDR_INJECTORDLL1                156
+#define IDD_DIALOG_CONFIG_BANGTASK      157
 #define IDC_EDIT_ACCOUNT                1000
 #define IDC_EDIT_PASS                   1001
 #define IDC_BUTTON_LOGIN                1002
@@ -59,14 +60,20 @@
 #define IDC_EDIT_PLAYERNAME             1053
 #define IDC_BUTTON_READCONFIG           1054
 #define IDC_BUTTON_TEST                 1055
+#define IDC_CHECK_BANGTASK_AUTOBUYEXORCISM 1057
+#define IDC_CHECK_BANGTASK_AUTOBUY_RETURNSYMBOL 1058
+#define IDC_CHECK_BANGTASK_USE_RETURNSYMBOL 1059
+#define IDC_CHECK_BANGTASK_DEFAULTCONFIG 1060
+#define IDC_BUTTON_BANGTASK_READCONFIG_OTHERPLAYER 1061
+#define IDC_BUTTON_BANGTASK_SUMIT       1062
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        157
+#define _APS_NEXT_RESOURCE_VALUE        159
 #define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         1056
+#define _APS_NEXT_CONTROL_VALUE         1063
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -156,6 +156,9 @@
     <ClInclude Include="RunGame.h">
       <Filter>Code\RunGame</Filter>
     </ClInclude>
+    <ClInclude Include="ConfigBangTaskDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UserConsole.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="RunGame.cpp">
       <Filter>Code\RunGame</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigBangTaskDlg.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

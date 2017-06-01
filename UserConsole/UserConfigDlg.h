@@ -6,6 +6,7 @@
 #include "ConfigFielddlg.h"
 #include "ConfigCollectDlg.h"
 #include "ConfigModeDlg.h"
+#include "ConfigBangTaskDlg.h"
 
 class CUserConfigDlg : public CDialogEx
 {
@@ -34,6 +35,7 @@ private:
 	CConfigCollectDlg       _CollectDlg;
 	CConfigFielddlg         _FieldDlg;
 	CConfigModeDlg          _ConfigModeDlg;
+	CConfigBangTaskDlg		_BangTaskDlg;
 	std::vector<CDialogEx*> _VecDlg;
 	BOOL                    _bClose;
 public:

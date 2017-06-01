@@ -12,7 +12,7 @@ UINT CTaskExtend::GetTask(_Out_ std::vector<CTaskObject>& Vec, _In_ std::functio
 	DWORD dwHead = ReadDWORD(dwRoot + C_task_erji);
 	DWORD dwCount = ReadDWORD(dwRoot + C_task_shu);
 
-	LOG_C_D(L"dwRoot=%X,dwHead=%X, dwCount=%d", dwRoot, dwHead, dwCount);
+
 	for (decltype(dwCount) i = 0;i < dwCount; ++i)
 	{
 		CTaskObject TaskObject(ReadDWORD(dwHead + i * 4));

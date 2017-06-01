@@ -215,6 +215,7 @@
     <ClInclude Include="..\..\MyTools\MyTools\SocketBuffer.h" />
     <ClInclude Include="..\..\MyTools\MyTools\TimeTick.h" />
     <ClInclude Include="..\..\MyTools\MyTools\ToolsPublic.h" />
+    <ClInclude Include="ConfigBangTaskDlg.h" />
     <ClInclude Include="ConfigCollectDlg.h" />
     <ClInclude Include="ConfigFielddlg.h" />
     <ClInclude Include="ConfigModeDlg.h" />
@@ -254,6 +255,7 @@
     <ClCompile Include="..\..\MyTools\MyTools\RelfexStruct.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\SocketBuffer.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\TimeTick.cpp" />
+    <ClCompile Include="ConfigBangTaskDlg.cpp" />
     <ClCompile Include="ConfigCollectDlg.cpp" />
     <ClCompile Include="ConfigFielddlg.cpp" />
     <ClCompile Include="ConfigModeDlg.cpp" />
