@@ -294,3 +294,8 @@ void CConfigFielddlg::OnBnClickedButtonFieldReadconfigOtherplayer()
 		SyncServerConfigToLocal();
 	}
 }
+
+BOOL CConfigFielddlg::IsLock() CONST
+{
+	return _emButtonConfigStatus == em_Button_Config_Status::em_Button_Config_Status_Lock;
+}

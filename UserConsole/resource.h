@@ -18,7 +18,6 @@
 #define IDR_DLL1                        155
 #define IDR_INJECTORDLL1                156
 #define IDD_DIALOG_CONFIG_BANGTASK      157
-#define IDD_DIALOG_PURIFYWATER          159
 #define IDD_DIALOG_CONFIG_PURIFYWATER   159
 #define IDC_EDIT_ACCOUNT                1000
 #define IDC_EDIT_PASS                   1001

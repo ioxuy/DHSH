@@ -303,7 +303,7 @@ BOOL CMainFormDlg::PreTranslateMessage(MSG* pMsg)
 {
 	if (pMsg->message == WM_CUSTOME_HOME)
 	{
-		UINT uIndex = static_cast<UINT>(pMsg->wParam);
+		/*UINT uIndex = static_cast<UINT>(pMsg->wParam);
 		DWORD dwPointValue = static_cast<DWORD>(pMsg->lParam);
 		_Point TarPoint = _Point::Decode(dwPointValue);
 
@@ -326,11 +326,11 @@ BOOL CMainFormDlg::PreTranslateMessage(MSG* pMsg)
 			}
 		}
 		else
-			::MessageBoxW(NULL, MyTools::CCharacter::FormatText(L"Invalid Index=", uIndex), L"", NULL);
+			::MessageBoxW(NULL, MyTools::CCharacter::FormatText(L"Invalid Index=", uIndex), L"", NULL);*/
 	}
 	else if (pMsg->message == WM_CUSTOME_END)
 	{
-		UINT uIndex = static_cast<UINT>(pMsg->wParam);
+		/*UINT uIndex = static_cast<UINT>(pMsg->wParam);
 
 		std::wstring wsPlayerName;
 		if (FindPlayerName_By_Index(uIndex, wsPlayerName))
@@ -340,7 +340,7 @@ BOOL CMainFormDlg::PreTranslateMessage(MSG* pMsg)
 			{
 				dlg->ShowWindow(SW_HIDE);
 			}
-		}
+		}*/
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
 }

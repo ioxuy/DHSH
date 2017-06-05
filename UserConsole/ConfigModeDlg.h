@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "ConsoleVariable.h"
 // CConfigModeDlg dialog
 
 class CConfigModeDlg : public CDialogEx
@@ -8,7 +8,7 @@ class CConfigModeDlg : public CDialogEx
 	DECLARE_DYNAMIC(CConfigModeDlg)
 
 public:
-	CConfigModeDlg(CWnd* pParent = NULL);   // standard constructor
+	CConfigModeDlg(_In_ GameAccountShareContent* pGameAccountShareContent, CWnd* pParent = NULL);   // standard constructor
 	virtual ~CConfigModeDlg();
 
 // Dialog Data
@@ -22,4 +22,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButtonRun();
+
+private:
+	GameAccountShareContent* _pGameAccountShareContent;
+public:
+	afx_msg void OnBnClickedButtonStop();
 };

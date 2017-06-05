@@ -35,7 +35,7 @@ private:
 public:
 	afx_msg void OnBnClickedCheckFieldDefaultconfig();
 	afx_msg void OnBnClickedButtonFieldSaveas();
-private:
+private: 
 	DWORD GetValue_PersonHp() CONST;
 	DWORD GetValue_PersonMp() CONST;
 	DWORD GetValue_PetHp() CONST;
@@ -52,6 +52,8 @@ private:
 	int FindConfigValue_By_ConfigName_In_VecConfig(_In_ CONST std::wstring& wsConfigName) CONST;
 
 	VOID AddCompVecConfig(_In_ int nValue, _In_ CONST std::wstring& wsConfigName, _Out_ std::vector<ConfigText>& Vec) CONST;
-public:
+
 	afx_msg void OnBnClickedButtonFieldReadconfigOtherplayer();
+public:
+	BOOL IsLock() CONST;
 };

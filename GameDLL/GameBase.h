@@ -260,7 +260,9 @@
 #define ReadDWORD(Addr) MyTools::CCharacter::ReadDWORD(Addr)
 
 #define WM_CUSTOME_HOME 0x400 + 0x52
-#define WM_CUSTOME_END  0x400 + 0x53
+#define WM_CUSTOME_END  WM_CUSTOME_HOME + 0x1
+#define WM_CUSTOME_READCONFIG WM_CUSTOME_END + 0x1
+#define WM_CUSTOME_STOP WM_CUSTOME_READCONFIG + 0x1
 
 #define SERVERIP L"192.168.0.104"
 #define SERVERPORT 12345
@@ -398,6 +400,7 @@ struct GameAccountStatus
 	BOOL bAlive;
 	DWORD dwPid;
 	HWND hGameWnd;
+	em_GameStatus emGameStatus;
 };
 
 enum em_PersonFightMode : int

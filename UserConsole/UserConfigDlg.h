@@ -1,8 +1,7 @@
 #pragma once
 
 // CUserConfigDlg dialog
-#include <string>
-#include <vector>
+#include "ConsoleVariable.h"
 #include "ConfigFielddlg.h"
 #include "ConfigCollectDlg.h"
 #include "ConfigModeDlg.h"
@@ -15,7 +14,7 @@ class CUserConfigDlg : public CDialogEx
 	DECLARE_DYNAMIC(CUserConfigDlg)
 
 public:
-	CUserConfigDlg(_In_ CONST std::wstring& wsPlayerName, CWnd* pParent = NULL);   // standard constructor
+	CUserConfigDlg(_In_ GameAccountShareContent* pGameAccountShareContent, _In_ CONST std::wstring& wsPlayerName, CWnd* pParent = NULL);   // standard constructor
 	virtual ~CUserConfigDlg();
 
 // Dialog Data
@@ -32,6 +31,10 @@ protected:
 public:
 	CONST std::wstring& GetPlayerName() CONST;
 	VOID  MyDestoreWindows();
+
+	GameAccountShareContent* GetGameAccountShareContentPtr();
+
+	BOOL CheckConfig(_In_ CONST std::wstring& wsText) CONST;
 private:
 	std::wstring _wsPlayerName;
 	CConfigCollectDlg       _CollectDlg;
@@ -41,6 +44,7 @@ private:
 	CConfigPurifyWaterDlg	_PurifyWaterDlg;
 	std::vector<CDialogEx*> _VecDlg;
 	BOOL                    _bClose;
+	GameAccountShareContent* _pGameAccountShareContent;
 public:
 	afx_msg void OnClose();
 };

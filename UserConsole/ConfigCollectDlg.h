@@ -26,6 +26,8 @@ private:
 public:
 	afx_msg void OnCbnSelchangeComboCollectMap();
 	afx_msg void OnBnClickedButtonCollectSumit();
+	afx_msg void OnBnClickedCheckCollectDefaultconfig();
+	afx_msg void OnBnClickedButtonCollectReadconfigOtherplayer();
 private:
 	// 
 	VOID SwapButtonFieldSumit();
@@ -75,7 +77,4 @@ private:
 	std::vector<ConfigText> _VecConfig;
 	std::wstring _wsPlayerName;
 	CONST static std::vector<std::wstring> _VecConfigName;
-public:
-	afx_msg void OnBnClickedCheckCollectDefaultconfig();
-	afx_msg void OnBnClickedButtonCollectReadconfigOtherplayer();
 };

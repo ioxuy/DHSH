@@ -28,6 +28,9 @@
     <Filter Include="Code\RunGame">
       <UniqueIdentifier>{4157f9c1-1eb4-4737-80fa-80ce4fd9eded}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\Dialog">
+      <UniqueIdentifier>{3715c8e9-0bd9-4fb6-aa75-7dcc47cb0018}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -162,6 +165,9 @@
     <ClInclude Include="ConfigPurifyWaterDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BaseConfigDialog.h">
+      <Filter>Code\Dialog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UserConsole.cpp">
@@ -274,6 +280,9 @@
     </ClCompile>
     <ClCompile Include="ConfigPurifyWaterDlg.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseConfigDialog.cpp">
+      <Filter>Code\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

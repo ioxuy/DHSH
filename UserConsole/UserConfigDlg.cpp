@@ -13,14 +13,16 @@
 
 IMPLEMENT_DYNAMIC(CUserConfigDlg, CDialogEx)
 
-CUserConfigDlg::CUserConfigDlg(_In_ CONST std::wstring& wsPlayerName, CWnd* pParent /*=NULL*/)
+CUserConfigDlg::CUserConfigDlg(_In_ GameAccountShareContent* pGameAccountShareContent, _In_ CONST std::wstring& wsPlayerName, CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOG_USERCONFIG, pParent), 
 	_wsPlayerName(wsPlayerName), 
 	_CollectDlg(_wsPlayerName), 
 	_FieldDlg(wsPlayerName),
 	_BangTaskDlg(wsPlayerName),
 	_PurifyWaterDlg(wsPlayerName),
-	_bClose(FALSE)
+	_ConfigModeDlg(pGameAccountShareContent),
+	_bClose(FALSE),
+	_pGameAccountShareContent(pGameAccountShareContent)
 {
 	
 }
@@ -115,6 +117,32 @@ VOID CUserConfigDlg::MyDestoreWindows()
 {
 	_bClose = TRUE;
 	this->PostMessageW(WM_CLOSE);
+}
+
+GameAccountShareContent* CUserConfigDlg::GetGameAccountShareContentPtr()
+{
+	return _pGameAccountShareContent;
+}
+
+BOOL CUserConfigDlg::CheckConfig(_In_ CONST std::wstring& wsText) CONST
+{
+	struct ModuleDlgText
+	{
+		std::wstring wsModuleText;
+		CONST CDialogEx* pDialog;
+	};
+
+	CONST static std::vector<ModuleDlgText> Vec = 
+	{
+		{ L"野外", &_FieldDlg },{ L"采集", &_CollectDlg },{ L"胜木", &_BangTaskDlg },
+		{ L"净水", &_PurifyWaterDlg },{ L"旺火", &_PurifyWaterDlg },
+	};
+
+	if (wsText == L"野外")
+	{
+
+	}
+	return TRUE;
 }
 
 void CUserConfigDlg::OnClose()
