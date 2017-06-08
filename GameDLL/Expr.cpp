@@ -66,6 +66,7 @@ std::vector<MyTools::ExpressionFunPtr>& CExpr::GetVec()
 		{ std::bind(&CExpr::PrintTask,this, std::placeholders::_1),L"PrintTask" },
 		{ std::bind(&CExpr::PrintCurMap,this, std::placeholders::_1),L"PrintCurMap" },
 		{ std::bind(&CExpr::PrintBag,this, std::placeholders::_1),L"PrintBag" },
+		{ std::bind(&CExpr::PlayerMove,this, std::placeholders::_1),L"PlayerMove" },
 	};
 	
 	return Vec;
@@ -147,4 +148,21 @@ VOID CExpr::PrintBag(CONST std::vector<std::wstring>& VecParm)
 		LOG_C_D(L"Addr=[%X],ID=[%X],Name=[%s],Count=[%d],Quality=[%s]", \
 			itm.GetNodeBase(), itm.GetItemId(), itm.GetName().c_str(), itm.GetCount(), itm.GetItemQuality().c_str());
 	}
+}
+
+VOID CExpr::PlayerMove(CONST std::vector<std::wstring>& VecParm)
+{
+	if (VecParm.size() != 2)
+		return;
+
+	Point TarPoint;
+	TarPoint.X = std::stoi(VecParm.at(0));
+	TarPoint.Y = std::stoi(VecParm.at(1));
+
+	StartGame;
+	MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([TarPoint]
+	{
+		MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint_Mouse(TarPoint);
+	});
+	
 }

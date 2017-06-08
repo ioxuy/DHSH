@@ -10,7 +10,7 @@ public:
 	~CCollectItem() = default;
 	
 	//
-	BOOL Run(_In_ CONST std::wstring& wsMapName, _In_ CONST std::vector<std::wstring>& VecItem) CONST;
+	BOOL Run() CONST;
 	
 	//
 	BOOL Check() CONST;
@@ -26,7 +26,7 @@ private:
 	CONST std::vector<Point>* GetCollectPath_By_MapName(_In_ CONST std::wstring& wsMapName) CONST;
 
 	//
-	BOOL CheckAroundCollectItem(_In_ CONST std::vector<std::wstring>& VecItem) CONST;
+	BOOL CheckAroundCollectItem(_In_ CONST std::wstring& wsCollectItemName) CONST;
 
 	//
 	BOOL UsePetDrinks() CONST;
@@ -35,13 +35,13 @@ private:
 	VOID SetDefaultValue() CONST;
 
 	//
-	BOOL Collect_In_Home(_In_ CONST std::vector<std::wstring>& VecItem) CONST;
+	BOOL Collect_In_Home(_In_ CONST std::wstring& wsCollectItemName) CONST;
 
 	// 
 	BOOL CollectFurniture(_In_ DWORD dwResId) CONST;
 
 	//
-	BOOL Collect_In_Courtyard(_In_ DWORD dwResId, _In_ CONST std::vector<std::wstring>& VecItem) CONST;
+	BOOL Collect_In_Courtyard(_In_ DWORD dwResId, _In_ CONST std::wstring& wsCollectItemName) CONST;
 public:
 	static CCollectItem* CreateInstance()
 	{

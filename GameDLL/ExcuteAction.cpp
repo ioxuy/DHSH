@@ -1,18 +1,21 @@
 #include "stdafx.h"
 #include "ExcuteAction.h"
+#include <thread>
+#include <future>
 #include <MyTools/Log.h>
 #include <MyTools/Character.h>
 #include <MyTools/CLThread.h>
 #include <MyTools/LdrHeader.h>
 #include "GameVariable.h"
-#include <thread>
+#include "GameConfig.h"
+#include "ScriptServices.h"
 
 #define _SELF L"ExcuteAction.cpp"
 
 CExcuteAction::PeekMessageAPtr CExcuteAction::_OldPeekMessagePtr = nullptr;
 CExcuteAction::CExcuteAction() : _LockQueMethodPtr(L"CExcuteAction::_LockQueMethodPtr")
 {
-	
+	_RunComplete = TRUE;
 }
 
 VOID CExcuteAction::PushPtrToMainThread(_In_ std::function<VOID(VOID)> MethodPtr)
@@ -61,34 +64,61 @@ BOOL WINAPI CExcuteAction::PeekMessage_(_Out_ LPMSG lpMsg, _In_opt_ HWND hWnd, _
 	if (bRetCode && (lpMsg->message == WM_KEYDOWN || lpMsg->message == WM_SYSKEYDOWN))
 	{
 		if (lpMsg->wParam == VK_HOME)
-			CExcuteAction::SendKeyToConsole(WM_CUSTOME_HOME);
+			MyTools::InvokeClassPtr<CExcuteAction>()->RunGame();
 		else if (lpMsg->wParam == VK_END)
-			CExcuteAction::SendKeyToConsole(WM_CUSTOME_END);
+			MyTools::InvokeClassPtr<CExcuteAction>()->Stop();
 	}
 	MyTools::InvokeClassPtr<CExcuteAction>()->ExcutePtr();
 	return bRetCode;
 }
 
-VOID CExcuteAction::SendKeyToConsole(_In_ DWORD dwMsg)
+VOID CExcuteAction::RunGame()
 {
-	std::wstring wsConsoleTitle;
-	auto pGameVariable = MyTools::InvokeClassPtr<CGameVariable>();
-	if (pGameVariable->GetGameShareContent() == nullptr || pGameVariable->GetAccountShareContent() == nullptr || pGameVariable->GetGameShareContent()->GlobalConfig.dwConsoleTitle == NULL)
-		return;
-
-	MyTools::CCharacter::FormatText(wsConsoleTitle, L"%08X", pGameVariable->GetGameShareContent()->GlobalConfig.dwConsoleTitle);
-
-	HWND hMainFormDlg = ::FindWindowW(NULL, wsConsoleTitle.c_str());
-	if (hMainFormDlg != NULL)
+	if (!_RunComplete)
 	{
-		Point Pt;
-		RECT r;
-		::GetWindowRect(pGameVariable->GetAccountShareContent()->AccountStatus.hGameWnd, &r);
-		Pt.X = r.left;
-		Pt.Y = r.top;
-
-		//LOG_CF_D(L"发送消息显示控制台! Point=[%d,%d]", Pt.X, Pt.Y);
-		::PostMessageW(hMainFormDlg, dwMsg, pGameVariable->GetAccountShareContent()->uIndex, Pt.Encode());
+		::MessageBoxW(NULL, L"停止挂机中……", L"错误", NULL);
+		return;
 	}
+
+	_RunComplete = FALSE;
+	std::thread t([this] 
+	{
+		auto pGameConfig = MyTools::InvokeClassPtr<CGameConfig>();
+		if (!pGameConfig->ExistConfigFile())
+		{
+			LOG_MSG_CF(L"角色配置文件不存在:%s", pGameConfig->GetConfigPath().c_str());
+			_RunComplete = TRUE;
+			return;
+		}
+
+		if (!pGameConfig->Initialize())
+		{
+			LOG_MSG_CF(L"Initialize Faild");
+			_RunComplete = TRUE;
+			return;
+		}
+
+		CScriptServices ScriptServices;
+		ScriptServices.Run();
+		LOG_CF_D(L"线程执行完毕!");
+		_RunComplete = TRUE;
+	});
+	t.detach();
 }
 
+VOID CExcuteAction::Stop()
+{
+	StopGame;
+	std::thread t([this] 
+	{
+		WCHAR wszText[MAX_PATH] = { 0 };
+		::GetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText, MAX_PATH);
+
+		::SetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, L"停止挂机中..........");
+		while (!_RunComplete)
+			::Sleep(1000);
+		
+		::SetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText);
+	});
+	t.detach();
+}

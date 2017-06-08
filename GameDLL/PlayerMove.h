@@ -33,6 +33,9 @@ public:
 
 	// 去特殊地图……
 	BOOL MoveToSpecialMap(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint, _In_ CONST std::wstring wsSpecialMapName) CONST;
+
+	//
+	BOOL MoveToPoint_By_Mouse(_In_ CONST Point& TarPoint) CONST;
 private:
 	// 跑到杂货摊Npc坐标点
 	BOOL MoveToGeneralStoreNpc(_In_ CONST std::wstring& wsMapName, _In_ CONST std::wstring& wsNpcName) CONST;

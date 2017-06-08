@@ -65,23 +65,32 @@ DWORD WINAPI _WorkThread(LPVOID)
 	while (bRunGame && EnumWindows((WNDENUMPROC)EnumSetWinName, NULL))
 		::Sleep(1000);
 
-
 	auto pGameVariable = MyTools::InvokeClassPtr<CGameVariable>();
 	if (!pGameVariable->SetGameSharePtr())
 	{
 		WCHAR wszGamePath[MAX_PATH] = { 0 };
 		::GetCurrentDirectoryW(MAX_PATH, wszGamePath);
 		lstrcatW(wszGamePath, L"\\Log\\");
-
 		MyTools::CLog::GetInstance().SetClientName(L"Game", wszGamePath, TRUE, 20 * 1024 * 1024);
 		MyTools::CCmdLog::GetInstance().Run(L"Game", CExpr::GetInstance().GetVec());
 
 		pGameVariable->GetGameShareContent() = new GameShareContent;
 		ZeroMemory(pGameVariable->GetGameShareContent(), sizeof(GameShareContent));
-		pGameVariable->GetAccountShareContent() = &pGameVariable->GetGameShareContent()->arrGameArrount[0];
 		pGameVariable->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_IsRunDlg, TRUE);
 
+		CPlayer Person;
+		if (!MyTools::InvokeClassPtr<CPlayerExtend>()->GetPerson(&Person))
+		{
+			LOG_CF_D(L"Person = NULL;");
+			return 0;
+		}
+		if (!pGameVariable->SetAccountGameShare(Person.GetName()))
+		{
+			LOG_CF_D(L"SetAccountGameShare = FALSE;");
+			return 0;
+		}
 		MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd = hGameWnd;
+		LOG_CF_D(L"Run in Dlg");
 	}
 	else if (!MyTools::InvokeClassPtr<CGameClient>()->Run(SERVERIP, SERVERPORT, 3 * 1000))
 	{

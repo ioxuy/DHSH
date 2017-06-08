@@ -1077,6 +1077,33 @@ BOOL CGameCALL::MoveToPoint(_In_ LPCSTR pszMapName, _In_ CONST Point& Point_) CO
 	return FALSE;
 }
 
+
+BOOL CGameCALL::MoveToPoint_Mouse(_In_ CONST Point& TarPoint) CONST
+{
+	__try
+	{
+		DWORD dwArray[2] = { TarPoint.X << 4,TarPoint.Y << 4 };
+		
+		__asm
+		{
+			PUSHAD;
+			LEA ECX, dwArray;
+			PUSH 1;
+			PUSH ECX;
+			MOV EAX, C_CALL_zoulu;
+			CALL EAX;
+			ADD ESP, 0x8;
+			POPAD;
+		}
+		return TRUE;
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER)
+	{
+		LOG_CF_E(L"MoveToPoint_Mouse Exception,Point_=[%d,%d]", TarPoint.X, TarPoint.Y);
+	}
+	return FALSE;
+}
+
 BOOL CGameCALL::CollectItem(_In_ DWORD dwObjAddr) CONST
 {
 	__try
@@ -1097,6 +1124,37 @@ BOOL CGameCALL::CollectItem(_In_ DWORD dwObjAddr) CONST
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
 		LOG_CF_E(L"CollectItem Exception, dwObjAddr=[%X]", dwObjAddr);
+	}
+	return FALSE;
+}
+
+BOOL CGameCALL::CollectFurniture(_In_ DWORD dwId) CONST
+{
+	__try
+	{
+		__asm
+		{
+			PUSHAD;
+			MOV EAX, C_caiji_CALL_chushi;
+			CALL EAX;
+			MOV ECX, EAX;
+
+			PUSH 0x3E8;
+			PUSH 1;
+			PUSH dwId;
+			PUSH 家具采集偏移;
+			PUSH 0;
+
+			MOV EAX, 采集家具CALL;
+			CALL EAX;
+
+			POPAD;
+		}
+		return TRUE;
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER)
+	{
+		LOG_CF_E(L"CollectFurniture Exception, dwId=[%X]", dwId);
 	}
 	return FALSE;
 }

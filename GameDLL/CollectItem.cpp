@@ -17,16 +17,20 @@
 #include "TextVariable.h"
 #include "ExcuteAction.h"
 #include "GameCALL.h"
+#include "TextVariable.h"
 
 #define _SELF L"CollectItemc.pp"
 
-BOOL CCollectItem::Run(_In_ CONST std::wstring& wsMapName, _In_ CONST std::vector<std::wstring>& VecItem) CONST
+BOOL CCollectItem::Run() CONST
 {
-	// 
-	SetDefaultValue();
+	if (!Check())
+		return FALSE;
+
+	CONST std::wstring wsMapName = MyTools::InvokeClassPtr<CTextVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_Collect_MapName);
+	CONST std::wstring wsCollectItemName = MyTools::InvokeClassPtr<CTextVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_Collect_ItemName);
 
 	if (wsMapName == L"家园")
-		return Collect_In_Home(VecItem);
+		return Collect_In_Home(wsCollectItemName);
 
 	auto pVecPath = GetCollectPath_By_MapName(wsMapName);
 	if (pVecPath == nullptr)
@@ -77,7 +81,7 @@ BOOL CCollectItem::Run(_In_ CONST std::wstring& wsMapName, _In_ CONST std::vecto
 				if (!pPersonAttribute->IsMoving())
 				{
 					// 
-					CheckAroundCollectItem(VecItem);
+					CheckAroundCollectItem(wsCollectItemName);
 					continue;
 				}
 
@@ -91,14 +95,12 @@ BOOL CCollectItem::Run(_In_ CONST std::wstring& wsMapName, _In_ CONST std::vecto
 
 BOOL CCollectItem::Check() CONST
 {
-	BOOL bFaild = FALSE;
 	if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"驱魔香") == 0)
 	{
 		LOG_CF_D(L"开启了自动购买驱魔香, 但是身上并不存在驱魔香! 去买驱魔香");
-		bFaild = !MyTools::InvokeClassPtr<CLogicBagItemAction>()->SupplementItem(L"驱魔香", 10);
+		if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->SupplementItem(L"驱魔香", 10))
+			return FALSE;
 	}
-	if (bFaild)
-		return FALSE;
 
 	// 检查宠物饮料
 	if (GetPetDrinksCount() == 0 && !SupplementPetDrinks())
@@ -107,6 +109,7 @@ BOOL CCollectItem::Check() CONST
 		return FALSE;
 	}
 
+	MyTools::InvokeClassPtr<CLogicBagItemAction>()->CheckExorcism();
 	return TRUE;
 }
 
@@ -142,14 +145,15 @@ CONST std::vector<Point>* CCollectItem::GetCollectPath_By_MapName(_In_ CONST std
 	return p == nullptr ? nullptr : &p->VecPoint;
 }
 
-BOOL CCollectItem::CheckAroundCollectItem(_In_ CONST std::vector<std::wstring>& VecItem) CONST
+BOOL CCollectItem::CheckAroundCollectItem(_In_ CONST std::wstring& wsCollectItemName) CONST
 {
 	// Collect Around ResItem
-	BOOL bExist = MyTools::InvokeClassPtr<CNpcExtend>()->FindPlayer_By_Condition_ExcuteAction([VecItem](CONST CPlayer& ResItem)
+	BOOL bExist = MyTools::InvokeClassPtr<CNpcExtend>()->FindPlayer_By_Condition_ExcuteAction([wsCollectItemName](CONST CPlayer& ResItem)
 	{
-		return MyTools::CLPublic::Vec_find_if_Const(VecItem, [ResItem](CONST std::wstring& wsItemName) { return wsItemName == ResItem.GetName(); }) != nullptr;
+		return wsCollectItemName == ResItem.GetName();;
 	}, [](CONST CNpc& ResItem) 
 	{
+		LOG_CF_D(L"Collecting~");
 		ResItem.Collect();
 	});
 
@@ -174,12 +178,12 @@ BOOL CCollectItem::UsePetDrinks() CONST
 
 VOID CCollectItem::SetDefaultValue() CONST
 {
-	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 1);
+	
 }
 
-BOOL CCollectItem::Collect_In_Home(_In_ CONST std::vector<std::wstring>& VecItem) CONST
+BOOL CCollectItem::Collect_In_Home(_In_ CONST std::wstring& wsCollectItemName) CONST
 {
-	if (!MyTools::InvokeClassPtr<CPersonAttribute>()->IsInHome(TRUE) && MyTools::InvokeClassPtr<CPlayerMove>()->MoveToHome())
+	if (!MyTools::InvokeClassPtr<CPersonAttribute>()->IsInHome(TRUE) && !MyTools::InvokeClassPtr<CPlayerMove>()->MoveToHome())
 	{
 		LOG_CF_E(L"回家园失败……");
 		return FALSE;
@@ -199,7 +203,7 @@ BOOL CCollectItem::Collect_In_Home(_In_ CONST std::vector<std::wstring>& VecItem
 		return FALSE;
 	}
 
-	return Collect_In_Courtyard(pElement->dwResId, VecItem);
+	return Collect_In_Courtyard(pElement->dwResId, wsCollectItemName);
 }
 
 BOOL CCollectItem::CollectFurniture(_In_ DWORD dwResId) CONST
@@ -209,17 +213,17 @@ BOOL CCollectItem::CollectFurniture(_In_ DWORD dwResId) CONST
 		LOG_CF_D(L"从庭院回到住宅……");
 		MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([]
 		{
-			MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint(Point(1, 26));
+			MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint_Mouse(Point(1, 26));
 		});
-		GameSleep(1000);
+		GameSleep(2000);
 	}
 
 	BOOL bExist = MyTools::InvokeClassPtr<CNpcExtend>()->FindPlayer_By_Condition_ExcuteAction([dwResId](CONST CPlayer& itm) { return itm.GetResId() == dwResId; }, [](CONST CNpc& itm) 
 	{
-		itm.Collect();
+		itm.CollectFurniture();
 	});
 
-	if (!bExist)
+	if (!bExist && GameRun)
 	{
 		LOG_MSG_CF(L"采集的家具不存在!!!");
 		return FALSE;
@@ -229,7 +233,7 @@ BOOL CCollectItem::CollectFurniture(_In_ DWORD dwResId) CONST
 	return TRUE;
 }
 
-BOOL CCollectItem::Collect_In_Courtyard(_In_ DWORD dwResId, _In_ CONST std::vector<std::wstring>& VecItem) CONST
+BOOL CCollectItem::Collect_In_Courtyard(_In_ DWORD dwResId, _In_ CONST std::wstring& wsCollectItemName) CONST
 {
 	while (GameRun)
 	{
@@ -269,7 +273,7 @@ BOOL CCollectItem::Collect_In_Courtyard(_In_ DWORD dwResId, _In_ CONST std::vect
 			return FALSE;
 		}
 
-		if (!CheckAroundCollectItem(VecItem))
+		if (!CheckAroundCollectItem(wsCollectItemName))
 		{
 			// UnExist Res Packet
 			LOG_CF_D(L"周围没有资源包了……去采集家具!");

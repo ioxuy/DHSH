@@ -20,6 +20,7 @@ public:
 
 	BOOL SetAccountGameShare(_In_ CONST std::wstring& wsPlayerName);
 
+	virtual DWORD GetEmptyValue() CONST throw() override;
 private:
 	VOID SetAccountGameShare(_In_ UINT uIndex, _In_ CONST std::wstring& wsPlayerName);
 private:

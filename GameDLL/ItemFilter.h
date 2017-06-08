@@ -9,6 +9,7 @@ class CItemFilter : public MyTools::CRelfexBaseClass
 public:
 	enum class em_ItemFilterType
 	{
+		em_ItemFilterType_Invalid,
 		em_ItemFilterType_Drop,
 		em_ItemFilterType_Decompose,
 		em_ItemFilterType_Save,
@@ -18,6 +19,11 @@ public:
 		em_ItemFilterType_Collect,
 	};
 
+	struct ItemFilterFileText
+	{
+		std::wstring wsItemName;
+		std::wstring wsFilterText;
+	};
 public:
 	CItemFilter();
 	~CItemFilter() = default;
@@ -30,6 +36,19 @@ public:
 
 	//
 	UINT GetVecItem_By_FilterType(_In_ em_ItemFilterType emType, _Out_ std::vector<std::wstring>& Vec) CONST;
+
+	//
+	BOOL ReadItemFilterFile();
+
+private:
+	//
+	std::wstring GetFilePath() CONST throw();
+
+	//
+	BOOL GetItemFilterFileText(_In_ CONST std::wstring& wsPath, _Out_ std::vector<CItemFilter::ItemFilterFileText>& Vec) CONST;
+
+	//
+	em_ItemFilterType GetType_By_Text(_In_ CONST std::wstring& wsText) CONST throw();
 private:
 	std::map<std::wstring, em_ItemFilterType> _MapItemFilter;
 	MyTools::CLLock _Lock;

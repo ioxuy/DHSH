@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FarmField.h"
 #include <MyTools/Log.h>
+#include <MyTools/Character.h>
 #include "PersonAttribute.h"
 #include "PlayerMove.h"
 #include "FarmMonster.h"
@@ -11,19 +12,24 @@
 #include "BagItemExtend.h"
 #include "LogicBagItemAction.h"
 #include "PersonPetAction.h"
+#include "TextVariable.h"
 
 #define _SELF L"FarmField.cpp"
-BOOL CFarmField::Run(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint) CONST
+BOOL CFarmField::Run() CONST
 {
-	LOG_CF_D(L"野外刷怪……目的地是[%s,%d,%d]", wsMapName.c_str(), TarPoint.X,TarPoint.Y);
+	FieldConfig Config_;
+	if (!GetFieldConfig(Config_) || !Check())
+		return FALSE;
+
+	LOG_CF_D(L"野外刷怪……目的地是[%s,%d,%d]", Config_.wsMapName.c_str(), Config_.MapPoint.X, Config_.MapPoint.Y);
 	CONST auto pPersonAttributePtr = MyTools::InvokeClassPtr<CPersonAttribute>();
 	while (GameRun)
 	{
 		GameSleep(500);
-		if (pPersonAttributePtr->GetCurrentMapName() != wsMapName)
+		if (pPersonAttributePtr->GetCurrentMapName() != Config_.wsMapName)
 		{
-			LOG_CF_D(L"当前地图=[%s], !=目的地[%s], 重新寻路!", pPersonAttributePtr->GetCurrentMapName().c_str(), wsMapName.c_str());
-			if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToMapPoint(wsMapName, TarPoint))
+			LOG_CF_D(L"当前地图=[%s], !=目的地[%s], 重新寻路!", pPersonAttributePtr->GetCurrentMapName().c_str(), Config_.wsMapName.c_str());
+			if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToMapPoint(Config_.wsMapName, Config_.MapPoint))
 			{
 				LOG_CF_D(L"MoveToMapPoint Faild!");
 				break;
@@ -98,5 +104,21 @@ BOOL CFarmField::Check() CONST
 
 
 	return MyTools::InvokeClassPtr<CLogicBagItemAction>()->AfterFight_Item();
+}
+
+BOOL CFarmField::GetFieldConfig(_Out_ FieldConfig& FieldConfig_) CONST
+{
+	FieldConfig_.wsMapName = MyTools::InvokeClassPtr<CTextVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_Field_MapName);
+	
+	std::vector<std::wstring> VecPoint;
+	if (MyTools::CCharacter::Split(MyTools::InvokeClassPtr<CTextVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_Field_MapPoint), L",", VecPoint, Split_Option_RemoveEmptyEntries) != 2)
+	{
+		LOG_MSG_CF(L"坐标格式错误!");
+		return FALSE;
+	}
+
+	FieldConfig_.MapPoint.X = std::stoi(VecPoint.at(0));
+	FieldConfig_.MapPoint.Y = std::stoi(VecPoint.at(1));
+	return TRUE;
 }
 

@@ -27,10 +27,12 @@ public:
 
 	VOID SetRun(_In_ BOOL bRun);
 
+protected:
+	VOID RunGame();
+
+	VOID Stop();
 private:
 	static BOOL WINAPI PeekMessage_(_Out_ LPMSG lpMsg, _In_opt_ HWND hWnd, _In_ UINT wMsgFilterMin, _In_ UINT wMsgFilterMax, _In_ UINT wRemoveMsg);
-
-	static VOID SendKeyToConsole(_In_ DWORD dwMsg);
 private:
 	// 主线程执行函数队列
 	std::queue<ThreadMethodInfo> _QueMethodPtr;
@@ -40,6 +42,8 @@ private:
 
 	//
 	static PeekMessageAPtr _OldPeekMessagePtr;
+
+	BOOL _RunComplete;
 public:
 	static CExcuteAction* CreateInstance()
 	{

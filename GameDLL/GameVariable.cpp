@@ -134,3 +134,7 @@ VOID CGameVariable::SetAccountGameShare(_In_ UINT uIndex, _In_ CONST std::wstrin
 	MyTools::CCharacter::wstrcpy_my(_pGameAccountShareContent->AccountContent.wszPlayerName, wsPlayerName.c_str());
 }
 
+DWORD CGameVariable::GetEmptyValue() CONST throw()
+{
+	return 0;
+}

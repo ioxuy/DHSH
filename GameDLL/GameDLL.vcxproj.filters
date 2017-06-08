@@ -223,6 +223,12 @@
     <ClCompile Include="HotFireTask.cpp">
       <Filter>Game\Script\HotFire</Filter>
     </ClCompile>
+    <ClCompile Include="GameConfig.cpp">
+      <Filter>Game\Text\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptServices.cpp">
+      <Filter>Game\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -461,6 +467,12 @@
     <ClInclude Include="HotFireTask.h">
       <Filter>Game\Script\HotFire</Filter>
     </ClInclude>
+    <ClInclude Include="GameConfig.h">
+      <Filter>Game\Text\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptServices.h">
+      <Filter>Game\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -585,6 +597,9 @@
     </Filter>
     <Filter Include="Game\Script\HotFire">
       <UniqueIdentifier>{3a15d3e5-1d0b-4e82-bbe5-337e807a40c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog">
+      <UniqueIdentifier>{470ffcf9-d34f-4271-80e5-de5af3936412}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

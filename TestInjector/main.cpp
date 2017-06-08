@@ -10,15 +10,16 @@
 #include <MyTools/CLExpression.h>
 #include <future>
 #include "resource.h"
+#include <random>
 
 #define _SELF L"main.cpp"
 
 
 int main()
 {
-	std::wstring wsText = LR"(去黄泥岗（135，73）处干掉那个{辽国眼线|POS黄泥岗|135|73}。)";
-	wsText = wsText.substr(wsText.find(L"去找一个") + 4);
-	wsText = wsText.substr(0, wsText.find(L"回来交给"));
+	std::map<int, std::wstring> v;
+	//v.insert(std::make_pair(5, std::wstring(0)));
+	int(0);
 	::Sleep(-1);
 	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))

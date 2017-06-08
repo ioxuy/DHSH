@@ -19,6 +19,8 @@
 #include "Npc.h"
 #include "ResNpcExtend.h"
 #include "GameVariable.h"
+#include "Player.h"
+#include "PlayerExtend.h"
 
 #define _SELF L"PlayerMove.cpp"
 BOOL CPlayerMove::MoveToPoint(_In_ CONST Point& TarPoint) CONST
@@ -208,13 +210,7 @@ BOOL CPlayerMove::FindDlg_By_BindMethod() CONST
 BOOL CPlayerMove::MoveToHome() CONST
 {
 	if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != L"应天府")
-	{
-		if (!TransferToCity(L"应天府"))
-		{
-			LOG_CF_E(L"没有应天府的传送符……怎么回家园?");
-			return FALSE;
-		}
-	}
+		TransferToCity(L"应天府");
 
 	CResText::ResNpcMapPointText ResNpcPoint;
 	if (!MyTools::InvokeClassPtr<CResNpcExtend>()->GetResNpc_By_MapName_NpcName(L"应天府",L"房屋管理员", ResNpcPoint))
@@ -224,7 +220,7 @@ BOOL CPlayerMove::MoveToHome() CONST
 	}
 	
 
-	if (!MoveToPoint(ResNpcPoint.FixPoint))
+	if (!MoveToMapPoint(L"应天府", ResNpcPoint.FixPoint))
 		return FALSE;
 
 
@@ -236,7 +232,7 @@ BOOL CPlayerMove::MoveToHome() CONST
 		if (Npc.OpenNpcDlg())
 		{
 			bOpenDlg = TRUE;
-			bClickOption = Npc.CLickOption_DisableDlg(L"DoEnterMyHome", L"npcdlg");
+			bClickOption = Npc.CLickOption_DisableDlg(L"doEnterMyHome", L"npcdlg");
 		}
 	});
 	if (!bOpenDlg)
@@ -329,6 +325,46 @@ BOOL CPlayerMove::MoveToSpecialMap(_In_ CONST std::wstring& wsMapName, _In_ CONS
 	return TRUE;
 }
 
+
+BOOL CPlayerMove::MoveToPoint_By_Mouse(_In_ CONST Point& TarPoint) CONST
+{
+	MyTools::CTimeTick TimeTick;
+	CPlayer Person;
+	CONST auto pPersonAttributePtr = MyTools::InvokeClassPtr<CPersonAttribute>();
+
+	if (!MyTools::InvokeClassPtr<CPlayerExtend>()->GetPerson(&Person))
+	{
+		LOG_CF_E(L"GetPerson = FALSE");
+		return FALSE;
+	}
+
+	while (GameRun && pPersonAttributePtr->GetDis(TarPoint) > 1.0f)
+	{
+		GameSleep(1000);
+		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 30 * 1000)
+		{
+			CONST auto CurPoint = pPersonAttributePtr->GetPoint();
+
+			LOG_CF_E(L"10s之内都无法移动! 当前地图=%s,Tar=[%d,%d], Now=[%d,%d], dis=%.2f", pPersonAttributePtr->GetCurrentMapName().c_str(), TarPoint.X, TarPoint.Y, CurPoint.X, CurPoint.Y, pPersonAttributePtr->GetDis(TarPoint));
+			StopGame;
+			return FALSE;
+		}
+		if (!pPersonAttributePtr->IsMoving())
+		{
+			MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([TarPoint]
+			{
+				MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint_Mouse(TarPoint);
+			});
+			TimeTick.Reset();
+			continue;
+		}
+
+		TimeTick.Reset();
+	}
+	GameSleep(3 * 1000);
+	return TRUE;
+}
+
 BOOL CPlayerMove::ShowQuestion_When_UnMove(CONST CGameUi& Question) CONST
 {
 	CHAR Buffer1[50], Buffer2[50], Buffer3[50], Buffer4[50] = { 0 };
@@ -371,8 +407,11 @@ BOOL CPlayerMove::ShowQuestion_When_UnMove(CONST CGameUi& Question) CONST
 BOOL CPlayerMove::MoveToGeneralStore(_Out_ std::wstring& wsNpcName) CONST
 {
 	std::wstring wsCurrentMapName = MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName();
+
+	LOG_C_D(L"wsCurrentMapName=%s", wsCurrentMapName.c_str());
 	if (!MyTools::InvokeClassPtr<CMapSearch>()->Exist(wsCurrentMapName))
 	{
+		LOG_C_D(L"UnExist MapName!");
 		if (TransferToCity(L"应天府") || TransferToCity(L"星秀村") || TransferToCity(L"汴京城"))
 		{
 			LOG_CF_D(L"由于处于非大地图的范围……所以先使用回城符!");
@@ -384,32 +423,17 @@ BOOL CPlayerMove::MoveToGeneralStore(_Out_ std::wstring& wsNpcName) CONST
 	}
 
 	std::wstring wsCityName = GetRecentlyCityName();
-	if (TransferToCity(wsCityName))
-	{
-		if(wsCityName == L"星秀村")
-			wsNpcName = L"【星】杂货摊老板";
-		else if (wsCityName == L"应天府")
-			wsNpcName = L"【应】杂货摊老板";
-		else
-			wsNpcName = L"【汴】杂货摊老板";
-	}
-	else
-	{
-		LOG_CF_D(L"不存在城市[%s]的传送符, 尝试传送去别的城市!");
-		if (TransferToCity(L"星秀村"))
-			wsNpcName = L"【星】杂货摊老板";
-		else if (TransferToCity(L"应天府"))
-			wsNpcName = L"【应】杂货摊老板";
-		else if (TransferToCity(L"汴京城"))
-			wsNpcName = L"【汴】杂货摊老板";
-		else
-		{
-			LOG_CF_D(L"不存在任何的城市传送符!");
-			return FALSE;
-		}
-	}
-	
+	LOG_C_D(L"GetRecentlyCityName=%s", wsCityName.c_str());
+	TransferToCity(wsCityName);
 
+	if (wsCityName == L"星秀村")
+		wsNpcName = L"【星】杂货摊老板";
+	else if (wsCityName == L"应天府")
+		wsNpcName = L"【应】杂货摊老板";
+	else
+		wsNpcName = L"【汴】杂货摊老板";
+	
+	LOG_C_D(L"MoveToGeneralStoreNpc->(%s,%s)", wsCityName.c_str(), wsNpcName.c_str());
 	return MoveToGeneralStoreNpc(wsCityName, wsNpcName);
 }
 
@@ -446,7 +470,7 @@ BOOL CPlayerMove::MoveToGeneralStoreNpc(_In_ CONST std::wstring& wsMapName, _In_
 	}
 	
 	LOG_CF_D(L"走到杂货摊Npc[%s]旁边", wsNpcName.c_str());
-	if (!MoveToPoint(ResNpc.FixPoint))
+	if (!MoveToMapPoint(wsMapName, ResNpc.FixPoint))
 	{
 		LOG_CF_E(L"走到%s失败!", wsNpcName.c_str());
 		return FALSE;

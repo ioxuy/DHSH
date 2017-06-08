@@ -35,5 +35,11 @@ VOID CScanBase::Start() CONST
 	dwBase = MyTools::CLSearchBase::FindBase("8A????3C040F??????????3C09", 0x6AB1B2 - 0x6AB191, 1, 0, L"Game.exe");
 	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	是否屏蔽玩家基址	0x%X", dwBase);
 
+	dwCALL = MyTools::CLSearchBase::FindCALL("FF????85C00F??????????8B??????????E8", 0x741252 - 0x741263, dwClient, 1, 0, L"Game.exe");
+	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	走路CALL	0x%X", dwCALL);
+
+	dwBase = MyTools::CLSearchBase::FindBase("8B????33??8B??????????3B??C7", 0x6B7CED - 0x6B7CF2, 0x2, 0, L"Game.exe");
+	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	走路偏移	0x%X", dwBase);
+
 	LOG_CF_D(L"SpendTime/s = %d", static_cast<DWORD>(TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Second)));
 }

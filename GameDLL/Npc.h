@@ -25,9 +25,10 @@ public:
 
 	// 
 	BOOL Collect() CONST;
+	BOOL CollectFurniture() CONST;
 
 private:
-
+	BOOL Collect_By_ActionPtr(_In_ std::function<DWORD(VOID)> ActionPtr) CONST;
 };
 
 

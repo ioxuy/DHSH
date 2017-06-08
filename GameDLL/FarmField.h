@@ -3,31 +3,26 @@
 
 #include "GameBase.h"
 
-class CFarmField : public MyTools::CRelfexBaseClass
+class CFarmField
 {
+private:
+	struct FieldConfig
+	{
+		std::wstring wsMapName;
+		Point MapPoint;
+	};
 public:
 	CFarmField() = default;
 	~CFarmField() = default;
 	
 	// 
-	BOOL Run(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& TarPoint) CONST;
+	BOOL Run() CONST;
 	
 	// 
 	BOOL Check() CONST;
-public:
-	static CFarmField* CreateInstance()
-	{
-		return new CFarmField;
-	}
-	
-	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
-	{
-		delete reinterpret_cast<CFarmField*>(lpObjectAddr);
-	}
 
-	CFarmField(CONST CFarmField&) = delete;
-	
-	CFarmField& operator=(CONST CFarmField&) = delete;
+private:
+	BOOL GetFieldConfig(_Out_ FieldConfig& FieldConfig_) CONST;
 };
 
 #endif // !__DHSH_GAMEDLL_GAME_SCRIPT_FIELD_FARMFIELD_H__

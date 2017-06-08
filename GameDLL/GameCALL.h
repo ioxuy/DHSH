@@ -121,9 +121,12 @@ public:
 	BOOL MoveToNpc(_In_ LPCSTR pszMapName, _In_ LPCSTR pszNpcName) CONST;
 	BOOL MoveToPoint(_In_ CONST Point& Point_) CONST; // Current Map
 	BOOL MoveToPoint(_In_ LPCSTR pszMapName, _In_ CONST Point& Point_) CONST;
+	BOOL MoveToPoint_Mouse(_In_ CONST Point& TarPoint) CONST;
 
 	// ²É¼¯
 	BOOL CollectItem(_In_ DWORD dwObjAddr) CONST;
+	BOOL CollectFurniture(_In_ DWORD dwId) CONST;
+
 
 	// µã»÷
 	BOOL ClickNpcOption(_In_ DWORD dwNpcId, _In_ LPCSTR pszOptionText) CONST;
@@ -133,6 +136,8 @@ public:
 
 	// AutoMove
 	BOOL SetAutoMove(_In_ BOOL bRun) CONST;
+
+	//
 public:
 	static CGameCALL* CreateInstance()
 	{

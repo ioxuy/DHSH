@@ -92,16 +92,26 @@ BOOL CNpc::ClickOption_By_Condition(_In_ CONST std::wstring& wsOptionText, _In_ 
 
 BOOL CNpc::Collect() CONST
 {
+	return Collect_By_ActionPtr([this] { return GetNodeBase(); });
+}
+
+BOOL CNpc::CollectFurniture() CONST
+{
+	return Collect_By_ActionPtr([this] { return GetId(); });
+}
+
+BOOL CNpc::Collect_By_ActionPtr(_In_ std::function<DWORD(VOID)> ActionPtr) CONST
+{
 	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToPoint(GetPoint()))
 	{
 		LOG_CF_E(L"MoveToPoint Faild! Collect Faild!");
 		return FALSE;
 	}
 
-	LOG_CF_D(L"采集物品[%s]",GetName().c_str());
-	MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([this] 
+	LOG_CF_D(L"采集物品[%s]", GetName().c_str());
+	MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([ActionPtr]
 	{
-		MyTools::InvokeClassPtr<CGameCALL>()->CollectItem(GetNodeBase());
+		MyTools::InvokeClassPtr<CGameCALL>()->CollectItem(ActionPtr());
 	});
 
 	GameSleep(2 * 1000);

@@ -82,7 +82,7 @@ BOOL CLogicBagItemAction::SupplementItem(_In_ CONST std::wstring& wsItemName, _I
 		LOG_CF_E(L"±³°üÂúÁË!");
 		return FALSE;
 	}
-
+	LOG_C_D(L"SupplementItem:[%s,%d]", wsItemName.c_str(), uCount);
 	std::wstring wsNpcName;
 	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToGeneralStore(wsNpcName))
 		return FALSE;

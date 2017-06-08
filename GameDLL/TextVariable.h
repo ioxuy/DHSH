@@ -9,7 +9,7 @@ public:
 	CTextVariable() = default;
 	~CTextVariable() = default;
 	
-	
+	virtual std::wstring GetEmptyValue() CONST throw() override;
 public:
 	static CTextVariable* CreateInstance()
 	{
