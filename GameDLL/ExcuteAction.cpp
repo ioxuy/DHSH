@@ -111,20 +111,21 @@ VOID CExcuteAction::RunGame()
 VOID CExcuteAction::Stop()
 {
 	StopGame;
-	std::thread t([this] 
+	/*std::thread t([this] 
 	{
-		StopMove();
-
-		WCHAR wszText[MAX_PATH] = { 0 };
-		::GetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText, MAX_PATH);
-
-		::SetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, L"停止挂机中..........");
-		while (!_RunComplete)
-			::Sleep(1000);
 		
-		::SetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText);
+
+		//WCHAR wszText[MAX_PATH] = { 0 };
+		//::GetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText, MAX_PATH);
+
+		//::SetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, L"停止挂机中..........");
+		//while (!_RunComplete)
+		//	::Sleep(1000);
+		
+		//::SetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText);
 	});
-	t.detach();
+	t.detach();*/
+	StopMove();
 }
 
 VOID CExcuteAction::StopMove()

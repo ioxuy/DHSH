@@ -92,7 +92,7 @@ BOOL CGameConfig::Initialize() CONST
 		return FALSE;
 	}
 
-	if (SetCommonConfig())
+	if (!SetCommonConfig())
 		return FALSE;
 
 	struct BindConfigMethod
@@ -167,12 +167,6 @@ BOOL CGameConfig::ReadConfig_Collect() CONST
 		MyTools::InvokeClassPtr<CTextVariable>()->SetValueAndGetOldValue_By_Id(emTextVar, wsValue);
 		return TRUE;
 	};
-
-	if (!SetConfigValue(em_Config_Type::em_Config_Type_Collect, L"自动购买驱魔香", em_TextVar::em_TextVar_AutoBuyExorcism, fnSetValuePtr))
-		return FALSE;
-
-	if (!SetConfigValue(em_Config_Type::em_Config_Type_Collect, L"使用驱魔香", em_TextVar::em_TextVar_UseExorcism, fnSetValuePtr))
-		return FALSE;
 
 	if (!SetConfigValue(em_Config_Type::em_Config_Type_Collect, L"自动购买宠物饮料", em_TextVar::em_TextVar_AutoBuyPetDrinksCount, fnSetValuePtr))
 		return FALSE;

@@ -18,6 +18,7 @@
 #include "ExcuteAction.h"
 #include "GameCALL.h"
 #include "TextVariable.h"
+#include "ItemFilter.h"
 
 #define _SELF L"CollectItemc.pp"
 
@@ -110,7 +111,7 @@ BOOL CCollectItem::Check() CONST
 	}
 
 	MyTools::InvokeClassPtr<CLogicBagItemAction>()->CheckExorcism();
-	return TRUE;
+	return MyTools::InvokeClassPtr<CItemFilter>()->ReadItemFilterFile();
 }
 
 DWORD CCollectItem::GetPetDrinksCount() CONST

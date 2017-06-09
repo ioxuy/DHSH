@@ -68,10 +68,9 @@ BOOL CBangTask::MoveToBang() CONST
 		return FALSE;
 	}
 
-	DWORD dwNpcId = 0;
 	BOOL bOpenDlg = FALSE;
 	BOOL bClickOption = FALSE;
-	MyTools::InvokeClassPtr<CNpcExtend>()->FindNpc_By_Name_ExcutePtr(L"帮派传送员", [&bOpenDlg, &bClickOption, &dwNpcId](CONST CNpc& Npc)
+	MyTools::InvokeClassPtr<CNpcExtend>()->FindNpc_By_Name_ExcutePtr(L"帮派传送员", [&bOpenDlg, &bClickOption](CONST CNpc& Npc)
 	{
 		if (Npc.OpenNpcDlg())
 		{

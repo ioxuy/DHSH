@@ -229,6 +229,9 @@
     <ClCompile Include="ScriptServices.cpp">
       <Filter>Game\Script</Filter>
     </ClCompile>
+    <ClCompile Include="Examination.cpp">
+      <Filter>Game\Script\Exam</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -473,6 +476,9 @@
     <ClInclude Include="ScriptServices.h">
       <Filter>Game\Script</Filter>
     </ClInclude>
+    <ClInclude Include="Examination.h">
+      <Filter>Game\Script\Exam</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -603,6 +609,9 @@
     </Filter>
     <Filter Include="Game\Script\Common">
       <UniqueIdentifier>{18ca7cbc-2716-498f-928d-e6d898b68fca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Script\Exam">
+      <UniqueIdentifier>{36a09168-6d65-46dd-85eb-9a476766f81e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -15,6 +15,7 @@ public:
 	
 	//
 	BOOL ExistTask_By_PartName_Action(_In_ CONST std::wstring wsPartName, _In_ std::function<VOID(CONST CTaskObject&)> ActionPtr) CONST;
+
 public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{

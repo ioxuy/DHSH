@@ -17,9 +17,9 @@
 
 int main()
 {
-	std::map<int, std::wstring> v;
-	//v.insert(std::make_pair(5, std::wstring(0)));
-	int(0);
+	std::wstring wsText;
+	MyTools::CLFile::ReadUnicodeFile(LR"(D:\1.txt)", wsText);
+	::MessageBoxW(NULL, wsText.c_str(), L"", NULL);
 	::Sleep(-1);
 	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))
