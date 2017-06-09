@@ -31,6 +31,8 @@ protected:
 	VOID RunGame();
 
 	VOID Stop();
+
+	VOID StopMove();
 private:
 	static BOOL WINAPI PeekMessage_(_Out_ LPMSG lpMsg, _In_opt_ HWND hWnd, _In_ UINT wMsgFilterMin, _In_ UINT wMsgFilterMax, _In_ UINT wRemoveMsg);
 private:

@@ -54,6 +54,7 @@ BOOL CGameConfig::GetConfigAppText(_In_ em_Config_Type emConfigType, _Out_ std::
 		{ em_Config_Type::em_Config_Type_BangTask ,L"胜木" },
 		{ em_Config_Type::em_Config_Type_Exam ,L"考试" },
 		{ em_Config_Type::em_Config_Type_Fight ,L"战斗" },
+		{ em_Config_Type::em_Config_Type_Common ,L"公共" },
 	};
 
 	auto p = MyTools::CLPublic::Vec_find_if_Const(Vec, [emConfigType](CONST ConfigTypeText& itm) { return itm.ConfigType == emConfigType; });
@@ -90,6 +91,9 @@ BOOL CGameConfig::Initialize() CONST
 		LOG_MSG_CF(L"不存在配置项:[功能]");
 		return FALSE;
 	}
+
+	if (SetCommonConfig())
+		return FALSE;
 
 	struct BindConfigMethod
 	{
@@ -138,9 +142,6 @@ BOOL CGameConfig::ReadConfig_Field() CONST
 		return TRUE;
 	};
 
-	if (!SetFightConfig())
-		return FALSE;
-
 	if (!SetConfigValue(em_Config_Type::em_Config_Type_Field, L"地图", em_TextVar::em_TextVar_Field_MapName, fnSetTextPtr))
 		return FALSE;
 
@@ -188,9 +189,6 @@ BOOL CGameConfig::ReadConfig_Collect() CONST
 	if (!SetConfigValue(em_Config_Type::em_Config_Type_Collect, L"家园家具", em_TextVar::em_TextVar_CollectHome_Furniture, fnSetTextPtr))
 		return FALSE;
 
-	if (!SetFightConfig())
-		return FALSE;
-
 	return TRUE;
 }
 
@@ -206,12 +204,6 @@ BOOL CGameConfig::ReadConfig_BangTask() CONST
 		return FALSE;
 
 	if (!SetConfigValue(em_Config_Type::em_Config_Type_BangTask, L"启动购买应天府超程符", em_TextVar::em_TextVar_AutoBuyReturnSymbol, fnSetValuePtr))
-		return FALSE;
-
-	if (!SetConfigValue(em_Config_Type::em_Config_Type_BangTask, L"使用超程符", em_TextVar::em_TextVar_UseReturnSymbol, fnSetValuePtr))
-		return FALSE;
-
-	if (!SetFightConfig())
 		return FALSE;
 
 	return TRUE;
@@ -236,9 +228,6 @@ BOOL CGameConfig::ReadConfig_PurifyWater() CONST
 	if (!SetConfigValue(em_Config_Type::em_Config_Type_PurifyWater, L"接任务分类", em_TextVar::em_TextVar_PurifyWater_PromiseType, fnSetValuePtr))
 		return FALSE;
 
-	if (!SetFightConfig())
-		return FALSE;
-
 	return TRUE;
 }
 
@@ -259,9 +248,6 @@ BOOL CGameConfig::ReadConfig_HotFire() CONST
 	};
 
 	if (!SetConfigValue(em_Config_Type::em_Config_Type_HotFire, L"接任务分类", em_TextVar::em_TextVar_PurifyWater_PromiseType, fnSetValuePtr))
-		return FALSE;
-
-	if (!SetFightConfig())
 		return FALSE;
 
 	return TRUE;
@@ -329,4 +315,28 @@ BOOL CGameConfig::SetFightConfig() CONST
 		return FALSE;
 
 	return TRUE;
+}
+
+BOOL CGameConfig::SetCommonConfig() CONST
+{
+	auto fnSetValuePtr = [](em_TextVar emTextVar, CONST std::wstring& wsValue)
+	{
+		MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(emTextVar, std::stoi(wsValue));
+		return TRUE;
+	};
+
+	if (!SetConfigValue(em_Config_Type::em_Config_Type_Common, L"自动购买驱魔香", em_TextVar::em_TextVar_AutoBuyExorcism, fnSetValuePtr))
+		return FALSE;
+
+	if (!SetConfigValue(em_Config_Type::em_Config_Type_Common, L"使用驱魔香", em_TextVar::em_TextVar_UseExorcism, fnSetValuePtr))
+		return FALSE;
+
+	//
+	if (!SetConfigValue(em_Config_Type::em_Config_Type_Common, L"屏蔽玩家", em_TextVar::em_TextVar_ShieldPlayer, fnSetValuePtr))
+		return FALSE;
+
+	if (!SetConfigValue(em_Config_Type::em_Config_Type_Common, L"使用超程符", em_TextVar::em_TextVar_UseReturnSymbol, fnSetValuePtr))
+		return FALSE;
+
+	return SetFightConfig();
 }

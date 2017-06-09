@@ -601,5 +601,8 @@
     <Filter Include="Dialog">
       <UniqueIdentifier>{470ffcf9-d34f-4271-80e5-de5af3936412}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Script\Common">
+      <UniqueIdentifier>{18ca7cbc-2716-498f-928d-e6d898b68fca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

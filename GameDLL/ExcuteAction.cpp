@@ -9,6 +9,8 @@
 #include "GameVariable.h"
 #include "GameConfig.h"
 #include "ScriptServices.h"
+#include "GameCALL.h"
+#include "PersonAttribute.h"
 
 #define _SELF L"ExcuteAction.cpp"
 
@@ -111,6 +113,8 @@ VOID CExcuteAction::Stop()
 	StopGame;
 	std::thread t([this] 
 	{
+		StopMove();
+
 		WCHAR wszText[MAX_PATH] = { 0 };
 		::GetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText, MAX_PATH);
 
@@ -121,4 +125,9 @@ VOID CExcuteAction::Stop()
 		::SetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText);
 	});
 	t.detach();
+}
+
+VOID CExcuteAction::StopMove()
+{
+	PushPtrToMainThread([] {MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint_Mouse(MyTools::InvokeClassPtr<CPersonAttribute>()->GetPoint()); });
 }

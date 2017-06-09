@@ -16,6 +16,7 @@ public:
 		em_Config_Type_BangTask,
 		em_Config_Type_Exam,
 		em_Config_Type_Fight,
+		em_Config_Type_Common
 	};
 
 public:
@@ -57,6 +58,9 @@ private:
 
 	//
 	BOOL SetFightConfig() CONST;
+
+	//
+	BOOL SetCommonConfig() CONST;
 public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{

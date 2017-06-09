@@ -329,6 +329,8 @@ enum class em_TextVar
 	em_TextVar_Field_MapPoint,
 	// ¹Ò»úÃüÁî
 	em_TextVar_ConfigAction,
+	// ÆÁ±ÎÍæ¼Ò
+	em_TextVar_ShieldPlayer
 };
 
 
