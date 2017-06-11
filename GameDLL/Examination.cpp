@@ -20,7 +20,7 @@ BOOL CExamination::Run()
 		}
 
 		MapLocation MapLocation_;
-		if (!GetTaskMapLocation(&TaskObject, MapLocation_));
+		if (!GetTaskMapLocation(&TaskObject, MapLocation_))
 		{
 			LOG_MSG_CF(L"获取考试地点失败!");
 			break;

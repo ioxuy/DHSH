@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "PlayerExtend.h"
 #include "GameClient.h"
+#include "GameUi.h"
+#include "GameUiExtend.h"
 #define _SELF L"dllmain.cpp"
 
 HWND hGameWnd = NULL;
@@ -52,6 +54,11 @@ DWORD WINAPI _KeepALiveThread(LPVOID lpParam)
 		for (int i = 0; i < 5 && bRunGame; ++i)
 			::Sleep(1000);
 		
+		MyTools::InvokeClassPtr<CGameUiExtend>()->Action_By_DlgName_When_ShowDlg(L"sys_msgdlg0", [](CONST CGameUi&) 
+		{
+			StopGame;
+			LOG_MSG_CF(L"游戏断开连接了!");
+		});
 	}
 	return 0;
 }
