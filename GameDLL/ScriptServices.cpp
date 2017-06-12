@@ -7,6 +7,7 @@
 #include "PurifyWaterTask.h"
 #include "BangTask.h"
 #include "PersonAction.h"
+#include "Examination.h"
 
 #define _SELF L"ScriptServices.cpp"
 BOOL CScriptServices::Run()
@@ -25,9 +26,16 @@ BOOL CScriptServices::Run()
 		return RunPtr<CPurifyWaterTask>();
 	else if (wsText == L"胜木")
 		return RunPtr<CBangTask>();
+	else if (wsText == L"考试")
+		return RunPtr<CExamination>();
 
 	LOG_MSG_CF(L"功能:[%s] 还没做……", wsText.c_str());
 	return FALSE;
+}
+
+BOOL CScriptServices::CommonCheck()
+{
+	return TRUE;
 }
 
 BOOL CScriptServices::CommonAction() CONST

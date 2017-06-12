@@ -12,6 +12,7 @@ public:
 
 	BOOL Run();
 
+	static BOOL CommonCheck();
 private:
 	BOOL CommonAction() CONST;
 private:

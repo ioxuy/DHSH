@@ -17,9 +17,19 @@
 
 int main()
 {
-	std::wstring wsText;
-	MyTools::CLFile::ReadUnicodeFile(LR"(D:\1.txt)", wsText);
-	::MessageBoxW(NULL, wsText.c_str(), L"", NULL);
+	std::wstring wsText = LR"(快去应天府（334，96）找{乡试考官1号|NPC应天府|乡试考官1号}接受考核。<BR>)";
+	std::wstring wsCityName;
+	MyTools::CCharacter::GetRemoveRight(wsText, L"快去", wsCityName);
+	MyTools::CCharacter::GetRemoveLeft(wsCityName, L"（", wsCityName);
+
+	std::wstring wsPoint;
+	MyTools::CCharacter::GetRemoveRight(wsText, L"（", wsPoint);
+	MyTools::CCharacter::GetRemoveLeft(wsPoint, L"）", wsPoint);
+	
+	std::wstring wsNpcName;
+	MyTools::CCharacter::GetRemoveRight(wsText, L"{", wsNpcName);
+	MyTools::CCharacter::GetRemoveLeft(wsNpcName, L"|", wsNpcName);
+
 	::Sleep(-1);
 	return 0;
 	if (!MyTools::CLProcess::Is_Exist_Process_For_ProcName(L"CProtect1.exe"))

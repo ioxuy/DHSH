@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\..\MyTools;$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir>\\192.168.0.106\Share\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

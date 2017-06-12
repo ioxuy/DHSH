@@ -10,8 +10,10 @@ private:
 	struct MapLocation
 	{
 		std::wstring wsMapName;
+		std::wstring wsNpcName;
 		Point TarPoint;
 	};
+
 public:
 	CExamination() = default;
 	~CExamination() = default;
@@ -21,13 +23,16 @@ public:
 	BOOL Run();
 private:
 	//
-	BOOL Signup(_Out_ CTaskObject* pTaskObject);
+	BOOL Signup();
 
 	//
 	BOOL ExistTask(_Out_ CTaskObject* pTaskObject) CONST;
 
 	//
 	BOOL GetTaskMapLocation(_In_ CONST CTaskObject* pTaskObject, _Out_ MapLocation& MapLocation_) CONST;
+
+	//
+	BOOL AnswerTaskQuestion(_In_ CONST MapLocation& MapLocation_) CONST;
 public:
 	virtual VOID ReleaseInstance(_In_ LPVOID lpObjectAddr) CONST
 	{
