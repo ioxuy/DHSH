@@ -6,11 +6,14 @@
 #include "HotFireTask.h"
 #include "PurifyWaterTask.h"
 #include "BangTask.h"
+#include "PersonAction.h"
 
 #define _SELF L"ScriptServices.cpp"
 BOOL CScriptServices::Run()
 {
 	StartGame;
+	CommonAction();
+
 	auto& wsText = MyTools::InvokeClassPtr<CTextVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_ConfigAction);
 	if (wsText == L"野外")
 		return RunPtr<CFarmField>();
@@ -25,4 +28,15 @@ BOOL CScriptServices::Run()
 
 	LOG_MSG_CF(L"功能:[%s] 还没做……", wsText.c_str());
 	return FALSE;
+}
+
+BOOL CScriptServices::CommonAction() CONST
+{
+	if (MyTools::InvokeClassPtr<CGameVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_ShieldPlayer))
+	{
+		LOG_CF_D(L"屏蔽其他玩家!");
+		MyTools::InvokeClassPtr<CPersonAction>()->DisableOtherPlayer();
+	}
+
+	return TRUE;
 }

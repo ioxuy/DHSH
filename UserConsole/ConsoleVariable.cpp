@@ -19,6 +19,11 @@ CConsoleVariable::~CConsoleVariable()
 	}
 }
 
+DWORD CConsoleVariable::GetEmptyValue() CONST throw()
+{
+	return 0;
+}
+
 PGameShareContent& CConsoleVariable::GetSareContent() CONST
 {
 	static PGameShareContent p = nullptr;

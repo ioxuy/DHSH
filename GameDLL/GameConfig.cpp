@@ -194,9 +194,6 @@ BOOL CGameConfig::ReadConfig_BangTask() CONST
 		return TRUE;
 	};
 
-	if (!SetConfigValue(em_Config_Type::em_Config_Type_BangTask, L"自动购买驱魔香", em_TextVar::em_TextVar_AutoBuyExorcism, fnSetValuePtr))
-		return FALSE;
-
 	if (!SetConfigValue(em_Config_Type::em_Config_Type_BangTask, L"启动购买应天府超程符", em_TextVar::em_TextVar_AutoBuyReturnSymbol, fnSetValuePtr))
 		return FALSE;
 

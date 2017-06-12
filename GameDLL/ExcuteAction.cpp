@@ -38,7 +38,7 @@ VOID CExcuteAction::ExcutePtr()
 {
 	_LockQueMethodPtr.Access([this]
 	{
-		while (!_QueMethodPtr.empty())
+		if (!_QueMethodPtr.empty())
 		{
 			auto& itm = _QueMethodPtr.front();
 			itm.ThreadExcutePtr();
@@ -85,6 +85,12 @@ VOID CExcuteAction::RunGame()
 	_RunComplete = FALSE;
 	std::thread t([this] 
 	{
+		if (MyTools::InvokeClassPtr<CGameVariable>()->GetGameShareContent() == nullptr || MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent() == nullptr)
+		{
+			LOG_MSG_CF(L"还没有初始化完毕!");
+			_RunComplete = TRUE;
+			return;
+		}
 		auto pGameConfig = MyTools::InvokeClassPtr<CGameConfig>();
 		if (!pGameConfig->ExistConfigFile())
 		{
@@ -125,7 +131,7 @@ VOID CExcuteAction::Stop()
 		//::SetWindowTextW(MyTools::InvokeClassPtr<CGameVariable>()->GetAccountShareContent()->AccountStatus.hGameWnd, wszText);
 	});
 	t.detach();*/
-	StopMove();
+	//StopMove();
 }
 
 VOID CExcuteAction::StopMove()

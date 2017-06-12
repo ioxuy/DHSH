@@ -417,7 +417,9 @@ BOOL CBangTask::Run()
 		CTaskObject CurrentTaskObject(NULL);
 		if (!PickBangTask(&CurrentTaskObject))
 		{
-			LOG_MSG_CF(L"接帮派任务失败!");
+			if(GameRun)
+				LOG_MSG_CF(L"接帮派任务失败!");
+
 			break;
 		}
 

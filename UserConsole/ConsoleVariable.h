@@ -16,6 +16,7 @@ public:
 	CConsoleVariable();
 	~CConsoleVariable();
 
+	virtual DWORD GetEmptyValue() CONST throw();
 
 	PGameShareContent& GetSareContent() CONST;
 

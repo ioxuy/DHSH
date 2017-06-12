@@ -441,7 +441,9 @@ VOID CPlayerMove::Move(_In_ CONST std::wstring& wsMapName, _In_ CONST Point& Tar
 {
 	CONST auto CurPoint = MyTools::InvokeClassPtr<CPersonAttribute>()->GetPoint();
 	
-	if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() == wsMapName)
+	if (!GameRun)
+		return;
+	else if (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() == wsMapName)
 	{
 		LOG_CF_D(L"MoveToPoint, Tar=[%d,%d], Now=[%d,%d], dis=%.2f", TarPoint.X, TarPoint.Y, CurPoint.X, CurPoint.Y, MyTools::InvokeClassPtr<CPersonAttribute>()->GetDis(TarPoint));
 		MyTools::InvokeClassPtr<CExcuteAction>()->PushPtrToMainThread([TarPoint]

@@ -13,6 +13,8 @@ public:
 	BOOL Run();
 
 private:
+	BOOL CommonAction() CONST;
+private:
 	template<typename T>
 	BOOL RunPtr()
 	{
