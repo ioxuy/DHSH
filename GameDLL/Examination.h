@@ -18,8 +18,6 @@ public:
 	CExamination() = default;
 	~CExamination() = default;
 	
-	BOOL Check() CONST;
-	
 	BOOL Run();
 private:
 	//

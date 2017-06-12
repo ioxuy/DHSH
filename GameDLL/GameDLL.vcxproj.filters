@@ -574,12 +574,6 @@
     <Filter Include="Expression">
       <UniqueIdentifier>{bfad8c82-7a7f-4809-860c-154070de8ace}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Script\答题">
-      <UniqueIdentifier>{4b49357d-c100-431d-b8eb-14fe9ac77287}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Script\跑商">
-      <UniqueIdentifier>{220dacbd-4164-4fbe-beb8-1020698ab0b6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Script\Field">
       <UniqueIdentifier>{cd1d2f16-4d0c-4599-a609-50f9de63702f}</UniqueIdentifier>
     </Filter>

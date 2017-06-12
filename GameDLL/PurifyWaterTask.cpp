@@ -14,11 +14,12 @@
 #include "ResText.h"
 #include "ExcuteAction.h"
 #include "GameCALL.h"
+#include "ScriptServices.h"
 
 #define _SELF L"PurifyWaterTask.cpp"
 BOOL CPurifyWaterTask::Run()
 {
-	while (GameRun)
+	while (GameRun && CScriptServices::CommonCheck())
 	{
 		CTaskObject TaskObject(NULL);
 		if (!ExistTask(&TaskObject))

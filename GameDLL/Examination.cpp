@@ -10,22 +10,9 @@
 #include "GameUi.h"
 #include "GameUiExtend.h"
 #include "NpcExtend.h"
-#include "BagItemExtend.h"
-#include "LogicBagItemAction.h"
+#include "ScriptServices.h"
 
 #define _SELF L"Examination.cpp"
-
-BOOL CExamination::Check() CONST
-{
-	if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"驱魔香") == 0)
-	{
-		LOG_CF_D(L"开启了自动购买驱魔香, 但是身上并不存在驱魔香! 去买驱魔香");
-		if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->SupplementItem(L"驱魔香", 10))
-			return FALSE;
-	}
-
-	return MyTools::InvokeClassPtr<CLogicBagItemAction>()->CheckExorcism();
-}
 
 BOOL CExamination::Run()
 {
@@ -43,7 +30,7 @@ BOOL CExamination::Run()
 		return TRUE;
 	}
 
-	while (GameRun && Check() && ExistTask(&TaskObject) && GetTaskMapLocation(&TaskObject, MapLocation_) && AnswerTaskQuestion(MapLocation_));
+	while (GameRun && CScriptServices::CommonCheck() && ExistTask(&TaskObject) && GetTaskMapLocation(&TaskObject, MapLocation_) && AnswerTaskQuestion(MapLocation_));
 	return TRUE;
 }
 

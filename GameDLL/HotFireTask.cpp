@@ -10,12 +10,13 @@
 #include "NpcExtend.h"
 #include "GameUiExtend.h"
 #include "FarmMonster.h"
+#include "ScriptServices.h"
 
 #define _SELF L"HotFireTask.cpp"
 BOOL CHotFireTask::Run()
 {
 	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 1);
-	while (GameRun)
+	while (GameRun && CScriptServices::CommonCheck())
 	{
 		CTaskObject TaskObject(NULL);
 		if (!ExistTask(&TaskObject))

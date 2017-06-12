@@ -19,6 +19,7 @@
 #include "GameCALL.h"
 #include "TextVariable.h"
 #include "ItemFilter.h"
+#include "ScriptServices.h"
 
 #define _SELF L"CollectItemc.pp"
 
@@ -96,13 +97,6 @@ BOOL CCollectItem::Run() CONST
 
 BOOL CCollectItem::Check() CONST
 {
-	if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"驱魔香") == 0)
-	{
-		LOG_CF_D(L"开启了自动购买驱魔香, 但是身上并不存在驱魔香! 去买驱魔香");
-		if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->SupplementItem(L"驱魔香", 10))
-			return FALSE;
-	}
-
 	// 检查宠物饮料
 	if (GetPetDrinksCount() == 0 && !SupplementPetDrinks())
 	{
@@ -110,8 +104,10 @@ BOOL CCollectItem::Check() CONST
 		return FALSE;
 	}
 
-	MyTools::InvokeClassPtr<CLogicBagItemAction>()->CheckExorcism();
-	return MyTools::InvokeClassPtr<CItemFilter>()->ReadItemFilterFile();
+	if (!MyTools::InvokeClassPtr<CItemFilter>()->ReadItemFilterFile())
+		return FALSE;
+
+	return CScriptServices::CommonCheck();
 }
 
 DWORD CCollectItem::GetPetDrinksCount() CONST

@@ -16,42 +16,17 @@
 #include "TaskExtend.h"
 #include "BagItem.h"
 #include "FarmMonster.h"
+#include "ScriptServices.h"
 
 #define _SELF L"BangTask.cpp"
 BOOL CBangTask::Check() CONST
 {
-	MyTools::InvokeClassPtr<CGameVariable>()->SetValueAndGetOldValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 1);
-
-	if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"驱魔香") == 0)
-	{
-		LOG_CF_D(L"开启了自动购买驱魔香, 但是身上并不存在驱魔香! 去买驱魔香");
-		if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->SupplementItem(L"驱魔香", 10))
-		{
-			LOG_CF_E(L"自动购买驱魔香失败……");
-			return FALSE;
-		}
-	}
-
-	if (MyTools::InvokeClassPtr<CGameVariable>()->GetRefValue_By_Id(em_TextVar::em_TextVar_AutoBuyReturnSymbol) && MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemPartName(L"超程符") == 0)
-	{
-		LOG_CF_D(L"开启了自动购买超程符, 身上不足, 去购买超程符!");
-		if (!MyTools::InvokeClassPtr<CLogicBagItemAction>()->SupplementItem(L"应天府超程符", 1))
-		{
-			LOG_CF_E(L"自动购买超程符失败……");
-			return FALSE;
-		}
-	}
-
-	// 使用驱魔香
-	MyTools::InvokeClassPtr<CLogicBagItemAction>()->CheckExorcism();
-	
-	// 
 	if (MyTools::InvokeClassPtr<CBagItemExtend>()->IsBagFull(2))
 	{
 		LOG_MSG_CF(L"背包至少要有2个格子!");
 		return FALSE;
 	}
-	return TRUE;
+	return CScriptServices::CommonCheck();
 }
 
 BOOL CBangTask::MoveToBang() CONST

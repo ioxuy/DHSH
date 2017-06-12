@@ -13,6 +13,7 @@
 #include "LogicBagItemAction.h"
 #include "PersonPetAction.h"
 #include "TextVariable.h"
+#include "ScriptServices.h"
 
 #define _SELF L"FarmField.cpp"
 BOOL CFarmField::Run() CONST
@@ -70,40 +71,7 @@ BOOL CFarmField::Run() CONST
 
 BOOL CFarmField::Check() CONST
 {
-	BOOL bFaild = FALSE;
-	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_AutoBuyExorcism, 1, [this, &bFaild]
-	{
-		if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"驱魔香") == 0)
-		{
-			LOG_CF_D(L"开启了自动购买驱魔香, 但是身上并不存在驱魔香! 去买驱魔香");
-			bFaild = !MyTools::InvokeClassPtr<CLogicBagItemAction>()->SupplementItem(L"驱魔香", 10);
-		}
-	});
-	if (bFaild)
-		return FALSE;
-
-	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_AutoBuyHappyBell, 1, [this, &bFaild]
-	{
-		if (MyTools::InvokeClassPtr<CBagItemExtend>()->GetCount_By_ItemName(L"欢悦铃") == 0)
-		{
-			LOG_CF_D(L"身上并不存在欢悦铃! 去买欢悦铃");
-			bFaild = !MyTools::InvokeClassPtr<CLogicBagItemAction>()->SupplementItem(L"欢悦铃", 10);
-		}
-	});
-	if (bFaild)
-		return FALSE;
-
-	MyTools::InvokeClassPtr<CGameVariable>()->Action_For_EqualValue_By_Id(em_TextVar::em_TextVar_UseExorcism, 0, [this]
-	{
-		if (MyTools::InvokeClassPtr<CPersonAttribute>()->ExistPersonBuff_By_PartName(L"驱魔香"))
-		{
-			LOG_CF_D(L"设置不使用驱魔香, 但是却检测到身上有驱魔香BUFF, 放弃驱魔香任务!");
-			MyTools::InvokeClassPtr<CLogicBagItemAction>()->RemoveExorcism();
-		}
-	});
-
-
-	return MyTools::InvokeClassPtr<CLogicBagItemAction>()->AfterFight_Item();
+	return !CScriptServices::CommonCheck() ? FALSE : MyTools::InvokeClassPtr<CLogicBagItemAction>()->AfterFight_Item();
 }
 
 BOOL CFarmField::GetFieldConfig(_Out_ FieldConfig& FieldConfig_) CONST
