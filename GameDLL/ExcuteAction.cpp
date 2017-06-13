@@ -117,6 +117,7 @@ VOID CExcuteAction::RunGame()
 VOID CExcuteAction::Stop()
 {
 	StopGame;
+	StopMove();
 	/*std::thread t([this] 
 	{
 		
@@ -136,5 +137,5 @@ VOID CExcuteAction::Stop()
 
 VOID CExcuteAction::StopMove()
 {
-	PushPtrToMainThread([] {MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint_Mouse(MyTools::InvokeClassPtr<CPersonAttribute>()->GetPoint()); });
+	MyTools::InvokeClassPtr<CGameCALL>()->MoveToPoint_Mouse(MyTools::InvokeClassPtr<CPersonAttribute>()->GetPoint());
 }

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace CreateCard
 {
     class Program
-    {
+    { 
         public static ulong[] Crc32Table = new ulong[256];
         public static int GetCrc(string strMsg)
         {

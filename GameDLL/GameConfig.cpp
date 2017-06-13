@@ -108,6 +108,7 @@ BOOL CGameConfig::Initialize() CONST
 		{ L"旺火", std::bind(&CGameConfig::ReadConfig_HotFire, this) },
 		{ L"净水", std::bind(&CGameConfig::ReadConfig_PurifyWater, this) },
 		{ L"胜木", std::bind(&CGameConfig::ReadConfig_BangTask, this) },
+		{ L"考试", std::bind(&CGameConfig::ReadConfig_Exam,this) },
 	};
 
 	auto p = MyTools::CLPublic::Vec_find_if_Const(Vec, [wsValue](CONST BindConfigMethod& itm) { return itm.wsConfigValue == wsValue; });
@@ -241,6 +242,11 @@ BOOL CGameConfig::ReadConfig_HotFire() CONST
 	if (!SetConfigValue(em_Config_Type::em_Config_Type_HotFire, L"接任务分类", em_TextVar::em_TextVar_PurifyWater_PromiseType, fnSetValuePtr))
 		return FALSE;
 
+	return TRUE;
+}
+
+BOOL CGameConfig::ReadConfig_Exam() CONST
+{
 	return TRUE;
 }
 

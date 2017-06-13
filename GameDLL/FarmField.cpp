@@ -14,6 +14,7 @@
 #include "PersonPetAction.h"
 #include "TextVariable.h"
 #include "ScriptServices.h"
+#include "ItemFilter.h"
 
 #define _SELF L"FarmField.cpp"
 BOOL CFarmField::Run() CONST
@@ -52,6 +53,7 @@ BOOL CFarmField::Run() CONST
 				}
 
 				GameSleep(2 * 1000);
+				MyTools::InvokeClassPtr<CBagItemAction>()->DropItem();
 				continue;
 			}
 
@@ -71,6 +73,9 @@ BOOL CFarmField::Run() CONST
 
 BOOL CFarmField::Check() CONST
 {
+	if (!MyTools::InvokeClassPtr<CItemFilter>()->ReadItemFilterFile())
+		return FALSE;
+
 	return !CScriptServices::CommonCheck() ? FALSE : MyTools::InvokeClassPtr<CLogicBagItemAction>()->AfterFight_Item();
 }
 

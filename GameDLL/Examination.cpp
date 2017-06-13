@@ -22,13 +22,18 @@ BOOL CExamination::Run()
 		LOG_MSG_CF(L"报名失败!");
 		return TRUE;
 	}
+	/*if (!ExistTask(&TaskObject))
+	{
+		LOG_MSG_CF(L"获取任务失败!");
+		return TRUE;
+	}*/
 
 	MapLocation MapLocation_;
-	if (!GetTaskMapLocation(&TaskObject, MapLocation_))
+	/*if (!GetTaskMapLocation(&TaskObject, MapLocation_))
 	{
 		LOG_MSG_CF(L"获取考试地点失败! Text=%s", TaskObject.GetTaskContent().c_str());
 		return TRUE;
-	}
+	}*/
 
 	while (GameRun && CScriptServices::CommonCheck() && ExistTask(&TaskObject) && GetTaskMapLocation(&TaskObject, MapLocation_) && AnswerTaskQuestion(MapLocation_));
 	return TRUE;
@@ -40,8 +45,10 @@ BOOL CExamination::Signup()
 	if (ExistTask(nullptr))
 		return TRUE;
 
-	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToMapPoint(L"衙门", Point(35, 32)))
+	if (!MyTools::InvokeClassPtr<CPlayerMove>()->MoveToSpecialMap(L"应天府", Point(441, 130),L"衙门"))
 		return FALSE;
+
+	GameSleep(3 * 1000);
 
 	struct NpcOptionText
 	{
@@ -83,12 +90,18 @@ BOOL CExamination::Signup()
 		return FALSE;
 	}
 
+	GameSleep(2 * 1000);
 	return ExistTask(nullptr);
 }
 
 BOOL CExamination::ExistTask(_Out_ CTaskObject* pTaskObject) CONST
 {
-	return MyTools::InvokeClassPtr<CTaskExtend>()->ExistTask_By_PartName_Action(L"#C20[活动]乡试", nullptr)/* || MyTools::InvokeClassPtr<CTaskExtend>()->ExistTask_By_PartName_Action(L"#C20[活动]会试", nullptr)*/;
+	auto fnSetTaskObjectPtr = [&pTaskObject](CONST CTaskObject& Obj)
+	{
+		MyTools::CLPublic::SetPtr(pTaskObject, Obj);
+	};
+	return MyTools::InvokeClassPtr<CTaskExtend>()->ExistTask_By_PartName_Action(L"#C20[活动]乡试", fnSetTaskObjectPtr) || 
+		   MyTools::InvokeClassPtr<CTaskExtend>()->ExistTask_By_PartName_Action(L"#C20[活动]会试", fnSetTaskObjectPtr);
 }
 
 BOOL CExamination::GetTaskMapLocation(_In_ CONST CTaskObject* pTaskObject, _Out_ MapLocation& MapLocation_) CONST
@@ -137,6 +150,9 @@ BOOL CExamination::AnswerTaskQuestion(_In_ CONST MapLocation& MapLocation_) CONS
 		return FALSE;
 	}
 
-	GameSleep(2 * 1000);
+	GameSleep(1 * 1000);
+	if(MyTools::InvokeClassPtr<CGameUiExtend>()->IsShowNpcDlg())
+		MyTools::InvokeClassPtr<CGameUiExtend>()->CloseNpcDlg();
+	GameSleep(1 * 1000);
 	return TRUE;
 }

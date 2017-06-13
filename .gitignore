@@ -195,3 +195,6 @@ ModelManifest.xml
 /.vs/DHSH/v15/Solution.VC.db-shm
 /.vs/DHSH/v15/Solution.VC.db-wal
 *.db
+/删除工程垃圾文件.bat
+/删除工程垃圾文件.bat
+*.bat

@@ -57,6 +57,9 @@ private:
 	BOOL ReadConfig_HotFire() CONST;
 
 	//
+	BOOL ReadConfig_Exam() CONST;
+
+	//
 	BOOL SetFightConfig() CONST;
 
 	//
