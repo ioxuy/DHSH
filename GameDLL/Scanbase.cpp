@@ -18,10 +18,10 @@ VOID CScanBase::Start() CONST
 	dwCALL = MyTools::CLSearchBase::FindCALL("8B??????????85??74??E8????????8B??????????F7", 0x45AB80 - 0x45AB9B, dwClient, 1, 0, L"Game.exe");
 	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	自动走路CALL	0x%X", dwCALL);
 
-	dwBase = MyTools::CLSearchBase::FindBase("8BC466C700E0FF8B4424", 0x47FB0B - 0x47FB22, 0x2, 0, L"Game.exe");
+	dwBase = MyTools::CLSearchBase::FindBase("8B??8A????84??75??6A006A006A002B??68", 0x48012E - 0x480123, 0x2, 0, L"Game.exe");
 	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	NPC选项文本偏移	0x%X", dwBase);
 
-	dwBase = MyTools::CLSearchBase::FindBase("8BC466C700E0FF8B4424", 0x47FB0B - 0x47FB2A, 0x2, 0, L"Game.exe", 0xFF);
+	dwBase = MyTools::CLSearchBase::FindBase("8B??8A????84??75??6A006A006A002B??68", 0x48012E - 0x4800DE, 0x2, 0, L"Game.exe", 0xFF);
 	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	NPC选项发包偏移	0x%X", dwBase);
 
 	dwBase = MyTools::CLSearchBase::FindBase_ByCALL("E8????????83??3189", 0x65151E - 0x651544, dwClient, 0x1, 0, L"Game.exe", 0x4DDC15 - 0x4DDBC0 + 0x1);
@@ -35,11 +35,11 @@ VOID CScanBase::Start() CONST
 	dwBase = MyTools::CLSearchBase::FindBase("8A????3C040F??????????3C09", 0x6AB1B2 - 0x6AB191, 1, 0, L"Game.exe");
 	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	是否屏蔽玩家基址	0x%X", dwBase);
 
-	dwCALL = MyTools::CLSearchBase::FindCALL("FF????85C00F??????????8B??????????E8", 0x741252 - 0x741263, dwClient, 1, 0, L"Game.exe");
-	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	走路CALL	0x%X", dwCALL);
+	dwCALL = MyTools::CLSearchBase::FindCALL("8B??68E80300006A01", 0x409F90 - 0x409FAC, dwClient, 1, 0, L"Game.exe");
+	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	采集家具CALL	0x%X", dwCALL);
 
-	dwBase = MyTools::CLSearchBase::FindBase("8B????33??8B??????????3B??C7", 0x6B7CED - 0x6B7CF2, 0x2, 0, L"Game.exe");
-	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	走路偏移	0x%X", dwBase);
+	dwBase = MyTools::CLSearchBase::FindBase("8B??68E80300006A01", 0x409F90 - 0x409F9F, 0x1, 0, L"Game.exe");
+	MyTools::CLog::GetInstance().Print(__FUNCTIONW__, _SELF, 0, LOG_TYPE_CONSOLE, MyTools::CLog::em_Log_Type_Debug, FALSE, L"#define	家具采集偏移	0x%X", dwBase);
 
 	LOG_CF_D(L"SpendTime/s = %d", static_cast<DWORD>(TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Second)));
 }

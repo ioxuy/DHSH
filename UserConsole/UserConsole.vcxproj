@@ -224,6 +224,7 @@
     <ClInclude Include="ConfigReadPlayerDlg.h" />
     <ClInclude Include="ConsoleClient.h" />
     <ClInclude Include="ConsoleVariable.h" />
+    <ClInclude Include="GameDialog.h" />
     <ClInclude Include="MainFormDlg.h" />
     <ClInclude Include="RechargeCardDlg.h" />
     <ClInclude Include="RechargeCardLogDlg.h" />
@@ -266,6 +267,7 @@
     <ClCompile Include="ConfigReadPlayerDlg.cpp" />
     <ClCompile Include="ConsoleClient.cpp" />
     <ClCompile Include="ConsoleVariable.cpp" />
+    <ClCompile Include="GameDialog.cpp" />
     <ClCompile Include="MainFormDlg.cpp" />
     <ClCompile Include="RechargeCardDlg.cpp" />
     <ClCompile Include="RechargeCardLogDlg.cpp" />
