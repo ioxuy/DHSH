@@ -9,6 +9,7 @@
 #include <future>
 #include <MyTools/CLPublic.h>
 #include <MyTools/CLProcess.h>
+#include <MyTools/CLAsync.h>
 #include <MyTools/CLNoModuleDLL.h>
 #include <MyTools/Log.h>
 #include "ConsoleVariable.h"
@@ -209,8 +210,8 @@ void CMainFormDlg::OnBnClickedButtonRungame()
 	{
 		AfxMessageBox(L"游戏路径错误! 请选择游戏路径!");
 		static std::wstring wsGamePath_;
-		if(ChoiceGamePath(wsGamePath_))
-			std::async(std::launch::async, &CMainFormDlg::SaveGamePath, this, wsGamePath_);
+		if (ChoiceGamePath(wsGamePath_))
+			MyTools::CLAsync::GetInstance().ExcuteAsync(&CMainFormDlg::SaveGamePath, this, wsGamePath_);
 
 		return;
 	}
