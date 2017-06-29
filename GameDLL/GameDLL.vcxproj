@@ -86,6 +86,7 @@
     <ClInclude Include="..\..\MyTools\MyTools\ByteBuffer.h" />
     <ClInclude Include="..\..\MyTools\MyTools\Character.h" />
     <ClInclude Include="..\..\MyTools\MyTools\ClassInstance.h" />
+    <ClInclude Include="..\..\MyTools\MyTools\CLAsync.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLClient.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLClientIoEvent.h" />
     <ClInclude Include="..\..\MyTools\MyTools\CLErrMsg.h" />
@@ -169,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\MyTools\MyTools\Character.cpp" />
+    <ClCompile Include="..\..\MyTools\MyTools\CLAsync.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CLClient.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CLClientIoEvent.cpp" />
     <ClCompile Include="..\..\MyTools\MyTools\CLErrMsg.cpp" />

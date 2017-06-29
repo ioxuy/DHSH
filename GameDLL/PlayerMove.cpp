@@ -37,7 +37,7 @@ BOOL CPlayerMove::MoveToMapPoint(_In_ CONST std::wstring& wsMapName, _In_ CONST 
 	while (GameRun && (MyTools::InvokeClassPtr<CPersonAttribute>()->GetCurrentMapName() != wsMapName || pPersonAttributePtr->GetDis(TarPoint) > 1.0f))
 	{
 		GameSleep(1000);
-		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 30 * 1000)
+		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Second) >= 30 * 1000)
 		{
 			CONST auto CurPoint = pPersonAttributePtr->GetPoint();
 
@@ -301,7 +301,7 @@ BOOL CPlayerMove::MoveToSpecialMap(_In_ CONST std::wstring& wsMapName, _In_ CONS
 	while (GameRun && fnExitPtr())
 	{
 		GameSleep(1000);
-		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 10 * 1000)
+		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Second) >= 10 * 1000)
 		{
 			CONST auto CurPoint = pPersonAttributePtr->GetPoint();
 
@@ -341,7 +341,7 @@ BOOL CPlayerMove::MoveToPoint_By_Mouse(_In_ CONST Point& TarPoint) CONST
 	while (GameRun && pPersonAttributePtr->GetDis(TarPoint) > 1.0f)
 	{
 		GameSleep(1000);
-		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 30 * 1000)
+		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Second) >= 30 * 1000)
 		{
 			CONST auto CurPoint = pPersonAttributePtr->GetPoint();
 

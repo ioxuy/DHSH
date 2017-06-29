@@ -132,6 +132,9 @@
     <ClInclude Include="AccountConfigExtend.h">
       <Filter>Config</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLAsync.h">
+      <Filter>MyTools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\MyTools\MyTools\Character.cpp">
@@ -214,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="AccountConfigExtend.cpp">
       <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLAsync.cpp">
+      <Filter>MyTools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

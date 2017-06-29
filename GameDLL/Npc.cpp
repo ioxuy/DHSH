@@ -122,7 +122,7 @@ BOOL CNpc::Collect_By_ActionPtr(_In_ std::function<DWORD(VOID)> ActionPtr) CONST
 	while (GameRun && (MyTools::InvokeClassPtr<CPersonAttribute>()->IsCollecting() && MyTools::InvokeClassPtr<CPersonAttribute>()->GetPetPhysicalStrength() >= 10))
 	{
 		GameSleep(1000);
-		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick_Second) >= 30)
+		if (TimeTick.GetSpentTime(MyTools::CTimeTick::em_TimeTick::em_TimeTick_Second) >= 30)
 		{
 			if (dwPetPhysicalStrengthValue == MyTools::InvokeClassPtr<CPersonAttribute>()->GetPetPhysicalStrength())
 			{

@@ -1,6 +1,7 @@
 #include "GameServer.h"
 #include <future>
 #include <MyTools/Log.h>
+#include <MyTools/CLAsync.h>
 #include "GameClient.h"
 #include "EchoPacket.h"
 #include "../GameDLL/GameBase.h"
@@ -131,7 +132,7 @@ DWORD WINAPI CGameServer::_WorkThread(LPVOID lpParam)
 					continue;
 				}
 
-				std::async(std::launch::async, &CGameServer::DisClientConnect, pGameServer, itm.second.get());
+				MyTools::CLAsync::GetInstance().ExcuteAsync(&CGameServer::DisClientConnect, pGameServer, itm.second.get());
 			}
 				
 		});

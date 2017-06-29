@@ -3,6 +3,7 @@
 #include <future>
 #include <MyTools/Log.h>
 #include <MyTools/CLThread.h>
+#include <MyTools/CLAsync.h>
 #include "PlayerExtend.h"
 #include "Player.h"
 #include "Npc.h"
@@ -113,7 +114,7 @@ VOID CExpr::PrintBuff(CONST std::vector<std::wstring>& VecParm)
 
 VOID CExpr::ScanBase(CONST std::vector<std::wstring>&)
 {
-	std::async(std::launch::async, &CScanBase::Start, MyTools::InvokeClassPtr<CScanBase>());
+	MyTools::CLAsync::GetInstance().ExcuteAsync(&CScanBase::Start, MyTools::InvokeClassPtr<CScanBase>());
 }
 
 VOID CExpr::TestPtr(CONST std::vector<std::wstring>& VecParm)

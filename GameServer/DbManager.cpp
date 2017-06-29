@@ -2,6 +2,7 @@
 #include <future>
 #include <MyTools/Log.h>
 #include <MyTools/Character.h>
+#include <MyTools/CLAsync.h>
 #include "Account.h"
 
 #define _SELF L"DbManager.cpp"
@@ -90,8 +91,8 @@ BOOL CDbManager::ExcuteSQL(_In_ CONST std::wstring& wsSQL, std::function<VOID(SQ
 		return FALSE;
 	}
 
-	
-	for (int i = 0;  GetDataPtr !=nullptr && i < 100 && ::SQLFetch(Env.hStmt) == SQL_SUCCESS; ++i)
+
+	for (int i = 0; GetDataPtr != nullptr && i < 100 && ::SQLFetch(Env.hStmt) == SQL_SUCCESS; ++i)
 		GetDataPtr(Env.hStmt);
 
 	FreeMem(Env);
@@ -108,7 +109,7 @@ BOOL CDbManager::GetVecAccountConfog(_Out_ std::vector<DbAccountConfig>& Vec) CO
 	WCHAR Text1[MAX_PATH];
 	WCHAR Text2[MAX_PATH];
 	WCHAR Text3[MAX_PATH];
-	return ExcuteSQL(L"exec [GetAccountConfig]",[&](SQLHSTMT& hStmt)
+	return ExcuteSQL(L"exec [GetAccountConfig]", [&](SQLHSTMT& hStmt)
 	{
 		ZeroMemory(Text1, _countof(Text1));
 		ZeroMemory(Text2, _countof(Text2));
@@ -153,7 +154,13 @@ BOOL CDbManager::SetAccountLoginRecord(_In_ DWORD dwAccountId, _In_ CONST std::w
 
 VOID CDbManager::AsyncExcuteSQL(_In_ CONST std::wstring& wsSQL)
 {
-	std::async(std::launch::async, &CDbManager::ExcuteSQL_No_Result, this, wsSQL);
+	auto fnMethodPtr = [this](_In_ CONST std::wstring& wsSQL)
+	{
+		if(!CDbManager::ExcuteSQL_No_Result(wsSQL))
+			LOG_CF_E(L"ExcuteSQL_No_Result Faild! SQL=%s", wsSQL.c_str());
+	};
+
+	MyTools::CLAsync::GetInstance().ExcuteAsync(fnMethodPtr, wsSQL);
 }
 
 BOOL CDbManager::GetTime_By_AccountId(_In_ DWORD dwAccountId, _Out_ DWORD& dwTime) CONST

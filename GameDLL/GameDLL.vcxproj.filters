@@ -232,6 +232,9 @@
     <ClCompile Include="Examination.cpp">
       <Filter>Game\Script\Exam</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MyTools\MyTools\CLAsync.cpp">
+      <Filter>MyTools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -478,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="Examination.h">
       <Filter>Game\Script\Exam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MyTools\MyTools\CLAsync.h">
+      <Filter>MyTools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

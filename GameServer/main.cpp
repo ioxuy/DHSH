@@ -1,5 +1,6 @@
 #include <iostream>
 #include <MyTools/Log.h>
+#include <MyTools/CLAsync.h>
 #include "AccountExtend.h"
 #include "AccountConfigExtend.h"
 #include "DbManager.h"
@@ -41,5 +42,6 @@ int main()
 	std::wcout << L"Runing..." << std::endl;
 lb_Exit:;
 	::Sleep(INFINITE);
+	MyTools::CLAsync::GetInstance().Stop();
 	return 0;
 }
